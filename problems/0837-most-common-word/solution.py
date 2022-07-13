@@ -1,23 +1,22 @@
+import re
 class Solution:
     def mostCommonWord(self, paragraph: str, banned: List[str]) -> str:
-        paragraph = paragraph.lower()
-
-        words: List[str] = re.split('[ .,;!?\']', paragraph)
-
-        banned.append("")
         banned.append(" ")
+        banned.append("")
+        words: List[str] = re.sub("[,.!?;'\"]", " ", paragraph).lower().split(" ")
+        count: Dict[int] = {}
         
-        maxStr: str = ""
-        maxCount: int = 0
-        count: Dict[str, int] = {}
         for word in words:
             if word not in banned:
                 if word not in count:
                     count[word] = 1
                 else:
                     count[word] = count[word] + 1
-                if count[word] > maxCount:
-                        maxCount = count[word]
-                        maxStr = word
-        print(count)
-        return maxStr
+        # print(count)         
+        max: tuple[str, int] = ("", 0)
+        for i, (k, v) in enumerate(count.items()):
+            if v > max[1]:
+                max = (k, v)
+        return max[0]
+        
+                

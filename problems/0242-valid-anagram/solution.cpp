@@ -1,20 +1,21 @@
 #include <algorithm>
 
+
+
 class Solution {
 public:
+    static constexpr auto sortBy = [] (char a, char b) {
+        return a < b;
+    };
+    
     bool isAnagram(string s, string t) {
         if (s.size() != t.size()) {
             return false;
         }
-
-        std::sort(s.begin(), s.end(), [](char a, char b) { return a < b; });
-        std::sort(t.begin(), t.end(), [](char a, char b) { return a < b; });
         
-        for (int i = 0; i < s.size(); i++) {
-            if (s[i] != t[i]) {
-                return false;
-            }
-        }
-        return true;
+        std::sort(s.begin(), s.end(), Solution::sortBy);
+        std::sort(t.begin(), t.end(), Solution::sortBy);
+        
+        return s == t;
     }
 };

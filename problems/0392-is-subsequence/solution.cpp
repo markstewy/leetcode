@@ -1,19 +1,22 @@
+// solution in 7 minutes
 class Solution {
 public:
     bool isSubsequence(string s, string t) {
-        if (s.size() == 0) {
-            return true;
-        }
+        if (s == t) return true;
         
-        int i = -1;
+        int idxS = 0;
+        int idxT = 0;
         
-        for (char c : s) {
-            i++;
-            while (i < t.size() && t[i] != c) {
-                i++;
+        while (idxT < t.size()) {
+            if (s[idxS] == t[idxT]) {
+                idxS++;
+            }
+            idxT++;
+            
+            if (idxS >= s.size()) {
+                return true;
             }
         }
-
-        return i < t.size();
+        return false;   
     }
 };

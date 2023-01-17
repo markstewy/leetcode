@@ -1,21 +1,9 @@
-#include <algorithm>
-
-
-
+// solution in under 3 minutes
 class Solution {
 public:
-    static constexpr auto sortBy = [] (char a, char b) {
-        return a < b;
-    };
-    
     bool isAnagram(string s, string t) {
-        if (s.size() != t.size()) {
-            return false;
-        }
-        
-        std::sort(s.begin(), s.end(), Solution::sortBy);
-        std::sort(t.begin(), t.end(), Solution::sortBy);
-        
-        return s == t;
+        sort(t.begin(), t.end());
+        sort(s.begin(), s.end()); 
+        return t == s;
     }
 };

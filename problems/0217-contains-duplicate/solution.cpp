@@ -1,17 +1,13 @@
-#include <unordered_map>
-
+#include<set>
+// solution reached in under 3 minutes
 class Solution {
 public:
     bool containsDuplicate(vector<int>& nums) {
-        std::unordered_map<int, int> m;
-        
+        set<int> uniqueNums;
         for (int n : nums) {
-            if (m[n] == 1) {
-                return true;
-            } else {
-                m[n] = 1;
-            }
+            uniqueNums.insert(n);
         }
-        return false;
+        return nums.size() != uniqueNums.size();
     }
 };
+

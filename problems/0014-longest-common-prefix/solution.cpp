@@ -1,33 +1,19 @@
-#include <algorithm>
-
-auto sortBySize = [](std::string a, std::string b) {
-    return a.size() < b.size();
-};
-
+// solution in 15 minutes
 class Solution {
 public:
     string longestCommonPrefix(vector<string>& strs) {
-        std::sort(strs.begin(), strs.end(), sortBySize);
         
-        if (strs.size() == 1) {
-            return strs[0];
-        }
+        string pre = "";
         
-        if (strs.size() == 0) {
-            return "";
-        }
-        
-        std::string cp = "";
-        
-        for (int col = 0; col < strs[0].size(); col++) {
-            char c = strs[0][col];
-            for (int row = 1; row < strs.size(); row++) {
-                if (strs[row][col] != c) {
-                    return cp;
-                }
+        for (int i = 0; i < strs[0].size(); i++) {
+            char c = strs[0][i];
+            
+            for (int s = 1; s < strs.size(); s++) {
+                if (i >= strs[s].size() || strs[s][i] != c) return pre;
             }
-            cp += c;
+            
+            pre.push_back(c);
         }
-        return cp;
+        return pre;
     }
 };

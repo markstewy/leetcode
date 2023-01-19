@@ -1,25 +1,25 @@
 class Solution {
 public:
+    // solution in 17 minutes    
+    vector<int> getNextRow(vector<int> prior) {
+        vector<int> row{1};
+        for (int i = 1; i < prior.size(); i++) {
+            row.push_back(prior[i - 1] + prior[i]);
+        }
+        row.push_back(1);
+        return row;
+    }
+    
     vector<vector<int>> generate(int numRows) {
-        std::vector<std::vector<int>> solution{};
-        if (numRows <= 0) { return solution; }
-        solution.push_back(std::vector<int>{1});
-        if (numRows == 1) { return solution; }
-        solution.push_back(std::vector<int>{1, 1});
-        if (numRows == 2) { return solution; }
+        if (numRows == 0) return {};
+        if (numRows == 1) return {{1}};
+        if (numRows == 2) return {{1}, {1, 1}};
         
-        
-        for (int i = 2; i < numRows; i++) {
-            std::vector<int> prior = solution[i - 1];
-            
-            std::vector<int> temp{1};
-            for (int j = 1; j < i; j++) {
-                temp.push_back(prior[j] + prior[j - 1]);
-            }
-            temp.push_back(1);
-            solution.push_back(temp);
+        vector<vector<int>> solution{{1}, {1, 1}};
+        for (int r = 3; r <= numRows; r++) {
+            vector<int> priorRow = solution.back();
+            solution.push_back(getNextRow(priorRow));
         }
         return solution;
     }
 };
-

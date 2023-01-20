@@ -1,18 +1,19 @@
 #include <set>
-
+// solution in 15 mins
 class Solution {
 public:
     int numUniqueEmails(vector<string>& emails) {
         set<string> uniqueEmails;
         for (string e : emails) {
-            string domain = e.substr(e.find('@'));
-            string cleanE;
+            string name;
             for (char c : e) {
-                if (c == '+' || c == '@') break;
-                if (c != '.') cleanE.push_back(c);
+                if (c == '@' || c == '+') break;
+                if (c == '.') continue;
+                name += c;
             }
-            cleanE += domain;
-            uniqueEmails.insert(cleanE);
+            string domain = e.substr(e.find('@'));
+            name += domain;
+            uniqueEmails.insert((name));
         }
         return uniqueEmails.size();
     }

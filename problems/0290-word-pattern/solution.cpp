@@ -1,38 +1,38 @@
-#include <unordered_map>
-
 class Solution {
+// solution in 18 mintues
 public:
     bool wordPattern(string pattern, string s) {
-        vector<string> sVec;
-        string word;
-        
+        vector<string> sv;
+        string word = "";
         for (char c : s) {
-            if (c == ' '){
-                sVec.push_back(word);
+            if (c == ' ') {
+                if (word.size() > 0) sv.push_back(word);
                 word = "";
-                continue;
             } else {
                 word.push_back(c);
             }
         }
-        sVec.push_back(word);
+        sv.push_back(word);
         
-        if (sVec.size() != pattern.size()) {
-            return false;
+        if (sv.size() != pattern.size()) return false;
+        
+        unordered_map<char, string> cs;
+        unordered_map<string, char> sc;
+        
+        for (int i = 0; i < sv.size(); i++) {
+            cs[pattern[i]] = sv[i];
+            sc[sv[i]] = pattern[i];
         }
         
-        unordered_map<char, string> m;
-        unordered_map<string, char> m2;
+        string s_to_c = "";
+        string c_to_s = "";
+        for (int i = 0; i < sv.size(); i++) {
+        s_to_c += sc[sv[i]];
+        c_to_s += cs[pattern[i]];
+        if (i < sv.size() - 1) c_to_s += " ";
+        }
         
-        for (int i = 0; i < min(s.size(), pattern.size()); i++) {
-            m[pattern[i]] = sVec[i];
-            m2[sVec[i]] = pattern[i];
-        }
-        for (int i = 0; i < pattern.size(); i++) {
-            if (m[pattern[i]] != sVec[i] || m2[sVec[i]] != pattern[i]) {
-                return false;
-            }
-        }
-        return true;
+        return s_to_c == pattern && c_to_s == s;
+        
     }
 };

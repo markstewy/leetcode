@@ -1,9 +1,8 @@
-#include<unordered_map>
-
+// solution in 10 mins
 class Solution {
 public:
     int maxNumberOfBalloons(string text) {
-        unordered_map<char, int> m {
+        unordered_map<char, int>m {
             {'b', 0},
             {'a', 0},
             {'l', 0},
@@ -12,13 +11,14 @@ public:
         };
         
         for (char c : text) {
-            (m[c])++;
+            if (m.find(c) != m.end()) {
+                m[c] = m[c] + 1;
+            }
         }
         
-        int singles = min(m['b'], min(m['a'], m['n']));
-        int doubles = min(m['l'], m['o']);
+        int singleMin = min(m['b'], min(m['a'], m['n']));
+        int doubleMin = min(m['l'], m['o']);
         
-        return min(singles, (doubles / 2));
-        
+        return min(singleMin, doubleMin / 2);
     }
 };

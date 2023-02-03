@@ -1,13 +1,14 @@
-#include<set>
-// solution reached in under 3 minutes
+#include <unordered_map>
+// solution in 2 minutes
 class Solution {
 public:
     bool containsDuplicate(vector<int>& nums) {
-        set<int> uniqueNums;
+        unordered_map<int, int> m;
+        
         for (int n : nums) {
-            uniqueNums.insert(n);
+            if (m.find(n) != m.end()) return true;
+            m[n] = 1;
         }
-        return nums.size() != uniqueNums.size();
+        return false;
     }
 };
-

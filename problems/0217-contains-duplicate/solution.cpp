@@ -1,13 +1,16 @@
 #include <unordered_map>
-// solution in 2 minutes
+
 class Solution {
 public:
     bool containsDuplicate(vector<int>& nums) {
-        unordered_map<int, int> m;
-        
+        unordered_map<int, int> cache;
+
         for (int n : nums) {
-            if (m.find(n) != m.end()) return true;
-            m[n] = 1;
+            if (cache.find(n) != cache.end()) {
+                return true;
+            } else {
+                cache[n] = 1;
+            }
         }
         return false;
     }

@@ -1,16 +1,15 @@
-#include <unordered_map>
+#include<unordered_set>
 
 class Solution {
 public:
     bool containsDuplicate(vector<int>& nums) {
-        unordered_map<int, int> cache;
+        unordered_set<int> set;
 
-        for (int n : nums) {
-            if (cache.find(n) != cache.end()) {
+        for (int& n : nums) {
+            if (set.find(n) != set.end()) {
                 return true;
-            } else {
-                cache[n] = 1;
             }
+            set.insert(n);
         }
         return false;
     }

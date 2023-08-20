@@ -1,20 +1,17 @@
-#include<unordered_map>
-
 class Solution {
 public:
     vector<int> twoSum(vector<int>& nums, int target) {
-        unordered_map<int,int> cache; // <num, index>
+        unordered_map<int, int> s; // <num, idx>
 
         int i = 0;
-        for (int n : nums) {
+        for (int& n : nums) {
 
             int diff = target - n;
-
-            if (cache.find(diff) != cache.end()) {
-                return {i, cache[diff]};
-            } else {
-                cache[n] = i;
+            if (s.find(diff) != s.end()) {
+                return {s[diff], i};
             }
+
+            s.insert(std::make_pair(n, i));
             i++;
         }
 

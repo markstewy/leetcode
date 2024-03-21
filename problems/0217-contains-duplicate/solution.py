@@ -1,4 +1,3 @@
-
 class Solution:
     def containsDuplicate(self, nums: List[int]) -> bool:
         cache = set()
@@ -7,5 +6,4 @@ class Solution:
             if n in cache:
                 return True
             cache.add(n)
-        
         return False

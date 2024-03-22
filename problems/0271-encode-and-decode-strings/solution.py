@@ -10,19 +10,23 @@ class Codec:
     def decode(self, s: str) -> List[str]:
         """Decodes a single string to a list of strings.
         """
+    
+        decoded = []        
         i = 0
-        decoded = []
-
-        while i < (len(s) - 1):
+        while i < len(s):
             l = ""
-            while s[i] != "#":
+            while s[i] != "#": # get length
                 l += s[i]
                 i += 1
+            
             i += 1
-            end = i + int(l)
+            end = int(l) + i
             decoded.append(s[i : end])
             i = end
+
         return decoded
+
+
 
 # Your Codec object will be instantiated and called as such:
 # codec = Codec()

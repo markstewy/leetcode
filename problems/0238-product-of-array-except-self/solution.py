@@ -12,8 +12,9 @@ class Solution:
             prod *= nums[i]
             rtl.append(prod)
         rtl.reverse()
-        
+
         ans = []
+
         for i in range(len(nums)):
             l = 1
             r = 1
@@ -22,7 +23,7 @@ class Solution:
                 l = ltr[i - 1]
             if i < len(nums) - 1:
                 r = rtl[i + 1]
-            ans.append(l * r)
-        
+            
+            ans.append((l * r))
         return ans
 

@@ -1,24 +1,22 @@
 class Solution:
     def trap(self, height: List[int]) -> int:
-        ltrMax, rtlMax = [], []
+        ltr, rtl = [], []
 
-        tallest = 0
+        mh = 0
         for n in height:
-            tallest = max(n, tallest)
-            ltrMax.append(tallest)
+            mh = max(mh, n)
+            ltr.append(mh)
 
-        tallest = 0
+        mh = 0
         for i in range(len(height) - 1, -1, -1):
-            tallest = max(tallest, height[i])
-            rtlMax.append(tallest)
-        rtlMax.reverse()
+            mh = max(mh, height[i])
+            rtl.append(mh)
+        rtl.reverse()
 
-        count = 0
+        water = 0
+        for i in range(1, len(height) - 1):
+            w = min(ltr[i - 1], rtl[i + 1]) - height[i]
+            if w > 0:
+                water += w
 
-        for i in range(1, len(height) - 1, 1):
-            depth = min(ltrMax[i - 1], rtlMax[i + 1]) - height[i]
-            if depth > 0:
-                count += depth
-        
-        return count
-            
+        return water

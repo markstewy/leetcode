@@ -20,5 +20,5 @@ class Solution:
                 rows[r].add(v)
                 cols[c].add(v)
                 sqs[(r//3, c//3)].add(v)
-
         return True
+

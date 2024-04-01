@@ -1,18 +1,16 @@
 class Solution:
     def threeSum(self, nums: List[int]) -> List[List[int]]:
-        nums.sort()
+        nums.sort() #O(n*logn)
         ans = []
 
         for i in range(len(nums)):
-            if nums[i] > 0:
-                break # 3 positive ints will never sum to zero
-            
-            if i > 0 and nums[i] == nums[i - 1]:
+            if nums[i] > 0: # no 3 positive ints will add to zero
+                break
+            if i > 0 and nums[i] == nums[i - 1]: # avoid duplicate entires
                 continue
 
             l = i + 1
             r = len(nums) - 1
-
             while l < r:
                 sum = nums[i] + nums[l] + nums[r]
                 if sum < 0:
@@ -25,4 +23,6 @@ class Solution:
                     while nums[l] == nums[l - 1] and l < r:
                         l += 1
         return ans
-            
+
+
+

@@ -11,4 +11,8 @@ class Solution:
             elif sum > target:
                 r -= 1
             else:
-                return [l + 1, r + 1] 
+                return [l + 1, r + 1]
+                l += 1
+                r -= 1
+
+        

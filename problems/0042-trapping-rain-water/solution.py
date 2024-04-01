@@ -1,22 +1,21 @@
 class Solution:
     def trap(self, height: List[int]) -> int:
         ltr, rtl = [], []
+        waterTotal = 0
 
-        mh = 0
+        m = 0
         for n in height:
-            mh = max(mh, n)
-            ltr.append(mh)
-
-        mh = 0
-        for i in range(len(height) - 1, -1, -1):
-            mh = max(mh, height[i])
-            rtl.append(mh)
+            m = max(m, n)
+            ltr.append(m)
+        m = 0
+        for i in range(len(height) - 1, -1 , -1):
+            m = max(m, height[i])
+            rtl.append(m)
         rtl.reverse()
 
-        water = 0
         for i in range(1, len(height) - 1):
-            w = min(ltr[i - 1], rtl[i + 1]) - height[i]
-            if w > 0:
-                water += w
+            water = min(ltr[i - 1], rtl[i + 1]) - height[i]
+            waterTotal += max(0, water)
+        
+        return waterTotal
 
-        return water

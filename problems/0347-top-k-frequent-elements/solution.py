@@ -6,15 +6,14 @@ class Solution:
         for n in nums:
             count[n] = count.get(n, 0) + 1
         
-        sorted_n_time_arrays = [[] for _ in range(len(nums) + 1)]
+        sorted = [[] for _ in range(len(nums) + 1)]
 
         for n, c in count.items():
-            sorted_n_time_arrays[c].append(n)
+            sorted[c].append(n)
+
         
-        for i in range(len(sorted_n_time_arrays) - 1, -1 , -1):
-            for n in sorted_n_time_arrays[i]:
+        for i in range(len(sorted) - 1, -1, -1):
+            for n in sorted[i]:
                 ans.append(n)
                 if len(ans) == k:
                     return ans
-        
-        return []

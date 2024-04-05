@@ -4,13 +4,15 @@ class Solution:
         ans = []
 
         for i in range(len(nums)):
-            if nums[i] > 0: # no 3 positive ints will add to zero
-                break
-            if i > 0 and nums[i] == nums[i - 1]: # avoid duplicate entires
-                continue
+            if nums[i] > 0:
+                break # there will never be 3 pos ints that sum to zero
+
+            if i > 0 and nums[i] == nums[i - 1]:
+                continue # avoid duplicates
 
             l = i + 1
             r = len(nums) - 1
+
             while l < r:
                 sum = nums[i] + nums[l] + nums[r]
                 if sum < 0:
@@ -20,9 +22,10 @@ class Solution:
                 else:
                     ans.append([nums[i], nums[l], nums[r]])
                     l += 1
-                    while nums[l] == nums[l - 1] and l < r:
+                    while nums[l - 1] == nums[l] and l < r:
                         l += 1
         return ans
 
+        
 
 

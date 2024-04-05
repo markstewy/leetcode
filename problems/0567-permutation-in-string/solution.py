@@ -1,41 +1,41 @@
 class Solution:
     def checkInclusion(self, s1: str, s2: str) -> bool:
-        if len(s1) >  len(s2):
-            return False
+        if len(s1) > len(s2): return False
 
-        s1Count, s2Count = [0] * 26, [0] * 26
+        s1, s2 = s1.lower(), s2.lower()
+        s1Count, s2WinCount = [0] * 26, [0] * 26
 
         for i in range(len(s1)):
             s1Count[ord(s1[i]) - ord("a")] += 1
-            s2Count[ord(s2[i]) - ord("a")] += 1
+            s2WinCount[ord(s2[i]) - ord("a")] += 1
         
-        matches = 0 
+        matches = 0
         for i in range(len(s1Count)):
-            if s1Count[i] == s2Count[i]:
+            if s1Count[i] == s2WinCount[i]:
                 matches += 1
-            
-        for i in range(len(s1), len(s2)):
+        
+        l = 0
+        for r in range(len(s1), len(s2)):
             if matches == 26:
                 return True
-            # add new char to right
-            index = ord(s2[i]) - ord("a")
-            s2Count[index] += 1
-            if s2Count[index] == s1Count[index]:
+        
+            # remove l from count (adj matches)
+            letter_index = ord(s2[l]) - ord("a")
+            s2WinCount[letter_index] -= 1
+            if s2WinCount[letter_index] == s1Count[letter_index]:
                 matches += 1
-            if s2Count[index] == s1Count[index] + 1:
+            if s2WinCount[letter_index] + 1 == s1Count[letter_index]:
                 matches -= 1
+            l += 1
 
-            # remove old char from left
-            index = ord(s2[i - len(s1)]) - ord("a")
-            s2Count[index] -= 1
-            if s2Count[index] == s1Count[index]:
+            # add r to count (adj matches)
+            letter_index = ord(s2[r]) - ord("a")
+            s2WinCount[letter_index] += 1
+            if s2WinCount[letter_index] == s1Count[letter_index]:
                 matches += 1
-            if s2Count[index] + 1 == s1Count[index]:
+            if s2WinCount[letter_index] == s1Count[letter_index] + 1:
                 matches -= 1
-
+            
         return matches == 26
-        
 
-
-        
 

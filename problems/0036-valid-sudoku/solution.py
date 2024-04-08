@@ -8,7 +8,8 @@ class Solution:
             for c in range(9):
                 v = board[r][c]
 
-                if v == ".": continue
+                if v == ".":
+                    continue
 
                 if (
                     v in rows[r]
@@ -20,5 +21,5 @@ class Solution:
                 rows[r].add(v)
                 cols[c].add(v)
                 sqs[(r//3, c//3)].add(v)
-
         return True
+

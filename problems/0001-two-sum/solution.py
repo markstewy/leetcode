@@ -1,6 +1,6 @@
 class Solution:
     def twoSum(self, nums: List[int], target: int) -> List[int]:
-        cache = {}
+        cache = {} # n -> i
 
         for i, n in enumerate(nums):
             diff = target - n
@@ -8,4 +8,3 @@ class Solution:
                 return [i, cache[diff]]
             
             cache[n] = i
-            

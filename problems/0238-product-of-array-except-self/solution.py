@@ -1,6 +1,7 @@
 class Solution:
     def productExceptSelf(self, nums: List[int]) -> List[int]:
         ltr, rtl = [], []
+        ans = []
 
 
         prod = 1
@@ -14,8 +15,6 @@ class Solution:
             rtl.append(prod)
         rtl.reverse()
 
-
-        ans = []
         for i in range(len(nums)):
             l = 1
             r = 1
@@ -25,5 +24,5 @@ class Solution:
             if i < len(nums) - 1:
                 r = rtl[i + 1]
             ans.append(l * r)
-        
         return ans
+

@@ -1,11 +1,12 @@
 class Solution:
     def isAnagram(self, s: str, t: str) -> bool:
         if len(s) != len(t): return False
-
-        sMap, tMap = {}, {}
+        smap, tmap = {}, {}
 
         for i in range(len(s)):
-            sMap[s[i]] = sMap.get(s[i], 0) + 1
-            tMap[t[i]] = tMap.get(t[i], 0) + 1
+            smap[s[i]] = smap.get(s[i], 0) + 1
+            tmap[t[i]] = tmap.get(t[i], 0) + 1
+
+        return smap == tmap
+
         
-        return sMap == tMap

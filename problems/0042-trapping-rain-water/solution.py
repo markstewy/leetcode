@@ -3,21 +3,24 @@ class Solution:
         ltr, rtl = [], []
         totalWater = 0
 
-        mh = 0
-        for h in height:
-            mh = max(mh, h)
-            ltr.append(mh)
-        
-        mh = 0
-        for i in range(len(height) - 1, -1 , -1):
-            mh = max(mh, height[i])
-            rtl.append(mh)
-        rtl.reverse()
+        m = 0
+        for n in height:
+            m = max(m, n)
+            ltr.append(m)
 
-        for i in range(1, len(height) - 1, 1):
-            mh = min(ltr[i - 1], rtl[i + 1])
-            water = max(0, mh - height[i])
-            totalWater += water
-        
+        m = 0
+        for i in range(len(height) - 1, -1, -1):
+            m = max(m, height[i])
+            rtl.append(m)
+        rtl.reverse()
+    
+        # iterate over array excluding first and last positions (these can't hold water)
+        i = 1
+        while i < len(height) - 1:
+            waterLevel = min(ltr[i - 1], rtl[i + 1])
+            waterDepth = max(0, waterLevel - height[i])
+            totalWater += waterDepth
+            i += 1
         return totalWater
-            
+
+

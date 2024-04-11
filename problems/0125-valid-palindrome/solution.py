@@ -1,10 +1,10 @@
 class Solution:
     def isPalindrome(self, s: str) -> bool:
-        newArr = []
         s = s.lower()
+        newA = []
 
         for c in s:
             if c.isalpha() or c.isdigit():
-                newArr.append(c)
-            
-        return newArr == newArr[::-1]
+                newA.append(c)
+        
+        return newA == newA[::-1]

@@ -3,7 +3,6 @@ class Solution:
         ltr, rtl = [], []
         ans = []
 
-
         prod = 1
         for n in nums:
             prod *= n
@@ -23,6 +22,9 @@ class Solution:
                 l = ltr[i - 1]
             if i < len(nums) - 1:
                 r = rtl[i + 1]
+            
             ans.append(l * r)
+
         return ans
+            
 

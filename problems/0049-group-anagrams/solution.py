@@ -3,10 +3,9 @@ class Solution:
         ans = collections.defaultdict(list)
 
         for s in strs:
-            ukey = [0] * 26
-            s = s.lower()
+            uKey = [0] * 26
             for c in s:
-                ukey[ord(c) - ord("a")] += 1
-            ans[tuple(ukey)].append(s)
+                uKey[ord(c) - ord("a")] += 1
+            ans[tuple(uKey)].append(s)
+        
         return ans.values()
-            

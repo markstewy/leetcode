@@ -3,6 +3,7 @@ class Codec:
         """Encodes a list of strings to a single string.
         """
         encoded = ""
+
         for s in strs:
             encoded += str(len(s)) + "#" + s
         return encoded
@@ -12,7 +13,7 @@ class Codec:
         """Decodes a single string to a list of strings.
         """
         ans = []
-
+        
         i = 0
         while i < len(s):
             l = ""
@@ -21,14 +22,10 @@ class Codec:
                 i += 1
             i += 1
 
-            start = i
             end = i + int(l)
-
-            ans.append(s[start : end])
+            ans.append(s[i : end])
             i = end
         return ans
-
-        
 
 
 # Your Codec object will be instantiated and called as such:

@@ -4,13 +4,14 @@ class Solution:
         cols = collections.defaultdict(set)
         sqs = collections.defaultdict(set)
 
+
         for r in range(9):
             for c in range(9):
                 v = board[r][c]
-
+                
                 if v == ".":
                     continue
-
+                
                 if (
                     v in rows[r]
                     or v in cols[c]

@@ -3,46 +3,46 @@ class Solution:
         if len(s1) > len(s2):
             return False
 
-        # sliding window of fixed length
-        # the window should have exactly same number of each char, no more no less
-
-        s1Count = {}
+        s1Count = {} # c => count
         window = {}
 
-        for i in range(len(s1)):
-            s1Count[s1[i]] = s1Count.get(s1[i], 0) + 1
-            window[s2[i]] = window.get(s2[i], 0) + 1
+        # initialize s1Count so we can use it for comparision to window
+        for c in s1:
+            s1Count[c] = s1Count.get(c, 0) + 1
         
-        # track if we have all chars satisfied with "matches"
-        # a match is when a char has no more, no less than the char count in s1Count
+        # initizlize window and matches count
         matches = 0
-        need = len(s1Count)
-
-        # initialize matches
-        for c, count in window.items():
-            if c not in s1Count:
-                continue
-            if window[c] == s1Count[c]:
-                matches += 1
-
-        l = 0
-        for r in range(len(s1), len(s2)):
-            if matches == need:
-                return True
+        needed = len(s1Count)
+        for i in range(len(s1)):
+            c = s2[i]
+            window[c] = window.get(c, 0) + 1
             
-            window[s2[r]] = window.get(s2[r], 0) + 1
-            if s2[r] in s1Count and window[s2[r]] == s1Count[s2[r]]:
+            if c in s1Count and s1Count[c] == window[c]:
                 matches += 1
-            if s2[r] in s1Count and window[s2[r]] == s1Count[s2[r]] + 1:
+            if c in s1Count and s1Count[c] + 1 == window[c]:
                 matches -= 1
 
-            window[s2[l]] -= 1
-            if s2[l] in s1Count and window[s2[l]] == s1Count[s2[l]]:
+
+        l = 0 
+        for r in range(len(s1), len(s2)):
+            if matches == needed:
+                return True
+            
+            # update r and matches
+            rc = s2[r]
+            window[rc] = window.get(rc, 0) + 1
+            if rc in s1Count and s1Count[rc] == window[rc]:
                 matches += 1
-            if s2[l] in s1Count and window[s2[l]] == s1Count[s2[l]] - 1:
+            if rc in s1Count and s1Count[rc] + 1 == window[rc]:
+                matches -= 1
+
+            # update l and matches
+            lc = s2[l]
+            window[lc] -= 1
+            if lc in s1Count and s1Count[lc] == window[lc]:
+                matches += 1
+            if lc in s1Count and s1Count[lc] - 1 == window[lc]:
                 matches -= 1
             l += 1
         
-        return matches == need
-
-
+        return matches == needed

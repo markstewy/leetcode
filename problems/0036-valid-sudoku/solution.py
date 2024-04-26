@@ -4,11 +4,10 @@ class Solution:
         cols = collections.defaultdict(set)
         sqs = collections.defaultdict(set)
 
-
         for r in range(9):
             for c in range(9):
                 v = board[r][c]
-                
+
                 if v == ".":
                     continue
                 
@@ -22,5 +21,5 @@ class Solution:
                 rows[r].add(v)
                 cols[c].add(v)
                 sqs[(r//3, c//3)].add(v)
+        
         return True
-

@@ -1,30 +1,34 @@
 class Solution:
     def threeSum(self, nums: List[int]) -> List[List[int]]:
-        nums.sort() # n log n
+        nums.sort() # 0(n*logn)
+
         ans = []
 
-        for i, a in enumerate(nums):
-            if i > 0 and nums[i] == nums[i - 1]:
-                continue # avoid duplicates
-
-            if a > 0:
-                break # no 3 pos ints will ever sum to zero
-
-            l =  i + 1
+        for i in range(len(nums)):
+            l = i + 1
             r = len(nums) - 1
 
+            # no 3 pos ints will ever sum to zero
+            if nums[i] > 0:
+                break
+            
+            # skip n if it was the same in prior
+            if i > 0 and nums[i] == nums[i - 1]:
+                continue
+
+
             while l < r:
-                sum = a + nums[l] + nums[r]
+                sum = nums[i] + nums[l] + nums[r]
 
-                if sum < 0:
-                    l += 1
-                elif sum > 0:
+                if sum > 0: 
                     r -= 1
+                elif sum < 0:
+                    l += 1
                 else:
-                    ans.append([a, nums[l], nums[r]])
-
+                    ans.append([nums[i], nums[l], nums[r]])
                     l += 1
                     while nums[l] == nums[l - 1] and l < r:
                         l += 1
 
         return ans
+            

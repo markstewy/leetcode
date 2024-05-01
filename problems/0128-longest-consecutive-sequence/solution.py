@@ -11,4 +11,3 @@ class Solution:
                 longest = max(longest, l)
         
         return longest
-

@@ -1,15 +1,12 @@
 class Solution:
     def maxProfit(self, prices: List[int]) -> int:
-        maxP = 0
-        buy = prices[0]
-        sell = 0
+        mp = 0
+        b = float('infinity')
 
-        for p in prices:
-            sell = p
-            profit = sell - buy
-            maxP = max(profit, maxP)
-
-            if sell < buy:
-                buy = sell
+        for s in prices:
+            profit = max(0, s - b)
+            mp = max(mp, profit)
+            if s < b:
+                b = s
         
-        return maxP
+        return mp

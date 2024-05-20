@@ -9,5 +9,5 @@ class Solution:
                 while n + l in numSet:
                     l += 1
                 longest = max(longest, l)
-        
+
         return longest

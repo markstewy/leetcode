@@ -13,14 +13,14 @@ class Solution:
                     continue
                 
                 if (
-                    v in rows[r]
-                    or v in cols[c]
-                    or v in sqs[(r//3, c//3)]
+                    v in rows[r] or
+                    v in cols[c] or
+                    v in sqs[tuple([r//3, c//3])]
                 ):
                     return False
+                else:
+                    rows[r].add(v)
+                    cols[c].add(v)
+                    sqs[(r//3, c//3)].add(v)
                 
-                rows[r].add(v)
-                cols[c].add(v)
-                sqs[(r//3, c//3)].add(v)
-        
         return True

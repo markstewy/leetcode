@@ -14,13 +14,12 @@ class Solution:
             rtl.append(mh)
         rtl.reverse()
 
-        i = 1
         totalWater = 0
+        i = 1
         while i < len(height) - 1:
             h = min(ltr[i - 1], rtl[i + 1])
-            w = max(0, h - height[i])
-            totalWater += w
+            depth = max(0, h - height[i])
+            totalWater += depth
             i += 1
-        
+    
         return totalWater
-

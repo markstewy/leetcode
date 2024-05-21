@@ -7,11 +7,12 @@ class Solution:
             l = i + 1
             r = len(nums) - 1
 
-            if nums[i] > 0:
-                break
             if i > 0 and nums[i] == nums[i - 1]:
                 continue
-
+            
+            if nums[i] > 0:
+                break
+            
             while l < r:
                 sum = nums[i] + nums[l] + nums[r]
 
@@ -24,5 +25,5 @@ class Solution:
                     l += 1
                     while nums[l] == nums[l - 1] and l < r:
                         l += 1
-            
+        
         return ans

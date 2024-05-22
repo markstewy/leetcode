@@ -1,36 +1,23 @@
 class Solution:
     def characterReplacement(self, s: str, k: int) -> int:
-        longest = 0
-        cache = {}
-        mChar = 0
-        mCount = 0
-        # max occurance - k <= 0 then the substring is valid and record length
+        count = {} # char - > count
+        maxsub = 0
+        # is valid if length of sub - max value in count map <= k
 
         l = 0
         for r in range(len(s)):
-            cache[s[r]] = cache.get(s[r], 0) + 1
-            if cache[s[r]] > mCount:
-                mCount = cache[s[r]]
-                mChar = s[r]
+            count[s[r]] = count.get(s[r], 0) + 1
 
-            # make substring valid: len - most common char <= number of changes we can make
-            while (r - l + 1) - mCount > k:
-                cache[s[l]] -= 1
+            while (r - l + 1) - max(count.values()) > k:
+                count[s[l]] -= 1
                 l += 1
-
-                # if the char we removed was the max count char, we need to 0(n) recalc the max
-                if s[l - 1] == mChar:
-                    mChar = 0
-                    mCount = 0
-                    for c , count in cache.items():
-                        if count > mCount:
-                            mCount = count
-                            mChar = c
-
             
-            longest = max(longest, r - l + 1)
+            maxsub = max(maxsub, r - l + 1)
         
-        return longest
+        return maxsub
 
 
 
+        # expand to the right
+        # if not valid bring up left until is valid
+        # record the valid lengths to keep max (we only need the length not the substr idxs)

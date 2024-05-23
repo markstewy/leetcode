@@ -1,45 +1,48 @@
 class Solution:
     def minWindow(self, s: str, t: str) -> str:
-        if len(s) < len(t):
-            return ""
+        # expand window to the right check counts and matches
 
-        ans = [-1, -1]
-        shortest = float('infinity')
+        # while you have enough matches bring up the left and update matches
+        # everytime you bring up the left also check for length of sub and record l,r index
 
-        tCount = {}
+        # look for t within s
+        tcount = {}
+        swin = {}
+
         for c in t:
-            tCount[c] = tCount.get(c, 0) + 1
-        
-        have = 0
-        need = len(tCount)
+            tcount[c] = tcount.get(c, 0) + 1
 
-        window = {}
+
+        matches = 0
+        need = len(tcount.keys())
         l = 0
+        minSub = float('infinity')
+        minr = -1
+        minl = -1
+
         for r in range(len(s)):
             c = s[r]
-            window[c] = window.get(c, 0) + 1
-            
-            if c in tCount and tCount[c] == window[c]:
-                have += 1
+            swin[c] = swin.get(c, 0) + 1
 
-            while have >= need:
-                if (r - l + 1) < shortest:
-                    shortest = min(shortest, r - l + 1)
-                    ans = [l, r]
+            if c in tcount and tcount[c] == swin[c]:
+                matches += 1
 
-                window[s[l]] -= 1
+            while matches >= need:
+                # record new min
+                if (r - l + 1) < minSub:
+                    minSub = r - l + 1
+                    minl = l
+                    minr = r
 
-                if s[l] in tCount and tCount[s[l]] - 1 == window[s[l]]:
-                    have -= 1
+                # move up left pointer
+                c = s[l]
+                swin[c] -= 1
+                
+                if c in tcount and tcount[c] == swin[c] + 1:
+                    matches -= 1
 
                 l += 1
-                
-        if shortest == float('infinity'):
+        
+        if minSub == float('infinity'):
             return ""
-        
-        l = ans[0]
-        r = ans[1]
-        return s[l : r + 1]
-        
-
-
+        return s[minl : minr + 1]

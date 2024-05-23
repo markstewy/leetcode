@@ -1,23 +1,33 @@
 class Solution:
     def maxSlidingWindow(self, nums: List[int], k: int) -> List[int]:
-        ans = [] 
+        
+        # keep a list of max
+        # if a newly added n is greater than nums to the left, remove the nums on the left
+        # the max for a window will always be the n in position 0
+        # remove the position 0 if it's index is no longer in the window
+
+        # track index to make sure it's removed from the window
+        # track val to knwo if it should overwrite values to the left
+        # use a double sided queue so you can pop from the front or the back at constant time
+
         dq = collections.deque()
-        # [6]
+        ans = []
 
         l = 0
-        for r in range(len(nums)):
-            # add to deque, if higher pop right first
-            while len(dq) > 0 and nums[r] > nums[dq[-1]]:
+        for r, n in enumerate(nums):
+            while len(dq) > 0 and dq[-1]["num"] < n:
                 dq.pop()
-            dq.append(r)
-
-            if r >= k - 1:
-                # the index in dq[0] should be the max for that window
-                ans.append(nums[dq[0]])
-
-                # if left position (idx) in deque is == l then pop left
-                if dq[0] == l:
+            
+            # add r index and val
+            dq.append({"idx": r, "num": n})
+            
+            if (r - l + 1) >= k:
+                while dq[0]["idx"] < l:
                     dq.popleft()
+                
+                ans.append(dq[0]["num"])
                 l += 1
         
         return ans
+
+        

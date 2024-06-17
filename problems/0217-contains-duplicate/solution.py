@@ -7,5 +7,5 @@ class Solution:
                 return True
             else:
                 cache.add(n)
-        return False
         
+        return False

@@ -2,28 +2,26 @@ class Solution:
     def productExceptSelf(self, nums: List[int]) -> List[int]:
         ltr, rtl = [], []
 
-        prod = 1
+        sum = 1
         for n in nums:
-            prod *= n
-            ltr.append(prod)
+            sum *= n
+            ltr.append(sum)
         
-        prod = 1
+        sum = 1
         for i in range(len(nums) - 1, -1, -1):
-            prod *= nums[i]
-            rtl.append(prod)
+            sum *= nums[i]
+            rtl.append(sum)
         rtl.reverse()
 
-        ans = []
+        solution = []
 
         for i in range(len(nums)):
-            l = 1
-            r = 1
-            
-            if i > 0:
-                l = ltr[i - 1]
-            if i < len(nums) - 1:
-                r = rtl[i + 1]
-            
-            ans.append(l * r)
+            if i == 0:
+                solution.append(rtl[i + 1])
+            elif i == len(nums) - 1:
+                solution.append(ltr[i - 1])
+            else:
+                solution.append(ltr[i - 1] * rtl[i + 1])
+        
+        return solution
 
-        return ans

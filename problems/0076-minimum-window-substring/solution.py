@@ -1,48 +1,39 @@
 class Solution:
     def minWindow(self, s: str, t: str) -> str:
-        # expand window to the right check counts and matches
+        if len(s) < len(t):
+            return ""
+        if s == t:
+            return t
 
-        # while you have enough matches bring up the left and update matches
-        # everytime you bring up the left also check for length of sub and record l,r index
-
-        # look for t within s
-        tcount = {}
-        swin = {}
-
+        count, win = {}, {}
+        # intialize count
         for c in t:
-            tcount[c] = tcount.get(c, 0) + 1
-
-
+            count[c] = count.get(c, 0) + 1
+        
         matches = 0
-        need = len(tcount.keys())
+        needed = len(count.keys())
+
+        minLength = float('inf')
+        minl, minr = 0, 0
+
         l = 0
-        minSub = float('infinity')
-        minr = -1
-        minl = -1
-
-        for r in range(len(s)):
-            c = s[r]
-            swin[c] = swin.get(c, 0) + 1
-
-            if c in tcount and tcount[c] == swin[c]:
+        for r in range(len(s)): 
+            # move up r pointer 
+            win[s[r]] = win.get(s[r], 0) + 1
+            if s[r] in count and count[s[r]] == win[s[r]]:
                 matches += 1
-
-            while matches >= need:
-                # record new min
-                if (r - l + 1) < minSub:
-                    minSub = r - l + 1
+            
+            while matches >= needed:
+                if minLength > r - l + 1:
+                    minLength = r - l + 1
                     minl = l
                     minr = r
 
-                # move up left pointer
-                c = s[l]
-                swin[c] -= 1
-                
-                if c in tcount and tcount[c] == swin[c] + 1:
+                # move up l pointer
+                win[s[l]] -= 1
+                if s[l] in count and win[s[l]] == count[s[l]] - 1:
                     matches -= 1
-
                 l += 1
-        
-        if minSub == float('infinity'):
-            return ""
-        return s[minl : minr + 1]
+
+        return str(s[minl : minr + 1]) if minLength < float('inf') else  ""
+

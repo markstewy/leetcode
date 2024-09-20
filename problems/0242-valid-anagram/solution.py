@@ -3,11 +3,11 @@ class Solution:
         if len(s) != len(t):
             return False
 
-        sMap, tMap = {}, {}
+        sCount, tCount = {}, {}
 
         for i in range(len(s)):
-            sMap[s[i]] = sMap.get(s[i], 0) + 1
-            tMap[t[i]] = tMap.get(t[i], 0) + 1
-        
-        return sMap == tMap
+            sCount[s[i]] = sCount.get(s[i], 0) + 1
+            tCount[t[i]] = tCount.get(t[i], 0) + 1
 
+        return sCount == tCount
+        

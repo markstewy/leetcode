@@ -1,17 +1,18 @@
 class Solution:
     def longestConsecutive(self, nums: List[int]) -> int:
-        numSet = set(nums)
-        ans = 0
+        numSet = set(nums) # constant time lookup
+        maxL = 0
 
         for n in nums:
-            if n - 1 not in numSet: # is start of sequence
+            # is it a start of a set?
+            if n - 1 not in numSet:
                 l = 0
-                
                 while n in numSet:
                     l += 1
                     n += 1
-                
-                ans = max(ans, l)
-        return ans
+                maxL = max(maxL, l)
+        return maxL
+
+            # if yes, start counting and record max length
 
 

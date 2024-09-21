@@ -6,18 +6,20 @@ class Solution:
 
         for r in range(9):
             for c in range(9):
+                # check if it's already there
                 n = board[r][c]
+
                 if n == ".":
                     continue
-                
-                if (
-                    n in rows[r] or
-                    n in cols[c] or
-                    n in sqs[r//3, c//3]
-                ): return False
 
-                rows[r].add(n)
-                cols[c].add(n)
-                sqs[r//3, c//3].add(n)
-        
+                if (n in rows[r] or
+                    n in cols[c] or
+                    n in sqs[(r//3, c//3)]):
+                    return False
+                else:
+                    rows[r].add(n)
+                    cols[c].add(n)
+                    sqs[(r//3, c//3)].add(n)
+                
         return True
+

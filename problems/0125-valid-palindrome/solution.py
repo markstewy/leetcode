@@ -1,9 +1,13 @@
-class Solution:
-    def isPalindrome(self, s: str) -> bool:
-        sa = []
+class Solution(object):
+    def isPalindrome(self, s):
+        """
+        :type s: str
+        :rtype: bool
+        """
+        sArr = []
 
         for c in s:
             if c.isalpha() or c.isdigit():
-                sa.append(c.lower())
+                sArr.append(c.lower())
         
-        return sa == sa[::-1]
+        return sArr == sArr[::-1]

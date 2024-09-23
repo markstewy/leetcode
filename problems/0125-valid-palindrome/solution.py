@@ -1,9 +1,5 @@
-class Solution(object):
-    def isPalindrome(self, s):
-        """
-        :type s: str
-        :rtype: bool
-        """
+class Solution:
+    def isPalindrome(self, s: str) -> bool:
         sArr = []
 
         for c in s:

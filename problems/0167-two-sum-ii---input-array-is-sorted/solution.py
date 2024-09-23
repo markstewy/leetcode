@@ -1,12 +1,7 @@
-class Solution(object):
-    def twoSum(self, nums, target):
-        """
-        :type numbers: List[int]
-        :type target: int
-        :rtype: List[int]
-        """
-
-        l, r = 0, len(nums) - 1
+class Solution:
+    def twoSum(self, nums: List[int], target: int) -> List[int]:
+        l = 0
+        r = len(nums) - 1
 
         while l < r:
             sum = nums[l] + nums[r]
@@ -17,4 +12,3 @@ class Solution(object):
             else:
                 return [l + 1, r + 1]
         return []
-        

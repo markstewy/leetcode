@@ -1,20 +1,26 @@
-class Solution:
-    def characterReplacement(self, s: str, k: int) -> int:
-        count = {} # c: count
-        # character we will not replace occurs:
-        # max(cache.values()) times
+class Solution(object):
+    def characterReplacement(self, s, k):
+        """
+        :type s: str
+        :type k: int
+        :rtype: int
+        """
+        sCount = {}
         maxL = 0
-        
 
         l = 0
         for r in range(len(s)):
-            count[s[r]] = count.get(s[r], 0) + 1
+            # expand right
+            sCount[s[r]] = sCount.get(s[r], 0) + 1
             
-            while (r - l + 1) - max(count.values()) > k:
-                count[s[l]] -= 1
+            # if not valid bring up left
+            while (r - l + 1) - max(sCount.values()) > k:
+                sCount[s[l]] -= 1
                 l += 1
             
+            # record valid max length
             maxL = max(maxL, r - l + 1)
+            
         
         return maxL
 

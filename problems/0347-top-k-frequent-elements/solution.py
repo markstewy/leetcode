@@ -1,21 +1,25 @@
-class Solution:
-    def topKFrequent(self, nums: List[int], k: int) -> List[int]:
-        cache = {} # n: count
+class Solution(object):
+    def topKFrequent(self, nums, k):
+        """
+        :type nums: List[int]
+        :type k: int
+        :rtype: List[int]
+        """
+        count = {} # n: count
 
         for n in nums:
-            cache[n] = cache.get(n, 0) + 1
+            count[n] = count.get(n, 0) + 1
         
-        sortedArr = [[] for _ in range(len(nums) + 1)]
+        sortedArray = [[] for i in range(len(nums) + 1)]
 
-        for n, c in cache.items():
-            sortedArr[c].append(n)
+        for n, c in count.items():
+            sortedArray[c].append(n)
         
-
-        solution = []
-        for i in range(len(sortedArr) - 1, -1, -1):
-            values = sortedArr[i]
-            for n in values:
-                solution.append(n)
-                if len(solution) == k:
-                    return solution
-
+        answer = []
+        for i in range(len(sortedArray) - 1, -1, -1):
+            for n in sortedArray[i]:
+                answer.append(n)
+                if len(answer) == k:
+                    return answer
+    
+        return []

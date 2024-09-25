@@ -1,20 +1,22 @@
-class Solution:
-    def maxSlidingWindow(self, nums: List[int], k: int) -> List[int]:
-        dq = collections.deque()
+class Solution(object):
+    def maxSlidingWindow(self, nums, k):
+        """
+        :type nums: List[int]
+        :type k: int
+        :rtype: List[int]
+        """
+        dq = deque()
         ans = []
 
         for i, n in enumerate(nums):
-            while len(dq) > 0 and n > dq[-1]["num"]:
+            while dq and dq[-1]["val"] < n:
                 dq.pop()
-            
-            while len(dq) > 0 and dq[0]["idx"] <= (i - k):
-                dq.popleft()
-            
-            dq.append({"idx": i, "num": n})
-            
+            dq.append({"val": n, "idx": i})
+
             if i >= k - 1:
-                ans.append(dq[0]["num"])
-
-        return ans
-
+                while dq and dq[0]["idx"] <= i - k:
+                    dq.popleft()
+            
+                ans.append(dq[0]["val"])
+        return ans  
 

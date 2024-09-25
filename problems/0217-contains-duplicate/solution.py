@@ -1,9 +1,5 @@
-class Solution(object):
-    def containsDuplicate(self, nums):
-        """
-        :type nums: List[int]
-        :rtype: bool
-        """
+class Solution:
+    def containsDuplicate(self, nums: List[int]) -> bool:
         cache = set()
 
         for n in nums:
@@ -11,3 +7,4 @@ class Solution(object):
                 return True
             cache.add(n)
         return False
+        

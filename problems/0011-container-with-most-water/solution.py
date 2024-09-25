@@ -1,18 +1,20 @@
-class Solution:
-    def maxArea(self, height: List[int]) -> int:
+class Solution(object):
+    def maxArea(self, height):
+        """
+        :type height: List[int]
+        :rtype: int
+        """
         l = 0
         r = len(height) - 1
+        mvol = 0
 
-        mWater = 0
         while l < r:
-            vol = min(height[l], height[r]) * (r - l)
-            mWater = max(mWater, vol)
-
+            h = min(height[l], height[r])
+            vol = h * (r - l)
+            mvol = max(mvol, vol)
             if height[l] < height[r]:
                 l += 1
             else:
                 r -= 1
         
-        return mWater
-
-
+        return mvol

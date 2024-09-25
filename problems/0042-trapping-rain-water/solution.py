@@ -1,10 +1,14 @@
-class Solution:
-    def trap(self, height: List[int]) -> int:
+class Solution(object):
+    def trap(self, height):
+        """
+        :type height: List[int]
+        :rtype: int
+        """
         ltr, rtl = [], []
 
         mh = 0
         for h in height:
-            mh = max(h, mh)
+            mh = max(mh, h)
             ltr.append(mh)
         
         mh = 0
@@ -13,13 +17,12 @@ class Solution:
             rtl.append(mh)
         rtl.reverse()
 
-        totalVol = 0
-        for i in range(1, len(height) - 1):
+
+        total = 0
+        for i in range(1, len(height) - 1): # double check endof range in case it's not the right index, should be [-2]
             waterLevel = min(ltr[i - 1], rtl[i + 1])
-            groundLevel = height[i]
-            waterVol = max(0, waterLevel - groundLevel)
-            totalVol += waterVol
-
-        return totalVol
-
-
+            floor = height[i]
+            vol = max(0, waterLevel - floor)
+            total += vol
+        
+        return total

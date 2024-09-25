@@ -1,10 +1,7 @@
-class Solution(object):
-    def productExceptSelf(self, nums):
-        """
-        :type nums: List[int]
-        :rtype: List[int]
-        """
+class Solution:
+    def productExceptSelf(self, nums: List[int]) -> List[int]:
         ltr, rtl = [], []
+
 
         prod = 1
         for n in nums:
@@ -26,4 +23,5 @@ class Solution(object):
                 ans.append(ltr[-2])
             else:
                 ans.append(ltr[i - 1] * rtl[i + 1])
+        
         return ans

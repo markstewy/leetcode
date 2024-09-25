@@ -1,9 +1,5 @@
-class Solution(object):
-    def isValidSudoku(self, board):
-        """
-        :type board: List[List[str]]
-        :rtype: bool
-        """
+class Solution:
+    def isValidSudoku(self, board: List[List[str]]) -> bool:
         rows = collections.defaultdict(set)
         cols = collections.defaultdict(set)
         sqs = collections.defaultdict(set)
@@ -21,7 +17,6 @@ class Solution(object):
                 rows[r].add(n)
                 cols[c].add(n)
                 sqs[(r//3, c//3)].add(n)
-        
+            
         return True
-                
 

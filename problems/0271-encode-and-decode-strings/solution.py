@@ -8,8 +8,10 @@ class Codec:
         """
 
         encoded = ""
+
         for s in strs:
             encoded += str(len(s)) + "#" + s
+        
         return encoded
         
 
@@ -19,22 +21,23 @@ class Codec:
         :type s: str
         :rtype: List[str]
         """
-        decoded = []
         i = 0
+        ans = []
         while i < len(s):
-            l = ""
+            length = ""
             while s[i] != "#":
-                l += s[i]
+                length += s[i]
                 i += 1
             i += 1
-            length = int(l)
+            length = int(length)
+
             l = i
             r = i + length
-
-            decoded.append(s[l : r])
+            ans.append(s[l : r])
             i = r
-        
-        return decoded
+        return ans
+
+
         
 
 # Your Codec object will be instantiated and called as such:

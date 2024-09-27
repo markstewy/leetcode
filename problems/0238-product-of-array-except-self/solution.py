@@ -2,12 +2,11 @@ class Solution:
     def productExceptSelf(self, nums: List[int]) -> List[int]:
         ltr, rtl = [], []
 
-
         prod = 1
         for n in nums:
             prod *= n
             ltr.append(prod)
-        
+
         prod = 1
         for i in range(len(nums) - 1, -1, -1):
             prod *= nums[i]

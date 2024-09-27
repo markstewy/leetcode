@@ -4,12 +4,14 @@ class Solution(object):
         :type strs: List[str]
         :rtype: List[List[str]]
         """
-        anagrams = collections.defaultdict(list)
+        ans = collections.defaultdict(list)
 
         for s in strs:
-            anagramKey = [0] * 26
+            ukey = [0] * 26
             for c in s:
-                anagramKey[ord(c) - ord("a")] += 1
-            anagrams[tuple(anagramKey)].append(s)
-        
-        return anagrams.values()
+                ukey[ord(c) - ord("a")] += 1
+            
+            ans[tuple(ukey)].append(s)
+
+        return ans.values()
+

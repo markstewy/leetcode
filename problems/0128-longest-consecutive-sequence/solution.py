@@ -6,10 +6,7 @@ class Solution:
         for n in nums:
             if n - 1 not in nSet:
                 l = 0
-                while n in nSet:
+                while n + l in nSet:
                     l += 1
-                    n += 1
                 mL = max(mL, l)
-        
         return mL
-                

@@ -1,31 +1,22 @@
-class Solution(object):
-    def isValid(self, s):
-        """
-        :type s: str
-        :rtype: bool
-        """
-        openToClose = {
+class Solution:
+    def isValid(self, s: str) -> bool:
+        openToClosed = {
             "(": ")",
             "{": "}",
-            "[": "]"
+            "[": "]",
         }
 
-        if s[0] not in openToClose:
+        if s[0] not in openToClosed:
             return False
 
-        stack = []
 
+        stack = []
         for c in s:
-            isOpen = c in openToClose
-            # if it is a open, add the closed to the stack
-            if isOpen:
-                stack.append(openToClose[c])
-            # while it's a closed, pop it off of the stack
+            if c in openToClosed:
+                stack.append(openToClosed[c])
+            elif stack and c == stack[-1]:
+                stack.pop()
             else:
-                if stack and stack[-1] == c:
-                    stack.pop()
-                else:
-                    return False
+                return False
+                     
         return len(stack) == 0
-                
-            # when done the stack should be empty

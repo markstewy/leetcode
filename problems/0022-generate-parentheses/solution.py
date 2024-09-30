@@ -1,27 +1,18 @@
 class Solution:
     def generateParenthesis(self, n: int) -> List[str]:
-        stack = []
-        solution = []
+        ans = []
 
-        def backtrack(leftN, rightN):
-            # if all chars used push to solution
-            # if not all left used, add left
-            # if there are more l than r, add r
-
-            if leftN == rightN == n:
-                solution.append("".join(stack))
+        def helper(s, l, r):
+            if l == r == n:
+                ans.append(s)
                 return
-            
-            if leftN < n:
-                stack.append("(")
-                backtrack(leftN + 1, rightN)
-                stack.pop()
-            
-            if leftN > rightN:
-                stack.append(")")
-                backtrack(leftN, rightN + 1)
-                stack.pop()
-        
-        backtrack(0, 0)
-        return solution
+            if l > r and r < n:
+                variation = s + ")"
+                helper(variation, l, r + 1)
+            if l < n:
+                variation = s + "("
+                helper(variation, l + 1, r)
+
+        helper("(", 1, 0)
+        return ans
 

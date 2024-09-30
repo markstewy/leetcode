@@ -1,19 +1,25 @@
 class Solution:
     def carFleet(self, target: int, position: List[int], speed: List[int]) -> int:
-        stack = [] # arrival time
-        # default sort on first element in tuple (also, .sort is in place while sort() returns a new array
-        combinedArr = list(zip(position, speed))
-        combinedArr.sort(reverse=True)
+        cars = list(zip(position, speed))
+        cars.sort(key = lambda x : x[0]) # sort by position
 
-        for i in range(len(combinedArr)):
-            pos = combinedArr[i][0]
-            speed = combinedArr[i][1]
-            arrivalTime = (target - pos) / speed
+        arrivalTimes = []
 
-            if i == 0:
-                stack.append(arrivalTime)
-# if doesnt arrive before the car in front of it and become one fleet then add a secont fleet arrivalTime to the stack
-            elif arrivalTime > stack[-1]: 
-                stack.append(arrivalTime)
+        for c in cars:
+            dist = target - c[0]
+            speed = c[1]
+            arrivalTimes.append(dist / speed)
         
-        return len(stack)
+
+        k = 1
+        time = arrivalTimes[-1]
+        for i in range(len(arrivalTimes) - 1, -1, -1):
+            if arrivalTimes[i] > time:
+                k += 1
+                time = arrivalTimes[i]
+        
+        return k
+
+
+
+

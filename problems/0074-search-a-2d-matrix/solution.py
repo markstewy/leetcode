@@ -8,9 +8,9 @@ class Solution:
         while l <= r:
             m = l + (r - l) // 2
 
-            if target < matrix[m][0]:
+            if matrix[m][0] > target:
                 r = m - 1
-            elif target > matrix[m][-1]:
+            elif matrix[m][-1] < target:
                 l = m + 1
             else:
                 targetRow = m
@@ -18,23 +18,19 @@ class Solution:
         
         if targetRow == -1:
             return False
-
+        
         l = 0
-        r = len(matrix[targetRow]) - 1
+        r = len(matrix[0]) - 1
         targetCol = -1
-
         while l <= r:
             m = l + (r - l) // 2
 
-            if target < matrix[targetRow][m]:
+            if matrix[targetRow][m] > target:
                 r = m - 1
-            elif target > matrix[targetRow][m]:
+            elif matrix[targetRow][m] < target:
                 l = m + 1
             else:
                 targetCol = m
                 break
         
-        if targetCol == -1:
-            return False
-        
-        return True
+        return targetCol != -1

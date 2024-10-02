@@ -1,19 +1,24 @@
 class Solution:
     def evalRPN(self, tokens: List[str]) -> int:
-        stack = []
+        # if it's an int push to the stack
+        # if not perform the operation on the ints
+        # a, b, c,   for the '-' operation it woudl be b - c (rearrange the pops accordingly)
 
-        for c in tokens:
-            if c == "+":
+        stack = []
+        for t in tokens:                
+            if t == "+":
                 stack.append(stack.pop() + stack.pop())
-            elif c == "-":
-                a, b = stack.pop(), stack.pop()
+            elif t == "-":
+                a = stack.pop()
+                b = stack.pop()
                 stack.append(b - a)
-            elif c == "*":
-                stack.append(stack.pop() * stack.pop())                
-            elif c == "/":
-                a, b = stack.pop(), stack.pop()
-                stack.append(trunc(b / a))              
+            elif t == "*":
+                stack.append(stack.pop() * stack.pop())
+            elif t == "/":
+                a = stack.pop()
+                b = stack.pop()
+                stack.append(trunc(b / a))
             else:
-                stack.append(int(c))
-            
-        return stack[-1]
+                stack.append(int(t))
+        
+        return stack[0]

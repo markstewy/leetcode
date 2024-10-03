@@ -3,12 +3,10 @@ class Solution:
         if len(s) != len(t):
             return False
 
-        sCount, tCount = {}, {}
 
+        scount, tcount = {}, {}
         for i in range(len(s)):
-            sCount[s[i]] = sCount.get(s[i], 0) + 1
-            tCount[t[i]] = tCount.get(t[i], 0) + 1
-        
-        return sCount == tCount
+            scount[s[i]] = scount.get(s[i], 0) + 1
+            tcount[t[i]] = tcount.get(t[i], 0) + 1
 
-            
+        return scount == tcount

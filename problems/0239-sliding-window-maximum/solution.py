@@ -8,14 +8,11 @@ class Solution:
                 dq.pop()
             
             dq.append({"val": n, "idx": i})
-            
 
+            while dq and dq[0]["idx"] <= i - k:
+                dq.popleft()
+            
             if i >= k - 1:
-                while dq[0]["idx"] <= i - k:
-                    dq.popleft()
                 ans.append(dq[0]["val"])
+        
         return ans
-            
-
-
-

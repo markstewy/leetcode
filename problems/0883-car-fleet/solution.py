@@ -6,21 +6,15 @@ class Solution:
         arrivalTimes = []
 
         for c in cars:
-            distance = target - c[0]
-            speed = c[1]
-            arrivalTime = distance / speed
-            arrivalTimes.append(arrivalTime)
-
+            time = (target - c[0]) / c[1]
+            arrivalTimes.append(time)
+        
         fleetCount = 1
-        time = arrivalTimes[-1] # arrival time of first fleet (or the fleet in front of the current car)
+        fleetTime = arrivalTimes[-1]
+        print(arrivalTimes)
         for i in range(len(arrivalTimes) - 1, -1, -1):
-            if arrivalTimes[i] > time: # if you will arrive after the fleet in front of you then you will be a new fleet
+            if arrivalTimes[i] > fleetTime:
                 fleetCount += 1
-                time = arrivalTimes[i]
+                fleetTime = arrivalTimes[i]
         
         return fleetCount
-    
-    # 2, 4, 6, 8 # one fleet
-    # 8, 6, 4, 2 # 4 fleets
-        
-

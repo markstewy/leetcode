@@ -17,7 +17,7 @@ class Solution:
                     n in sqs[(r//3, c//3)]
                 ):
                     return False
-
+                
                 rows[r].add(n)
                 cols[c].add(n)
                 sqs[(r//3, c//3)].add(n)

@@ -6,14 +6,12 @@ class Codec:
         :type strs: List[str]
         :rtype: str
         """
-
         encoded = ""
-
         for s in strs:
             encoded += str(len(s)) + "#" + s
         
         return encoded
-        
+
 
     def decode(self, s):
         """Decodes a single string to a list of strings.
@@ -21,22 +19,23 @@ class Codec:
         :type s: str
         :rtype: List[str]
         """
-        i = 0
         ans = []
+        i = 0
         while i < len(s):
             length = ""
             while s[i] != "#":
                 length += s[i]
                 i += 1
             i += 1
-            length = int(length)
 
+            length = int(length)
             l = i
             r = i + length
+
             ans.append(s[l : r])
             i = r
+        
         return ans
-
 
         
 

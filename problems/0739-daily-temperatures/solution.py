@@ -1,22 +1,14 @@
 class Solution:
     def dailyTemperatures(self, temperatures: List[int]) -> List[int]:
-        temps = []
-        for i, t in enumerate(temperatures):
-            temps.append({"temp": t, "idx": i})
         
-        days = [0] * len(temps)
-
-        # add temp to stack, while temp is higher than the top of the stack pop and assign the diff in idx to the days array
-
+        days = [0] * len(temperatures)
         stack = []
-        for currDay in temps:
-            
-            while stack and stack[-1]["temp"] < currDay["temp"]:
-                dayCount = currDay["idx"] - stack[-1]["idx"]
-                priorDayIdx = stack[-1]["idx"]
-                days[priorDayIdx] = dayCount
+
+        for i, t in enumerate(temperatures):
+            while stack and t > stack[-1]["temp"]:
+                days[stack[-1]["idx"]] = i - stack[-1]["idx"]
                 stack.pop()
             
-            stack.append(currDay)
+            stack.append({"idx": i, "temp": t})
         
         return days

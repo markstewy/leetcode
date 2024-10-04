@@ -1,10 +1,12 @@
 class Solution:
     def firstUniqChar(self, s: str) -> int:
-        myMap = {}
-        for c in s:
-            myMap[c] = 1 if c not in myMap else myMap[c] + 1
+        count = {}
         
-        for i, c in enumerate(s):
-            if myMap[c] == 1:
+        for c in s:
+            count[c] = count.get(c, 0) + 1
+        
+        for i in range(len(s)):
+            if s[i] in count and count[s[i]] < 2:
                 return i
         return -1
+            

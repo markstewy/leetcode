@@ -2,23 +2,26 @@ class Solution:
     def trap(self, height: List[int]) -> int:
         ltr, rtl = [], []
 
-
-        mh = 0
+        mx = 0
         for h in height:
-            mh = max(mh, h)
-            ltr.append(mh)
-        
-        mh = 0
+            mx = max(mx, h)
+            ltr.append(mx)
+
+        mx = 0
         for i in range(len(height) - 1, -1, -1):
-            mh = max(mh, height[i])
-            rtl.append(mh)
+            mx = max(mx, height[i])
+            rtl.append(mx)
         rtl.reverse()
 
+
         totalVol = 0
+        # skip first and last idxs
         for i in range(1, len(height) - 1):
-            waterLevel = min(ltr[i - 1], rtl[i + 1])
-            floor = height[i]
-            waterDepth = max(0, waterLevel - floor)
-            totalVol += waterDepth
+            waterLevel = min(ltr[i - 1], rtl[i + 1]) 
+            floorLevel = height[i]
+
+            vol = max(0, waterLevel - floorLevel)
+
+            totalVol += vol
         
         return totalVol

@@ -5,10 +5,7 @@ class Solution:
         maxVol = 0
 
         while l < r:
-            h = min(height[l], height[r])
-            vol = (r - l) * h
-            maxVol = max(maxVol, vol)
-
+            maxVol = max(maxVol, min(height[l], height[r]) * (r - l))
             if height[l] < height[r]:
                 l += 1
             else:

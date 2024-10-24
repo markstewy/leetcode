@@ -1,24 +1,20 @@
 class Solution:
     def carFleet(self, target: int, position: List[int], speed: List[int]) -> int:
-        combined = []
+        combined = list(zip(position, speed))
+        combined.sort()
 
-        for i in range(len(position)):
-            combined.append({
-                "position": position[i], 
-                "speed": speed[i], 
-                "arrivalTime": (target - position[i]) / speed[i]})
+        time = []
 
-        combined.sort(key=lambda x: x["position"])
+        for c in combined:
+            arrival = (target - c[0]) / c[1]
+            time.append(arrival)
+        
 
-
-        fleetCount = 1
-        fleetTime = combined[-1]["arrivalTime"]
-        for i in range(len(combined) - 1, -1, -1):
-            if combined[i]["arrivalTime"] > fleetTime:
+        fleetArrivalTime = 0
+        fleetCount = 0
+        for i in range(len(time) - 1, -1, -1):
+            if time[i] > fleetArrivalTime:
                 fleetCount += 1
-                fleetTime = combined[i]["arrivalTime"]
-
+                fleetArrivalTime = time[i]
+        
         return fleetCount
-
-
-

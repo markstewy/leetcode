@@ -1,42 +1,40 @@
 class FileSystem:
 
     def __init__(self):
-        self.root = {"val": None, "sub": {}}
+        self.root = {"children": {}, "val": None}
+        
 
     def createPath(self, path: str, value: int) -> bool:
-        path = path.lstrip("/")
-        pathArr = path.split("/")
-        newDir = pathArr.pop()
-
+        path = path.lstrip("/").rstrip("/").split("/")
+        newDir = path.pop() #!
+        
         curr = self.root
-        for p in pathArr:
-            if p in curr["sub"]:
-                curr = curr["sub"][p]
+        for dir in path:
+            if dir in curr["children"]:
+                curr = curr["children"][dir]
             else:
                 return False
         
-        if newDir in curr["sub"] and curr["sub"][newDir]["val"] != None:
+        if newDir in curr["children"]:
             return False
-        
-        if newDir in curr["sub"]:
-            curr["sub"][newDir]["val"] = value # so you don't delete exising subdirs
         else:
-            curr["sub"][newDir] = { "sub": {}, "val": value }
+            curr["children"][newDir] = {"val": value, "children": {}}
+        
         return True
+        
 
     def get(self, path: str) -> int:
-        path = path.lstrip("/")
-        pathArr = path.split("/")
+        path = path.lstrip("/").rstrip("/").split("/")
         curr = self.root
 
-        for p in pathArr:
-            if p in curr["sub"]:
-                curr = curr["sub"][p]
+        for dir in path:
+            if dir in curr["children"]:
+                curr = curr["children"][dir]
             else:
                 return -1
         
-        return -1 if curr["val"] == None else curr["val"]
-
+        return curr["val"]
+        
 
 
 # Your FileSystem object will be instantiated and called as such:

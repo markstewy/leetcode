@@ -1,32 +1,32 @@
-# [[1,3],[2,6],[8,10],[15,18]]
 class Solution:
     def merge(self, intervals: List[List[int]]) -> List[List[int]]:
-        ans = []    
-        intervals.sort(key = lambda i : i[0])
-
-        l = intervals[0][0]
-        r = intervals[0][1]
-
-        for s in intervals:
-            leftOverlap = s[0] >= l and s[0] <= r
-            rightOverlap = s[1] >= l and s[1] <= r
-            fullOverlap = s[0] <= l and s[1] >= r
-            if leftOverlap or rightOverlap or fullOverlap:
-                l = min(s[0], l)
-                r = max(s[1], r)
+        ans = []
+        intervals.sort()
+        ans.append(intervals[0])
+                
+        def isOverlap(t1, t2):
+            if (
+                t2[0] <= t1[0] <= t2[1] or
+                t2[0] <= t1[1] <= t2[1] or
+                t1[0] <= t2[0] <= t1[1] or
+                t1[0] <= t2[1] <= t1[1]
+                ):
+                return True
             else:
-                ans.append([l, r])
-                l = s[0]
-                r = s[1]
+                return False
+            
         
-        ans.append([l, r])
+        def merge(t1, t2):
+            return [min(t1[0], t2[0]), max(t1[1], t2[1])]
+            
+        for curr in intervals:
+            if isOverlap(ans[-1], curr):
+                ans[-1] = merge(ans[-1], curr)
+            else:
+                ans.append(curr)
         return ans
-            
-        
-            
 
 
 
-        
-            
+
 

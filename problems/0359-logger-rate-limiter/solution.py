@@ -1,20 +1,16 @@
 class Logger:
 
     def __init__(self):
-        self.cache = {} #message: timestamp
+        self.lastTimes = {}
         
 
     def shouldPrintMessage(self, timestamp: int, message: str) -> bool:
-        shouldPrint = False
-        
-        longerThanTen = message in self.cache and timestamp - self.cache[message] >= 10
-
-        if longerThanTen or message not in self.cache:
-            self.cache[message] = timestamp
+        if message not in self.lastTimes or timestamp >= self.lastTimes[message] + 10:
+            self.lastTimes[message] = timestamp
             return True
-        else:
-            return False
-
+        return False
+        
+        
 
 
 # Your Logger object will be instantiated and called as such:

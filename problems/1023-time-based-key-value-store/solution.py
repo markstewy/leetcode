@@ -1,32 +1,34 @@
 class TimeMap:
 
     def __init__(self):
-        self.map = collections.defaultdict(list)
-        
+        self.values = collections.defaultdict(list)
 
     def set(self, key: str, value: str, timestamp: int) -> None:
-        self.map[key].append([timestamp, value])
+        self.values[key].append({"val": value, "time": timestamp})
+
 
     def get(self, key: str, timestamp: int) -> str:
-        if key not in self.map:
-            return ""
-        
-        tArr = self.map[key]
-        l = 0
-        r = len(tArr) - 1
+        values = self.values[key]
+        l, r = 0, len(values) - 1
+        ans = ""
 
-        closestPrev = ""
         while l <= r:
             m = l + (r - l) // 2
-            if tArr[m][0] < timestamp:
-                closestPrev = tArr[m][1]
+            if values[m]["time"] < timestamp:
+                ans = values[m]["val"]
                 l = m + 1
-            elif tArr[m][0] > timestamp:
+            elif values[m]["time"] > timestamp:
                 r = m - 1
             else:
-                return tArr[m][1]
+                return values[m]["val"]
+
+        return ans      
+
+ 
+
+
         
-        return closestPrev
+
 
 # Your TimeMap object will be instantiated and called as such:
 # obj = TimeMap()

@@ -1,56 +1,69 @@
 class SnakeGame:
 
     def __init__(self, width: int, height: int, food: List[List[int]]):
-        self.snake = deque()
-        self.snake.append({"r": 0, "c": 0})
-
-        self.board = [[""] * width for _ in range(height)]
-        self.height = height
         self.width = width
+        self.height = height
+        self.board = [[""] * width for _ in range(height)]
+        self.eatenCount = 0
+        
         self.food = deque(food)
-        self.addNextFood()
+        foodR = self.food[0][0]
+        foodC = self.food[0][1]
+        self.board[foodR][foodC] = "food"
+        self.food.popleft()
 
-    def addNextFood(self):
-        if self.food:
-            foodRow = self.food[0][0]
-            foodCol = self.food[0][1]
-            self.board[foodRow][foodCol] = "o"
-            self.food.popleft()
+        self.snake = deque()
+        self.snake.append([0, 0])
+        self.board[0][0] = "snake"
+
 
     def move(self, direction: str) -> int:
-        r = self.snake[-1]["r"]
-        c = self.snake[-1]["c"]
+        # is valid move
+        headR = self.snake[-1][0]
+        headC = self.snake[-1][1]
+        tailR = self.snake[0][0]
+        tailC = self.snake[0][1]
 
         if direction == "U":
-            r -= 1
-        elif direction == "D":
-            r += 1
-        elif direction == "L":
-            c -= 1
-        elif direction == "R":
-            c += 1
-
-        # return -1 if wall
-        if r < 0 or r > self.height - 1:
-            return -1
-        if c < 0 or c > self.width - 1:
-            return -1
-
-        # if no fodd move up the tail else do nothing
-        if self.board[r][c] != "o":
-            self.board[self.snake[0]["r"]][self.snake[0]["c"]] = ""
-            self.snake.popleft()
-        else:
-            self.addNextFood()
+            headR -= 1
+        if direction == "D":
+            headR += 1
+        if direction == "R":
+            headC += 1
+        if direction == "L":
+            headC -= 1
         
-        # check self collision after updating self.snake tail 
-        if self.board[r][c] == "x":
+        if headR < 0 or headR >= self.height or headC < 0 or headC >= self.width:
             return -1
 
-        # valid move, no food or wall
-        self.board[r][c] = "x"
-        self.snake.append({"r": r, "c": c})
-        return len(self.snake) - 1
+        isTailVacancy = headR == tailR and headC == tailC
+        isSnakeOccupied = self.board[headR][headC] == "snake" and not isTailVacancy
+        
+        if isSnakeOccupied:
+            return -1
+        
+        if self.board[headR][headC] == "food":
+            # increase score
+            self.eatenCount += 1
+
+            # add food
+            if self.food:
+                foodR = self.food[0][0]
+                foodC = self.food[0][1]
+                self.board[foodR][foodC] = "food"
+                self.food.popleft()
+
+        else:
+            # bring up tail
+            self.board[tailR][tailC] = ""
+            self.snake.popleft()
+        
+        # add to head
+        self.snake.append([headR, headC])
+        self.board[headR][headC] = "snake"
+        return self.eatenCount
+
+        
 
 
 # Your SnakeGame object will be instantiated and called as such:

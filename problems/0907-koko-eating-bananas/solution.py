@@ -1,24 +1,23 @@
 class Solution:
     def minEatingSpeed(self, piles: List[int], h: int) -> int:
-        piles.sort()
+        # speed k min 1 and max of max(piles)
+        lk = 1
+        rk = max(piles)
 
-        l = 1
-        r = piles[-1]
-
-        minSpeed = r
-
-        while l <= r:
-            m = l + (r - l) // 2
+        k = rk
+        while lk <= rk:
+            mk = lk + (rk - lk) // 2
 
             hrs = 0
             for p in piles:
-                hrs += math.ceil(float(p) / m)
+                hrs += math.ceil(p / mk)
+            if hrs <= h: # fast enough
+                k = min(k, mk)
+                rk = mk - 1
+            else: # not fast enough
+                lk = mk + 1
+        return k
             
-            if hrs <= h:
-                minSpeed = min(minSpeed, m)
-                r = m - 1
-            if hrs > h:
-                l = m + 1
-            
-        return minSpeed
+
+
 

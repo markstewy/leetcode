@@ -20,16 +20,17 @@ class Solution:
         
         l = 0
         r = len(matrix[targetRow]) - 1
+        found = False
 
         while l <= r:
             m = l + (r - l) // 2
 
-            if target > matrix[targetRow][m]:
-                l = m + 1
-            elif target < matrix[targetRow][m]:
+            if matrix[targetRow][m] > target:
                 r = m - 1
+            elif matrix[targetRow][m] < target:
+                l = m + 1
             else:
-                return True
-        return False
-
-
+                found = True
+                break
+        
+        return found

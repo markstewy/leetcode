@@ -1,19 +1,18 @@
 class Solution:
     def generateParenthesis(self, n: int) -> List[str]:
-        ans = []
+        self.ans = []
 
-        def helper(s, lCount, rCount):
-            if len(s) == n * 2:
-                ans.append(s)
+        def helper(l, r, s):
+            if l + r == n * 2:
+                self.ans.append(s)
                 return
             
-            if lCount > rCount:
-                sNext = s + ")"
-                helper(sNext, lCount, rCount + 1)
-            if lCount < n:
-                sNext = s + "("
-                helper(sNext, lCount + 1, rCount)
+            if l > r:
+                helper(l, r + 1, s + ")")
+            if l < n:
+                helper(l + 1, r, s + "(")
+        
+        helper(1, 0, "(")
 
-        helper("(", 1, 0)
+        return self.ans
 
-        return ans

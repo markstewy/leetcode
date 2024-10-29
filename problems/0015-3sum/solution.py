@@ -2,12 +2,13 @@ class Solution:
     def threeSum(self, nums: List[int]) -> List[List[int]]:
         nums.sort()
         ans = []
-        for i in range(len(nums)):
 
+        for i in range(len(nums)):
+            if nums[i] > 0:
+                break
+            
             if i > 0 and nums[i] == nums[i - 1]:
                 continue
-            if nums[i] > 0:
-                break # no 3 pos ints can sum to zero
             
             l = i + 1
             r = len(nums) - 1

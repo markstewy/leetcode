@@ -1,32 +1,25 @@
 class Solution:
     def merge(self, intervals: List[List[int]]) -> List[List[int]]:
-        ans = []
         intervals.sort()
-        ans.append(intervals[0])
-                
-        def isOverlap(t1, t2):
-            if (
-                t2[0] <= t1[0] <= t2[1] or
-                t2[0] <= t1[1] <= t2[1] or
-                t1[0] <= t2[0] <= t1[1] or
-                t1[0] <= t2[1] <= t1[1]
-                ):
+        
+        def isOverlap(int1, int2):
+            l1, r1 = int1[0], int1[1]
+            l2, r2 = int2[0], int2[1]
+
+            if l1 <= l2 <= r1 or l1 <= r2 <= r1 or l2 <= l1 <= r2 or l2 <= r1 <= r2:
                 return True
             else:
                 return False
             
+        def combine(int1, int2):
+            return [min(int1[0], int2[0]), max(int1[1], int2[1])]
         
-        def merge(t1, t2):
-            return [min(t1[0], t2[0]), max(t1[1], t2[1])]
-            
-        for curr in intervals:
-            if isOverlap(ans[-1], curr):
-                ans[-1] = merge(ans[-1], curr)
+        ans = intervals[0:1]
+
+        for i in intervals:
+            if isOverlap(i, ans[-1]):
+                ans[-1] = combine(i, ans[-1])
             else:
-                ans.append(curr)
+                ans.append(i)
+        
         return ans
-
-
-
-
-

@@ -4,23 +4,22 @@ class Solution:
         cols = collections.defaultdict(set)
         sqs = collections.defaultdict(set)
 
-
         for r in range(9):
             for c in range(9):
-                n = board[r][c]
-
-                if n == ".":
+                if board[r][c] == ".":
                     continue
                 
-                if (
-                    n in rows[r] or
-                    n in cols[c] or
-                    n in sqs[(r//3, c//3)]
-                ):
+
+                v = board[r][c]
+                if (v in rows[r] or
+                    v in cols[c] or 
+                    v in sqs[(r//3, c//3)]
+                    ):
                     return False
                 
-                rows[r].add(n)
-                cols[c].add(n)
-                sqs[(r//3, c//3)].add(n)
+                rows[r].add(v)
+                cols[c].add(v)
+                sqs[(r//3, c//3)].add(v)
         
         return True
+

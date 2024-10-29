@@ -5,12 +5,9 @@ class Solution:
 
         while l < r:
             total = nums[l] + nums[r]
-            if total == target:
-                return [l + 1, r + 1]
-            
-            if target > total:
-                l += 1
-            elif target < total:
+            if total > target:
                 r -= 1
-        
-        return []
+            elif total < target:
+                l += 1
+            else:
+                return [l + 1, r + 1]

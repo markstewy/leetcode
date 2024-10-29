@@ -5,17 +5,18 @@ class Solution:
         for n in nums:
             count[n] = count.get(n, 0) + 1
 
-        sortedFrequency = [[] for _ in range(len(nums) + 1)]
+        sortedByCount = [[] for _ in range(len(nums) + 1)]
 
         for n, c in count.items():
-            sortedFrequency[c].append(n)
+            sortedByCount[c].append(n)
         
+
         ans = []
-        for i in range(len(sortedFrequency) - 1, -1, -1):
-            kFrequentValues = sortedFrequency[i]
-            for n in kFrequentValues:
-                ans.append(n)
+        for i in range(len(sortedByCount) - 1, -1, -1):
+            vals = sortedByCount[i]
+            for v in vals:
+                ans.append(v)
                 if len(ans) == k:
                     return ans
         
-        return []
+        return ans

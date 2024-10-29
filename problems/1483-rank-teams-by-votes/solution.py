@@ -1,25 +1,23 @@
 class Solution:
     def rankTeams(self, votes: List[str]) -> str:
+        candidates = {}
+        for c in votes[0]:
+            candidates[c] = [0] * len(votes[0])
 
-        candidateCount = len(votes[0])
-        count = {} # [] size of candidates
 
-        for candidate in votes[0]:
-            count[candidate] = [0] * candidateCount # number of potential ranks
+        for v in votes:
+            for i, c in enumerate(v):
+                candidates[c][i] += 1
         
-        for ballot in votes:
-            for place, candidate in enumerate(ballot):
-                count[candidate][place] += 1
-        
-        candidateVotes = list(count.items())
-        candidateVotes.sort()
-        candidateVotes.sort(key=lambda x:x[1], reverse=True)
+
+        candidates = list(candidates.items())
+        candidates.sort()
+        candidates.sort(key=lambda x : (x[1]), reverse=True)
+        print(candidates)
 
         ans = ""
-        for c in candidateVotes:
+
+        for c in candidates:
             ans += c[0]
         
         return ans
-
-        
-

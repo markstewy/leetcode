@@ -5,33 +5,35 @@ class TimeMap:
         
 
     def set(self, key: str, value: str, timestamp: int) -> None:
-        self.store[key].append({"val": value, "time": timestamp})
+        self.store[key].append([timestamp, value])
+        
 
     def get(self, key: str, timestamp: int) -> str:
-        ans = {"val": "", "time": 0}
+        if key not in self.store or not self.store[key]:
+            return ""
 
-        if key in self.store and self.store[key]:
-            entries = self.store[key]
-            l, r = 0, len(entries) - 1
-            
-            while l <= r:
-                m = l + (r - l) // 2
+        values = self.store[key]
+        l = 0
+        r = len(values) - 1
+        maxPrev = [-1, ""]
 
-                if entries[m]["time"] > timestamp: # lower half
-                    r = m - 1
-                elif entries[m]["time"] < timestamp: # upper half
-                    l = m + 1
-                    # record m as prev option
-                    if entries[m]["time"] >= ans["time"]:
-                        ans = entries[m]
-                else:
-                    return entries[m]["val"]
+        while l <= r:
+            m = l + (r - l) // 2
+
+            if values[m][0] < timestamp:
+                if values[m][0] > maxPrev[0]:
+                    maxPrev = values[m]
+                l = m + 1
+            elif values[m][0] > timestamp:
+                r = m - 1
+            else:
+                return values[m][1]
         
-        return ans["val"]
-            
+        return maxPrev[1]
 
 
 
+        
 
 
 

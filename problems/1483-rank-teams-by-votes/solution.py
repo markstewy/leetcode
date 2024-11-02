@@ -8,13 +8,14 @@ class Solution:
         for v in votes:
             for i, c in enumerate(v):
                 candidates[c][i] -= 1
-        
-        cArr = list(candidates.items())
+    
+        candidateArr = list(candidates.items())
 
-        cArr.sort(key=lambda x : (x[1], x[0]))
+        candidateArr.sort(key=lambda x : (x[1], x[0]))
 
         ans = ""
-        for c in cArr:
+        for c in candidateArr:
             ans += c[0]
         
         return ans
+

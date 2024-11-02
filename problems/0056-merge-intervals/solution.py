@@ -11,12 +11,14 @@ class Solution:
         def combine(n1, n2):
             return [min(n1[0], n2[0]), max(n1[1], n2[1])]
 
-        intervals.sort()
-        ans = intervals[0:1]
 
-        for intv in intervals:
-            if isOverlap(ans[-1], intv):
-                ans[-1] = combine(ans[-1], intv)
+        intervals.sort()
+        ans = intervals[0 : 1]
+
+        for i in intervals:
+            if isOverlap(i, ans[-1]):
+                ans[-1] = combine(i, ans[-1])
             else:
-                ans.append(intv)
+                ans.append(i)
+        
         return ans

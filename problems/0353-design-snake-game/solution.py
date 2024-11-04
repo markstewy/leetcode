@@ -3,63 +3,63 @@ class SnakeGame:
     def __init__(self, width: int, height: int, food: List[List[int]]):
         self.width = width
         self.height = height
-        self.board = [[""] * width for _ in range(height)]
+
+        self.board = [[""] * self.width for _ in range(self.height)]
 
         self.food = deque(food)
-        foodR = self.food[0][0]
-        foodC = self.food[0][1]
-        self.board[foodR][foodC] = "food"
-        self.food.popleft()
+        if self.food:
+            foodR = self.food[0][0]
+            foodC = self.food[0][1]
+            self.board[foodR][foodC] = "food"
+            self.food.popleft()
 
         self.snake = deque()
         self.snake.append([0,0])
         self.board[0][0] = "snake"
 
-        self.eatenCount = 0
-
+        self.eatCount = 0
 
     def move(self, direction: str) -> int:
-        headR = self.snake[-1][0]
-        headC = self.snake[-1][1]
-        tailR = self.snake[0][0]
-        tailC = self.snake[0][1]
+        hr = self.snake[-1][0]
+        hc = self.snake[-1][1]
+        tr = self.snake[0][0]
+        tc = self.snake[0][1]
 
         if direction == "U":
-            headR -= 1
+            hr -= 1
         if direction == "D":
-            headR += 1
+            hr += 1
         if direction == "L":
-            headC -= 1
+            hc -= 1
         if direction == "R":
-            headC += 1
+            hc += 1
 
         # if out of bounds
-        if headR < 0 or headC < 0 or headR >= self.height or headC >= self.width:
+        if hr < 0 or hc < 0 or hr >= self.height or hc >= self.width:
             return -1
-        
-        # if crash into self
-        isSnake = self.board[headR][headC] == "snake"
-        isTail = headR == tailR and headC == tailC
-
+        # if crashes into self
+        isSnake = self.board[hr][hc] == "snake"
+        isTail = (hr == tr and hc == tc)
         if isSnake and not isTail:
             return -1
-        
-        if self.board[headR][headC] == "food":
-            self.eatenCount += 1
+
+        if self.board[hr][hc] == "food":
+            self.eatCount += 1
             if self.food:
                 foodR = self.food[0][0]
                 foodC = self.food[0][1]
                 self.board[foodR][foodC] = "food"
                 self.food.popleft()
-
         else:
-            self.board[tailR][tailC] = ""
+            self.board[tr][tc] = ""
             self.snake.popleft()
         
-        self.snake.append([headR, headC])
-        self.board[headR][headC] = "snake"
+        self.snake.append([hr, hc])
+        self.board[hr][hc] = "snake"
 
-        return self.eatenCount
+        return self.eatCount
+
+        
 
 
 # Your SnakeGame object will be instantiated and called as such:

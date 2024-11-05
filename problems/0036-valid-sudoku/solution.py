@@ -6,15 +6,11 @@ class Solution:
 
         for r in range(9):
             for c in range(9):
-                if board[r][c] == ".":
+                v = board[r][c]
+                if v == ".":
                     continue
                 
-
-                v = board[r][c]
-                if (v in rows[r] or
-                    v in cols[c] or 
-                    v in sqs[(r//3, c//3)]
-                    ):
+                if v in rows[r] or v in cols[c] or v in sqs[(r//3, c//3)]:
                     return False
                 
                 rows[r].add(v)
@@ -22,4 +18,3 @@ class Solution:
                 sqs[(r//3, c//3)].add(v)
         
         return True
-

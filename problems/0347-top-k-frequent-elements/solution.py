@@ -4,19 +4,18 @@ class Solution:
 
         for n in nums:
             count[n] = count.get(n, 0) + 1
-
-        sortedByCount = [[] for _ in range(len(nums) + 1)]
+        
+        freqArr = [[] for _ in range(len(nums) + 1)]
 
         for n, c in count.items():
-            sortedByCount[c].append(n)
+            freqArr[c].append(n)
         
-
         ans = []
-        for i in range(len(sortedByCount) - 1, -1, -1):
-            vals = sortedByCount[i]
-            for v in vals:
+        for i in range(len(freqArr) - 1 , -1 , -1):
+            values = freqArr[i]
+            for v in values:
                 ans.append(v)
                 if len(ans) == k:
                     return ans
         
-        return ans
+        return []

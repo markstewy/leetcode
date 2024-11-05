@@ -1,13 +1,11 @@
 class Solution:
     def twoSum(self, nums: List[int], target: int) -> List[int]:
-        cache = {} # n: index
+        store = {} # n: idx
 
         for i, n in enumerate(nums):
             diff = target - n
 
-            if diff in cache:
-                return [i, cache[diff]]
+            if diff in store:
+                return [store[diff], i]
             
-            cache[n] = i
-        
-        return []
+            store[n] = i

@@ -1,19 +1,24 @@
 class Solution:
     def carFleet(self, target: int, position: List[int], speed: List[int]) -> int:
         cars = list(zip(position, speed))
-
         cars.sort()
-        time = []
 
+        time = []
         for c in cars:
-            time.append((target - c[0]) / c[1])
+            position = c[0]
+            speed = c[1]
+            time.append((target - position) / speed)
+
         
         fleetTime = 0
         fleetCount = 0
 
         for i in range(len(time) - 1, -1, -1):
-            if time[i] > fleetTime:
+            t = time[i]
+            if t > fleetTime:
                 fleetCount += 1
-                fleetTime = time[i]
+                fleetTime = t
         
         return fleetCount
+
+

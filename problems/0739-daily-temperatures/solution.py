@@ -1,15 +1,14 @@
 class Solution:
     def dailyTemperatures(self, temps: List[int]) -> List[int]:
         ans = [0] * len(temps)
-        stack = [] # [{idx, temp}]
+        stack = [] # {"idx":, "temp":}
 
         for i, t in enumerate(temps):
-            while stack and t > stack[-1]["temp"]:
-                priorDay = stack[-1]["day"]
-                ans[priorDay] = i - priorDay
+            while stack and stack[-1]["temp"] < t:
+                days = i - stack[-1]["idx"]
+                ans[stack[-1]["idx"]] = days
                 stack.pop()
             
-            stack.append({"day": i, "temp": t})
+            stack.append({"idx": i, "temp": t})
         
         return ans
-

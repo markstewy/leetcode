@@ -6,26 +6,33 @@ class Codec:
 
         for s in strs:
             encoded += str(len(s)) + "#" + s
-
-        return encoded        
+        return encoded
+        
 
     def decode(self, s: str) -> List[str]:
         """Decodes a single string to a list of strings.
         """
-        ans = []
 
+        ans = []
         i = 0
         while i < len(s):
-            length = ""
+            l = ""
             while s[i] != "#":
-                length += s[i]
+                l += s[i]
                 i += 1
             i += 1
 
-            ans.append(s[i : i + int(length)])
-            i += int(length)          
-
+            l = int(l)
+            start = i
+            end = start + l
+            word = s[start : end]
+            ans.append(word)
+            i = end
+        
         return ans
+
+
+
 
         
 

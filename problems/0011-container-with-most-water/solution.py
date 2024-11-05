@@ -7,7 +7,6 @@ class Solution:
         while l < r:
             vol = min(height[l], height[r]) * (r - l)
             maxVol = max(maxVol, vol)
-
             if height[l] < height[r]:
                 l += 1
             else:

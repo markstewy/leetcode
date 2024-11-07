@@ -1,22 +1,20 @@
 class Solution:
     def maxSlidingWindow(self, nums: List[int], k: int) -> List[int]:
-        dq = deque()
+        stack = deque() # {"idx": , "num":}
         ans = []
 
         for i, n in enumerate(nums):
-            while dq and dq[-1]["val"] < n:
-                dq.pop()
+            while stack and n > stack[-1]["num"]:
+                stack.pop()
             
-            dq.append({"val": n, "idx": i})
+            stack.append({"idx": i, "num": n})
         
             lastIdxInWindow = i - k + 1
-            while dq and dq[0]["idx"] < lastIdxInWindow:
-                dq.popleft()
+
+            while stack[0]["idx"] < lastIdxInWindow:
+                stack.popleft()
             
             if lastIdxInWindow >= 0:
-                ans.append(dq[0]["val"])
+                ans.append(stack[0]["num"])
         
         return ans
-
-            
-

@@ -1,38 +1,38 @@
+
 class FileSystem:
 
     def __init__(self):
-        self.root = {} #key: sub name value: {"value":val, [subkeys...]}
+        self.root = {"sub": {}}
+        
 
     def createPath(self, path: str, value: int) -> bool:
-        curr = self.root
-        path = path.lstrip("/").rstrip("/").split(("/"))
+        path = path.lstrip("/").rstrip("/").split("/")
         newDir = path.pop()
-        
+
+        curr = self.root
         for p in path:
-            if p in curr:
-                curr = curr[p]
+            if p in curr["sub"]:
+                curr = curr["sub"][p]
             else:
                 return False
-        if newDir in curr:
+                
+        if newDir in curr["sub"]:
             return False
-        
-        curr[newDir] = {}
-        curr[newDir]["value"] = value
+
+        curr["sub"][newDir] = {"val": value, "sub": {}}
         return True
 
     def get(self, path: str) -> int:
+        path = path.lstrip("/").rstrip("/").split("/")
+
         curr = self.root
-        path = path.lstrip("/").rstrip("/").split(("/"))
-        
         for p in path:
-            if p in curr:
-                curr = curr[p]
+            if p in curr["sub"]:
+                curr = curr["sub"][p]
             else:
                 return -1
 
-        return curr["value"]
-
-        
+        return curr["val"]
 
 
 # Your FileSystem object will be instantiated and called as such:

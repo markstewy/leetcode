@@ -1,15 +1,15 @@
 class Logger:
 
     def __init__(self):
-        self.lastTimes = {}
+        self.store = {} # key: log value: timestamp
         
 
     def shouldPrintMessage(self, timestamp: int, message: str) -> bool:
-        if message not in self.lastTimes or timestamp >= self.lastTimes[message] + 10:
-            self.lastTimes[message] = timestamp
+        if message not in self.store or timestamp - self.store[message] >= 10:
+            self.store[message] = timestamp
             return True
-        return False
-        
+        else:
+            return False
         
 
 

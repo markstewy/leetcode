@@ -1,6 +1,6 @@
 class Solution:
     def romanToInt(self, s: str) -> int:
-        numerals = {
+        nums = {
             "I": 1,
             "II": 2,
             "III": 3,
@@ -21,18 +21,30 @@ class Solution:
             "CM": 900
         }
 
+        subtotal = 0
         total = 0
         i = 0
         while i < len(s):
-            if  i < len(s) - 1 and s[i : i + 2] in numerals:
-                numeral = s[i : i + 2]
-                total += numerals[numeral]
+
+            four = s[i : i + 4] if i + 4 <= len(s) else ""
+            three = s[i : i + 3] if i + 3 <= len(s) else ""
+            two = s[i : i + 2] if i + 2 <= len(s) else ""
+            one = s[i : i + 1] if i + 1 <= len(s) else ""
+
+            if four in nums:
+                total += nums[four]
+                i += 4
+            elif three in nums:
+                total += nums[three]
+                i += 3
+            elif two in nums:
+                total += nums[two]
                 i += 2
-            else:
-                numeral = s[i : i + 1]
-                total += numerals[numeral]
+            elif one in nums:
+                total += nums[one]
                 i += 1
         
         return total
 
             
+

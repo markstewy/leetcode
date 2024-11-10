@@ -1,20 +1,21 @@
 class Solution:
     def minEatingSpeed(self, piles: List[int], h: int) -> int:
-        l = 1 # slowest k
-        r = max(piles) # fastest k
-        slowestCompletionK = r
-
-        while l <= r:
-            mk = l + (r - l) // 2
-
-            hours = 0
-            for p in piles:
-                hours += math.ceil(p / mk) # dc
-            
-            if hours <= h:
-                slowestCompletionK = min(mk, slowestCompletionK)
-                r = mk - 1
-            if hours > h:
-                l = mk + 1
         
-        return slowestCompletionK
+        kl = 1
+        kr = max(piles)
+        slowestFinishingSpeed = kr
+
+        while kl <= kr:
+            km = kl + (kr - kl) // 2
+            hrs = 0
+            for p in piles:
+                hrs += math.ceil(p / km)
+
+            if hrs > h: # took more hours than we have
+                kl = km + 1 # speed up
+            elif hrs <= h: # took less hours than we have
+                slowestFinishingSpeed = min(slowestFinishingSpeed, km)
+                kr = km - 1 # slow down
+        
+        return slowestFinishingSpeed
+            

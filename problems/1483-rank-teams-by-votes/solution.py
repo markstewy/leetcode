@@ -4,18 +4,17 @@ class Solution:
 
         for c in votes[0]:
             candidates[c] = [0] * len(votes[0])
-
-        for v in votes:
-            for i, c in enumerate(v):
-                candidates[c][i] -= 1
+        
+        for vote in votes:
+            for place, name in enumerate(vote):
+                candidates[name][place] -= 1
+        
+        finalTally = list(candidates.items())
+        finalTally.sort(key=lambda x : (x[1], x[0]))
     
-        candidateArr = list(candidates.items())
-
-        candidateArr.sort(key=lambda x : (x[1], x[0]))
-
         ans = ""
-        for c in candidateArr:
+
+        for c in finalTally:
             ans += c[0]
         
         return ans
-

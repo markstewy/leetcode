@@ -5,25 +5,20 @@
 #         self.left = left
 #         self.right = right
 class Solution:
-    def isSubtree(self, root: Optional[TreeNode], subRoot: Optional[TreeNode]) -> bool:
-        if not subRoot:
+    def isSubtree(self, root: Optional[TreeNode], subroot: Optional[TreeNode]) -> bool:
+        if not subroot:
             return True
         if not root:
             return False
-        
-        if self.isSametree(root, subRoot):
+        if self.isSametree(root, subroot):
             return True
-        
-        return self.isSubtree(root.left, subRoot) or self.isSubtree(root.right, subRoot)
+        return self.isSubtree(root.left, subroot) or self.isSubtree(root.right, subroot)
 
-
-
-    def isSametree(self, root, subRoot):
-        if root == None and subRoot == None:
+    
+    def isSametree(self, root, subroot):
+        if subroot == None and root == None:
             return True
-        if root and subRoot and root.val == subRoot.val:
-            return self.isSametree(root.left, subRoot.left) and self.isSametree(root.right, subRoot.right)
+        if root and subroot and root.val == subroot.val:
+            return self.isSametree(root.left, subroot.left) and self.isSametree(root.right, subroot.right)
         else:
             return False
-        
-

@@ -1,18 +1,18 @@
 class Solution:
     def characterReplacement(self, s: str, k: int) -> int:
-        count = {}
+        scount = {}
         maxLen = 0
 
         l = 0
         for r in range(len(s)):
             c = s[r]
-            count[c] = count.get(c, 0) + 1
+            scount[c] = scount.get(c, 0) + 1
 
-            while r - l + 1 - max(count.values()) > k:
+            while r - l + 1 - max(scount.values()) > k:
                 c = s[l]
-                count[c] -= 1
+                scount[c] -= 1
                 l += 1
-
+            
             maxLen = max(maxLen, r - l + 1)
         
         return maxLen

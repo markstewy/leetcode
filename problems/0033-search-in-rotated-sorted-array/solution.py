@@ -9,12 +9,13 @@ class Solution:
             if nums[m] == target:
                 return m
 
-            if nums[l] <= nums[m]:
+            if nums[m] > nums[r]: # left side is continuous
                 if nums[l] <= target <= nums[m]:
                     r = m - 1
                 else:
                     l = m + 1
-            else:
+        
+            else: # right side in continuous
                 if nums[m] <= target <= nums[r]:
                     l = m + 1
                 else:

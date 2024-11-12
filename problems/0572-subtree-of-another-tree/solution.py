@@ -10,15 +10,18 @@ class Solution:
             return True
         if not root:
             return False
-        if self.isSametree(root, subroot):
+        if self.isSameTree(root, subroot):
             return True
+
         return self.isSubtree(root.left, subroot) or self.isSubtree(root.right, subroot)
+        
+
 
     
-    def isSametree(self, root, subroot):
-        if subroot == None and root == None:
+    def isSameTree(self, root, subroot):
+        if not root and not subroot:
             return True
         if root and subroot and root.val == subroot.val:
-            return self.isSametree(root.left, subroot.left) and self.isSametree(root.right, subroot.right)
+            return self.isSameTree(root.left, subroot.left) and self.isSameTree(root.right, subroot.right)
         else:
             return False

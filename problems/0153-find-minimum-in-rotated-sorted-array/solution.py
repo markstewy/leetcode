@@ -2,18 +2,15 @@ class Solution:
     def findMin(self, nums: List[int]) -> int:
         l = 0
         r = len(nums) - 1
-        mn = float("infinity")
+        minVal = float("infinity")
 
         while l <= r:
             m = l + (r - l) // 2
-            mn = min(nums[m], mn)
-            
-            if nums[m] <= nums[r]: # right is continuous
-                r = m - 1
-            else:                   # left is continuous
+            minVal = min(minVal, nums[m])
+
+            if nums[m] > nums[r]: # right side is not ascending, min is on right
                 l = m + 1
+            else: # min is on left
+                r = m - 1
         
-        return mn
-
-
-        # 01234
+        return minVal

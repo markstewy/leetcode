@@ -6,11 +6,10 @@ class Solution:
 
         while l <= r:
             m = l + (r - l) // 2
-            print(m)
 
-            if target < matrix[m][0]:
+            if matrix[m][0] > target:
                 r = m - 1
-            elif target > matrix[m][-1]:
+            elif matrix[m][-1] < target:
                 l = m + 1
             else:
                 targetRow = m
@@ -19,17 +18,20 @@ class Solution:
         if targetRow == -1:
             return False
         
-        values = matrix[targetRow]
         l = 0
-        r = len(values) - 1
+        values = matrix[targetRow]
+        r = len(values)
 
         while l <= r:
             m = l + (r - l) // 2
 
-            if target < values[m]:
+            if values[m] > target:
                 r = m - 1
-            elif target > values[m]:
+            elif values[m] < target:
                 l = m + 1
             else:
                 return True
-        return False 
+        
+        return False
+
+

@@ -3,22 +3,20 @@ class Solution:
         cars = list(zip(position, speed))
         cars.sort()
 
-        time = []
+        arrivalTimes = []
         for c in cars:
             position = c[0]
             speed = c[1]
-            time.append((target - position) / speed)
+            distance = target - position
+            arrivalTime = distance / speed
+            arrivalTimes.append(arrivalTime)
 
         
-        fleetTime = 0
-        fleetCount = 0
-
-        for i in range(len(time) - 1, -1, -1):
-            t = time[i]
-            if t > fleetTime:
+        fleetTime = arrivalTimes[-1]
+        fleetCount = 1
+        for i in range(len(arrivalTimes) - 1, -1, -1):
+            if arrivalTimes[i] > fleetTime:
+                fleetTime = arrivalTimes[i]
                 fleetCount += 1
-                fleetTime = t
-        
+            
         return fleetCount
-
-

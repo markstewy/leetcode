@@ -1,11 +1,11 @@
 class Solution:
     def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
-        anagramMap = collections.defaultdict(list)
+        anagrams = collections.defaultdict(list)
 
         for s in strs:
             ukey = [0] * 26
             for c in s:
                 ukey[ord(c) - ord("a")] += 1
-            anagramMap[tuple(ukey)].append(s)
+            anagrams[tuple(ukey)].append(s)
         
-        return list(anagramMap.values())
+        return list(anagrams.values())

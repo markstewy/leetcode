@@ -9,8 +9,7 @@ class Node:
 
 class Solution:
     def copyRandomList(self, head: 'Optional[Node]') -> 'Optional[Node]':
-        store = {}
-        
+        orgToCpy = {} # key: id(org) value: pointer to cpy obj
         dhead = Node(-1)
 
         org = head
@@ -18,18 +17,28 @@ class Solution:
 
         while org:
             cpy.next = Node(org.val)
-            store[id(org)] = cpy.next    
+            orgToCpy[id(org)] = cpy.next
             cpy = cpy.next
             org = org.next
         
         org = head
         cpy = dhead.next
-        while org:
-            cpy.random = store[id(org.random)] if org.random else None
 
-            cpy = cpy.next
+        while org:
+            if org.random:
+                cpy.random = orgToCpy[id(org.random)]
+            else:
+                cpy.random = None
             org = org.next
-        
+            cpy = cpy.next
+        self.printlist(dhead.next)
         return dhead.next
-        
+
+
+    def printlist(self, head):
+        s = ""
+        while head:
+            s += "val:" + str(head.random) + " "
+            head = head.next
+        print(s)
 

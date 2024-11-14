@@ -7,25 +7,25 @@ class Solution:
     def removeNthFromEnd(self, head: Optional[ListNode], n: int) -> Optional[ListNode]:
         dhead = ListNode()
         dhead.next = head
-
-        l = dhead
-        r = dhead
+        l, r = dhead, dhead
         i = 0
-        while r.next:
+
+        while r:
             r = r.next
-            if i >= n:
+            if i > n:
                 l = l.next
             i += 1
 
         l.next = l.next.next if l.next else None
-        
         self.printlist(dhead.next)
-
         return dhead.next
-    
+
+
+
     def printlist(self, head):
-        p = ""
+        s = ""
         while head:
-            p += "-->" + str(head.val)
+            s += str(head.val) + "--->"
             head = head.next
-        print(p)
+        print(s)
+

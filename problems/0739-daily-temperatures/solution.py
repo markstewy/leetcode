@@ -1,14 +1,15 @@
 class Solution:
     def dailyTemperatures(self, temps: List[int]) -> List[int]:
+        stack = []
         ans = [0] * len(temps)
-        stack = [] # {"idx":, "temp":}
 
         for i, t in enumerate(temps):
-            while stack and stack[-1]["temp"] < t:
-                days = i - stack[-1]["idx"]
-                ans[stack[-1]["idx"]] = days
+            while stack and t > stack[-1]["temp"]:
+                ans[stack[-1]["idx"]] = i - stack[-1]["idx"] # record number of days to get higher temp
                 stack.pop()
+            stack.append({"temp": t, "idx": i})
             
-            stack.append({"idx": i, "temp": t})
         
         return ans
+
+        # BigO: O(n) linear time and space

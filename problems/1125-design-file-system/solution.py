@@ -1,38 +1,25 @@
-
 class FileSystem:
 
     def __init__(self):
-        self.root = {"sub": {}}
-        
-
-    def createPath(self, path: str, value: int) -> bool:
-        path = path.lstrip("/").rstrip("/").split("/")
-        newDir = path.pop()
-
-        curr = self.root
-        for p in path:
-            if p in curr["sub"]:
-                curr = curr["sub"][p]
-            else:
-                return False
-                
-        if newDir in curr["sub"]:
+        self.root = {}
+        self.root[""] = None
+    
+    def createPath(self, path: str, value: int):
+        p = path.split("/")
+        parent = "/".join(p[:-1])
+        if path in self.root or parent not in self.root:
             return False
 
-        curr["sub"][newDir] = {"val": value, "sub": {}}
+        self.root[path] = value
         return True
 
-    def get(self, path: str) -> int:
-        path = path.lstrip("/").rstrip("/").split("/")
+    def get(self, path):
+        if path in self.root:
+            return self.root[path]
+        return -1
+        
 
-        curr = self.root
-        for p in path:
-            if p in curr["sub"]:
-                curr = curr["sub"][p]
-            else:
-                return -1
-
-        return curr["val"]
+        
 
 
 # Your FileSystem object will be instantiated and called as such:

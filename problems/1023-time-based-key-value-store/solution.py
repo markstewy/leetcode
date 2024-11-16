@@ -4,32 +4,35 @@ class TimeMap:
         self.store = collections.defaultdict(list)
 
     def set(self, key: str, value: str, timestamp: int) -> None:
-        self.store[key].append([timestamp, value])
+        self.store[key].append({"time": timestamp, "val": value})
 
-    def get(self, key: str, timestamp: int) -> str:
+    def get(self, key: str, targetTime: int) -> str:
+        mxprev = {"time": -1, "val": ""}
+
         if key not in self.store:
             return ""
-        maxPrev = [-float("infinity"), ""]
         values = self.store[key]
+
         l = 0
         r = len(values) - 1
-
         while l <= r:
             m = l + (r - l) // 2
+            mtime = values[m]["time"]
 
-            if values[m][0] < timestamp:
-                if values[m][0] > maxPrev[0]: # record the max prev
-                    maxPrev = values[m]
-                l = m + 1
-            elif values[m][0] > timestamp:
+            if targetTime < mtime:
                 r = m - 1
+            elif mtime < targetTime:
+                if mtime > mxprev["time"]:
+                    mxprev = values[m]
+                l = m + 1
             else:
-                return values[m][1] # perfect match return val
+                return values[m]["val"]
         
-        return maxPrev[1]
+        return mxprev["val"]
+        
 
 
 # Your TimeMap object will be instantiated and called as such:
 # obj = TimeMap()
-# obj.set(key,value,timestamp)
+# obj.set(key,value,targetTime)
 # param_2 = obj.get(key,timestamp)

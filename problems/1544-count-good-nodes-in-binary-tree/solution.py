@@ -8,15 +8,15 @@ class Solution:
     def goodNodes(self, root: TreeNode) -> int:
         self.goodCount = 0
 
-        def helper(node, prior):
-            if not node:
+        def helper(root, mxParent):
+            if not root:
                 return
-            if node.val >= prior:
+            if root.val >= mxParent:
                 self.goodCount += 1
-                prior = node.val
-
-            helper(node.right, prior)
-            helper(node.left, prior)
+            
+            mxParent = max(mxParent, root.val)
+            helper(root.left, mxParent)
+            helper(root.right, mxParent)
         
         helper(root, -float("infinity"))
 

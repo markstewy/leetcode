@@ -3,19 +3,23 @@ class Solution:
         
         kl = 1
         kr = max(piles)
-        slowestFinishingSpeed = kr
+        scs = kr
 
         while kl <= kr:
             km = kl + (kr - kl) // 2
-            hrs = 0
-            for p in piles:
-                hrs += math.ceil(p / km)
 
-            if hrs > h: # took more hours than we have
-                kl = km + 1 # speed up
-            elif hrs <= h: # took less hours than we have
-                slowestFinishingSpeed = min(slowestFinishingSpeed, km)
-                kr = km - 1 # slow down
-        
-        return slowestFinishingSpeed
+            hours = 0
+            for p in piles:
+                hours += math.ceil(p / km)
             
+            if hours <= h: # fast enough to complete all piles, next try going slower
+                scs = min(scs, km)
+                kr = km - 1
+            elif hours > h: # took too long, try going faster next time
+                kl = km + 1
+            # don't return if hours exact match because we are rounding hours up and may miss a more optimal km
+        
+        return scs
+
+
+

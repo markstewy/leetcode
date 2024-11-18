@@ -2,8 +2,8 @@ class SnakeGame:
 
     def __init__(self, width: int, height: int, food: List[List[int]]):
         self.board = [[""] * width for _ in range(height)]
-        self.width = width
         self.height = height
+        self.width = width
 
         self.food = deque(food)
         if self.food:
@@ -13,14 +13,13 @@ class SnakeGame:
             self.food.popleft()
 
         self.snake = deque()
-        self.snake.append([0, 0])
+        self.snake.append((0, 0))
         self.board[0][0] = "snake"
 
         self.eatCount = 0
 
 
     def move(self, direction: str) -> int:
-
         headR = self.snake[-1][0]
         headC = self.snake[-1][1]
         tailR = self.snake[0][0]
@@ -32,20 +31,19 @@ class SnakeGame:
             headR += 1
         if direction == "L":
             headC -= 1
-        if direction == "R":        
+        if direction == "R":
             headC += 1
 
         # if out of bounds
         if headR < 0 or headC < 0 or headR >= self.height or headC >= self.width:
             return -1
 
-        # if crash into self
+        # if crashes into self
         isSnake = self.board[headR][headC] == "snake"
         isTail = headR == tailR and headC == tailC
-
         if isSnake and not isTail:
             return -1
-
+        
         if self.board[headR][headC] == "food":
             self.eatCount += 1
             if self.food:
@@ -54,12 +52,12 @@ class SnakeGame:
                 self.board[foodR][foodC] = "food"
                 self.food.popleft()
         else:
-            self.snake.popleft()
             self.board[tailR][tailC] = ""
-
-        self.snake.append([headR, headC])
-        self.board[headR][headC] = "snake"
+            self.snake.popleft()
         
+        self.snake.append((headR, headC))
+        self.board[headR][headC] = "snake"
+    
         return self.eatCount
 
 

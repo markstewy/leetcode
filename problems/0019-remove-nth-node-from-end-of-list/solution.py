@@ -8,22 +8,26 @@ class Solution:
         dhead = ListNode()
         dhead.next = head
 
-        l, r = dhead, dhead
+        l = dhead
+        r = dhead
         i = 0
+
         while r.next:
-            r = r.next
-            if i >= n:
-                l = l.next
             i += 1
+            r = r.next
+            if i > n:
+                l = l.next
+
         
         l.next = l.next.next if l.next else None
         self.printList(dhead)
+
         return dhead.next
-    
 
     def printList(self, head):
         s = ""
         while head:
-            s += "--->" + str(head.val)
+            s += str(head.val) + "--> "
             head = head.next
+        
         print(s)

@@ -1,14 +1,13 @@
 class Solution:
     def reorderLogFiles(self, logs: List[str]) -> List[str]:
+        letterLogs = []
         digitLogs = []
-        alphaLogs = []
 
-        for log in logs:
-            if log[-1].isdigit():
-                digitLogs.append(log)
+        for l in logs:
+            if l[-1].isalpha():
+                letterLogs.append(l)
             else:
-                alphaLogs.append(log)
-
-        alphaLogs.sort(key=lambda x : (x.split(" ")[1:], x.split(" ")[0:1]))
-
-        return alphaLogs + digitLogs
+                digitLogs.append(l)
+        
+        letterLogs.sort(key=lambda x : (x.split(" ")[1:], x.split(" ")[0:1]))
+        return letterLogs + digitLogs

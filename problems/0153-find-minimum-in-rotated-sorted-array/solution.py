@@ -6,11 +6,12 @@ class Solution:
 
         while l <= r:
             m = l + (r - l) // 2
-            minVal = min(minVal, nums[m])
+            minVal = min(nums[m], minVal)
 
-            if nums[m] > nums[r]: # right side is not ascending, min is on right
-                l = m + 1
-            else: # min is on left
+            if nums[m] < nums[r]: # right side is ascending and doesn't have the min
                 r = m - 1
+            else: # left side is ascending and doesn't have the min
+                l = m + 1
         
         return minVal
+

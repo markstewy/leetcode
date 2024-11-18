@@ -8,16 +8,23 @@ class Solution:
 
             if nums[m] == target:
                 return m
+            if nums[l] == target:
+                return l
+            if nums[r] == target:
+                return r
 
-            if nums[m] > nums[r]: # left side is continuous
-                if nums[l] <= target <= nums[m]:
+            if nums[r] > nums[m]: # right side is ascending
+                if nums[m] < target < nums[r]:
+                    l = m + 1
+                else:
+                    r = m - 1
+            else: # left side is ascending
+                if nums[l] < target < nums[m]:
                     r = m - 1
                 else:
                     l = m + 1
         
-            else: # right side in continuous
-                if nums[m] <= target <= nums[r]:
-                    l = m + 1
-                else:
-                    r = m - 1
         return -1
+                
+            
+

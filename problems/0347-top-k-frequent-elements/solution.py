@@ -4,15 +4,15 @@ class Solution:
 
         for n in nums:
             count[n] = count.get(n, 0) + 1
-        
-        frequency = [[] for _ in range(len(nums) + 1)]
+
+        sortedArr = [[] for _ in range(len(nums) + 1)]
 
         for n, c in count.items():
-            frequency[c].append(n)
+            sortedArr[c].append(n)
         
         ans = []
-        for i in range(len(frequency) - 1, -1, -1):
-            values = frequency[i]
+        for i in range(len(sortedArr) - 1, -1, -1):
+            values = sortedArr[i]
             for v in values:
                 ans.append(v)
                 if len(ans) == k:

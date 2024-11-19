@@ -1,8 +1,3 @@
-class Entry:
-    def __init__(self, value, timestamp):
-        self.val = value
-        self.time = timestamp
-
 class TimeMap:
 
     def __init__(self):
@@ -10,34 +5,30 @@ class TimeMap:
         
 
     def set(self, key: str, value: str, timestamp: int) -> None:
-        self.store[key].append(Entry(value, timestamp))
+        self.store[key].append((timestamp, value))
 
     def get(self, key: str, timestamp: int) -> str:
         if key not in self.store:
             return ""
-        values = self.store[key]
 
+        target = timestamp
+        values = self.store[key]
+        nearestPrev = (-1, "")
         l = 0
         r = len(values) - 1
 
-
-        targetTime = timestamp
-        maxPrev = Entry("", -float("infinity"))
         while l <= r:
             m = l + (r - l) // 2
-
-            if targetTime > values[m].time:
-                if maxPrev.time < values[m].time:
-                    maxPrev = values[m]
-                l = m + 1
-            elif targetTime < values[m].time:
+            if values[m][0] > target:
                 r = m - 1
+            elif values[m][0] < target:
+                nearestPrev = values[m]
+                l = m + 1
             else:
-                return values[m].val
+                return values[m][1]
         
-        return maxPrev.val
-
-        
+        return nearestPrev[1]
+    
 
 
 # Your TimeMap object will be instantiated and called as such:

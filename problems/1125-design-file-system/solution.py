@@ -1,24 +1,27 @@
 class FileSystem:
 
     def __init__(self):
-        self.root = {}
-        self.root[""] = None
-    
-    def createPath(self, path: str, value: int):
-        p = path.split("/")
-        parent = "/".join(p[:-1])
-        if path in self.root or parent not in self.root:
+        self.store = {}
+        self.store[""] = ""   
+
+    def createPath(self, path: str, value: int) -> bool:
+        paths = path.split("/")
+        # print(paths)
+        parent = "/".join(paths[:-1])
+        newDir = paths[-1]
+        fullPath = parent + "/" + newDir
+
+        if parent not in self.store or fullPath in self.store:
             return False
+        else:
+            self.store[fullPath] = value
+            return True
 
-        self.root[path] = value
-        return True
 
-    def get(self, path):
-        if path in self.root:
-            return self.root[path]
-        return -1
-        
-
+    def get(self, path: str) -> int:
+        if path not in self.store:
+            return -1
+        return self.store[path]
         
 
 

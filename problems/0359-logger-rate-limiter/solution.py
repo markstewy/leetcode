@@ -1,7 +1,7 @@
 class Logger:
 
     def __init__(self):
-        self.store = {} # message: timestamp of last log
+        self.store = {}
         
 
     def shouldPrintMessage(self, timestamp: int, message: str) -> bool:
@@ -10,7 +10,7 @@ class Logger:
             return True
         else:
             return False
-        
+
 
 
 # Your Logger object will be instantiated and called as such:

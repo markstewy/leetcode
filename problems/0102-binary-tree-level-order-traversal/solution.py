@@ -8,17 +8,16 @@ class Solution:
     def levelOrder(self, root: Optional[TreeNode]) -> List[List[int]]:
         self.levels = []
 
-        def helper(node, level):
-            if not node:
+        def helper(root, level):
+            if not root:
                 return
-
-            if not self.levels or level > len(self.levels) - 1:
+            if len(self.levels) - 1 < level:
                 self.levels.append([])
-            self.levels[level].append(node.val)
-
-            helper(node.left, level + 1)
-            helper(node.right, level + 1)
+            self.levels[level].append(root.val)
+        
+            helper(root.left, level + 1)
+            helper(root.right, level + 1)
         
         helper(root, 0)
-        return self.levels
 
+        return self.levels

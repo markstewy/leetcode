@@ -1,39 +1,52 @@
 class TopVotedCandidate:
 
     def __init__(self, persons: List[int], times: List[int]):
-        count = {}
-        maxVotes = 0
-        leader = ""
         self.leaders = []
-        self.times = times
+        count = {}
+        maxVote = 0
+        leader = ""
 
-        for p in persons:
+        for i in range(len(persons)):
+            p = persons[i]
             count[p] = count.get(p, 0) + 1
-            if count[p] >= maxVotes:
-                maxVotes = count[p]
+            if count[p] >= maxVote:
+                maxVote = count[p]
                 leader = p
-            self.leaders.append(leader)
 
+            self.leaders.append({"person": leader, "time": times[i]})
+        self.printLeaders()
 
-    def q(self, t: int) -> int:
-        times = self.times
-        l = 0
-        r = len(times) - 1
-        nearestPrev = -1
-        target = t
         
+    def q(self, t: int) -> int:
+        values = self.leaders
+        target = t
+        l = 0
+        r = len(values) - 1
+        closestPrev = -1
+
         while l <= r:
             m = l + (r - l) // 2
 
-            if times[m] < target:
-                nearestPrev = m
+            if values[m]["time"] < target:
+                closestPrev = m
                 l = m + 1
-            elif times[m] > target:
+            elif values[m]["time"] > target:
                 r = m - 1
             else:
-                return self.leaders[m]
+                return values[m]["person"]
         
-        return self.leaders[nearestPrev]
+        return values[closestPrev]["person"]
+
+
+    def printLeaders(self):
+        s = ""
+        for l in self.leaders:
+            t = l["time"]
+            p = l["person"]
+            s += f"p:{p} t: {t},  "
+        print(s)
+
+
 
         
 

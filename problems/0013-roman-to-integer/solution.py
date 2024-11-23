@@ -13,9 +13,9 @@ class Solution:
         s = s.replace("IV", "IIII").replace("IX", "VIIII")
         s = s.replace("XL", "XXXX").replace("XC", "LXXXX")
         s = s.replace("CD", "CCCC").replace("CM", "DCCCC")
-        number = 0
-        for c in s:
-            number += numerals[c]
+        print(s)
+        total = 0
+        for n in s:
+            total += numerals[n]
         
-        return number
-
+        return total

@@ -4,16 +4,18 @@ class Solution:
         ans = []
 
         for i, n in enumerate(nums):
-            while dq and n > dq[-1]["val"]:
+
+            while dq and dq[-1]["val"] < n:
                 dq.pop()
             
             dq.append({"val": n, "idx": i})
 
-            lastValidIdxInWindow = i - k  + 1
-            while dq and dq[0]["idx"] < lastValidIdxInWindow:
+            lastValidIdx = i - k + 1
+            while dq and dq[0]["idx"] < lastValidIdx:
                 dq.popleft()
             
-            if lastValidIdxInWindow >= 0:
+            if lastValidIdx >= 0:
                 ans.append(dq[0]["val"])
         
         return ans
+            

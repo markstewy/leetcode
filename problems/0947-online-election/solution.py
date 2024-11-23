@@ -1,25 +1,29 @@
 class TopVotedCandidate:
 
     def __init__(self, persons: List[int], times: List[int]):
+        self.times = times
         self.leaders = []
         count = {}
-        maxVote = 0
-        leader = ""
+        maxVotes = 0
+        leader = None
 
-        for i in range(len(persons)):
-            p = persons[i]
+        for p in persons:
             count[p] = count.get(p, 0) + 1
-            if count[p] >= maxVote:
-                maxVote = count[p]
+            if count[p] >= maxVotes:
+                maxVotes = count[p]
                 leader = p
-
-            self.leaders.append({"person": leader, "time": times[i]})
-        self.printLeaders()
-
+            
+            self.leaders.append(leader)
         
+
     def q(self, t: int) -> int:
-        values = self.leaders
-        target = t
+        idx = self.findNearestTimeIdx(t)
+        return self.leaders[idx]
+        
+
+    def findNearestTimeIdx(self, time):
+        values = self.times
+        target = time
         l = 0
         r = len(values) - 1
         closestPrev = -1
@@ -27,29 +31,15 @@ class TopVotedCandidate:
         while l <= r:
             m = l + (r - l) // 2
 
-            if values[m]["time"] < target:
+            if values[m] < target:
                 closestPrev = m
                 l = m + 1
-            elif values[m]["time"] > target:
+            elif values[m] > target:
                 r = m - 1
             else:
-                return values[m]["person"]
+                return m
         
-        return values[closestPrev]["person"]
-
-
-    def printLeaders(self):
-        s = ""
-        for l in self.leaders:
-            t = l["time"]
-            p = l["person"]
-            s += f"p:{p} t: {t},  "
-        print(s)
-
-
-
-        
-
+        return closestPrev
 
 # Your TopVotedCandidate object will be instantiated and called as such:
 # obj = TopVotedCandidate(persons, times)

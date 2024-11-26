@@ -9,8 +9,11 @@ class Solution:
                 break
         
         s2 = 0
+
         while True:
-            s2 = nums[s2]
             s = nums[s]
+            s2 = nums[s2]
             if s == s2:
                 return s
+        
+        

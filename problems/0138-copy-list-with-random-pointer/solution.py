@@ -10,23 +10,25 @@ class Node:
 class Solution:
     def copyRandomList(self, head: 'Optional[Node]') -> 'Optional[Node]':
         dhead = Node(-1)
-        orgToCopy = {} # id: pointer
+        orgToCpy = {}
 
         org = head
         cpy = dhead
 
         while org:
             cpy.next = Node(org.val)
-            orgToCopy[id(org)] = cpy.next
-            org = org.next
+            orgToCpy[id(org)] = cpy.next
+
             cpy = cpy.next
-    
+            org = org.next
+        
         org = head
         cpy = dhead.next
 
         while org:
-            cpy.random = orgToCopy[id(org.random)] if org.random else None
-            org = org.next
+            cpy.random = orgToCpy[id(org.random)] if org.random else None
             cpy = cpy.next
-    
+            org = org.next
+        
         return dhead.next
+

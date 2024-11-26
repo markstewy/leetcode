@@ -2,16 +2,16 @@ class Solution:
     def findMin(self, nums: List[int]) -> int:
         l = 0
         r = len(nums) - 1
-        minVal = float("infinity")
+        mn = float("infinity")
 
         while l <= r:
             m = l + (r - l) // 2
-            minVal = min(nums[m], minVal)
+            mn = min(nums[m], mn)
 
-            if nums[m] < nums[r]: # right side is ascending and doesn't have the min
-                r = m - 1
-            else: # left side is ascending and doesn't have the min
+            if nums[m] > nums[r]: # right side contians min
                 l = m + 1
+            else: # left side contains min
+                r = m - 1
         
-        return minVal
-
+        return mn
+            

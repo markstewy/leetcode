@@ -9,13 +9,13 @@ class Solution:
         curr = dhead
 
         while list1 or list2:
-            if list2 and not list1:
+            if not list1:
                 curr.next = list2
-                return dhead.next
-            if list1 and not list2:
+                break
+            if not list2:
                 curr.next = list1
-                return dhead.next
-            
+                break
+
             if list1.val < list2.val:
                 curr.next = list1
                 list1 = list1.next
@@ -23,6 +23,6 @@ class Solution:
                 curr.next = list2
                 list2 = list2.next
             curr = curr.next
-        
+
         return dhead.next
-            
+

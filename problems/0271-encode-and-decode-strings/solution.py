@@ -12,6 +12,7 @@ class Codec:
     def decode(self, s: str) -> List[str]:
         """Decodes a single string to a list of strings.
         """
+
         i = 0
         decoded = []
 
@@ -22,12 +23,14 @@ class Codec:
                 i += 1
             i += 1
 
+            length = int(l)
             start = i
-            end = i + int(l)
-            decoded.append(s[start:end])
+            end = start + length
+            decoded.append(s[start : end])
             i = end
-    
+        
         return decoded
+
         
 
 

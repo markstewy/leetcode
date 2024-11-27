@@ -6,6 +6,7 @@ class Solution:
             ukey = [0] * 26
             for c in s:
                 ukey[ord(c) - ord("a")] += 1
+        
             anagrams[tuple(ukey)].append(s)
         
         return list(anagrams.values())

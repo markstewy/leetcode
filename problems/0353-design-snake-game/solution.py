@@ -1,23 +1,22 @@
 class SnakeGame:
 
     def __init__(self, width: int, height: int, food: List[List[int]]):
-        self.board = [[" "] * width for _ in range(height)]
         self.width = width
         self.height = height
-        
+        self.board = [[""] * width for _ in range(height)] 
+
         self.food = deque(food)
         if self.food:
             foodR = self.food[0][0]
             foodC = self.food[0][1]
-            self.board[foodR][foodC] = "f"
+            self.board[foodR][foodC] = "food"       
             self.food.popleft()
-    
+
         self.snake = deque()
         self.snake.append([0, 0])
-        self.board[0][0] = "s"
+        self.board[0][0] = "snake"
 
         self.eatCount = 0
-
 
     def move(self, direction: str) -> int:
         headR = self.snake[-1][0]
@@ -31,35 +30,33 @@ class SnakeGame:
             headR += 1
         if direction == "L":
             headC -= 1
-        if direction == "R":
+        if direction == "R":   
             headC += 1
-
-        # out of bounds
+    
+        # if out of bounds
         if headR < 0 or headC < 0 or headR >= self.height or headC >= self.width:
             return -1
 
-        # crash into self
-        isSnake = self.board[headR][headC] == "s"
-        isTail = headR == tailR and headC == tailC
+        isSnake = self.board[headR][headC] == "snake"
+        isTail = headR == tailR and headC == tailC   
+
         if isSnake and not isTail:
             return -1
 
-        if self.board[headR][headC] == "f":
-            self.eatCount += 1
+        if self.board[headR][headC] == "food":
+            self.eatCount += 1   
             if self.food:
                 foodR = self.food[0][0]
                 foodC = self.food[0][1]
-                self.board[foodR][foodC] = "f"
+                self.board[foodR][foodC] = "food"       
                 self.food.popleft()
         else:
             self.board[tailR][tailC] = ""
             self.snake.popleft()
         
         self.snake.append([headR, headC])
-        self.board[headR][headC] = "s"
-
+        self.board[headR][headC] = "snake"
         return self.eatCount
-
 
 
 # Your SnakeGame object will be instantiated and called as such:

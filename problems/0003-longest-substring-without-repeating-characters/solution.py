@@ -5,12 +5,11 @@ class Solution:
 
         l = 0
         for r in range(len(s)):
-            c = s[r]
-            while c in cset:
+            while s[r] in cset:
                 cset.remove(s[l])
                 l += 1
-            cset.add(c)
+            
+            cset.add(s[r])
             maxLen = max(maxLen, r - l + 1)
         
         return maxLen
-

@@ -7,14 +7,13 @@
 class Solution:
     def flipEquiv(self, root1: Optional[TreeNode], root2: Optional[TreeNode]) -> bool:
         
-        def helper(root1, root2):
-            if not root1 and not root2:
+        def helper(r1, r2):
+            if not r1 and not r2:
                 return True
-            if root1 and root2 and root1.val == root2.val:
-                return (helper(root1.left, root2.left) and helper(root1.right, root2.right))or (helper(root1.right, root2.left) and helper(root1.left, root2.right))
+            if r1 and r2 and r1.val == r2.val:
+                return (helper(r1.left, r2.left) and helper(r1.right, r2.right)) or (helper(r1.left, r2.right) and helper(r1.right, r2.left))
             else:
                 return False
         
         return helper(root1, root2)
-            
 

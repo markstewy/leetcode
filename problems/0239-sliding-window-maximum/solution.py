@@ -5,17 +5,18 @@ class Solution:
 
         for i, n in enumerate(nums):
 
-            while dq and dq[-1]["val"] < n:
+            while dq and n > dq[-1]["val"]:
                 dq.pop()
             
             dq.append({"val": n, "idx": i})
 
             lastValidIdx = i - k + 1
+
             while dq and dq[0]["idx"] < lastValidIdx:
                 dq.popleft()
-            
+
             if lastValidIdx >= 0:
                 ans.append(dq[0]["val"])
+            
         
         return ans
-            

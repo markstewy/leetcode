@@ -5,7 +5,7 @@ class TimeMap:
         
 
     def set(self, key: str, value: str, timestamp: int) -> None:
-        self.store[key].append([timestamp, value])
+        self.store[key].append({"val": value, "time": timestamp})
         
 
     def get(self, key: str, timestamp: int) -> str:
@@ -13,24 +13,24 @@ class TimeMap:
             return ""
         
         values = self.store[key]
-
+        target = timestamp
         l = 0
         r = len(values) - 1
-        closestPrev = ""
-        target = timestamp
+        nearestPrev = ""
 
         while l <= r:
             m = l + (r - l) // 2
 
-            if values[m][0] < target:
-                closestPrev = values[m][1]
+            if values[m]["time"] < target:
+                nearestPrev = values[m]["val"]
                 l = m + 1
-            elif values[m][0] > target:
+            elif values[m]["time"] > target:
                 r = m - 1
             else:
-                return values[m][1]
+                return values[m]["val"]
         
-        return closestPrev
+        return nearestPrev
+        
 
 
 # Your TimeMap object will be instantiated and called as such:

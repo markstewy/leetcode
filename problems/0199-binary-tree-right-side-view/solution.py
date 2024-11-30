@@ -11,14 +11,11 @@ class Solution:
         def helper(root, level):
             if not root:
                 return
-            if len(self.ans) - 1 < level:
+
+            if level > len(self.ans):
                 self.ans.append(root.val)
-            
             helper(root.right, level + 1)
             helper(root.left, level + 1)
         
-        helper(root, 0)
-
+        helper(root, 1)
         return self.ans
-        
-

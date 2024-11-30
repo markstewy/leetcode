@@ -1,20 +1,21 @@
 class Solution:
     def commonChars(self, words: List[str]) -> List[str]:
-        merged = Counter(words[0])
-        
+        mergedCount = Counter(words[0])
+
         for word in words:
             wordCount = Counter(word)
-            commonKeys = wordCount.keys() & merged.keys() # only letters in common
+            commonLetters = wordCount.keys() & mergedCount.keys()
 
-            merged = {
-                key: min(wordCount[key], merged[key]) # only if each has duplicate
-                for key in commonKeys
+            mergedCount = {
+                key: min(wordCount[key], mergedCount[key])
+                for key in commonLetters
             }
-
-
+        
         ans = []
-        for l, cnt in merged.items():
+
+        for l, cnt in mergedCount.items():
             for _ in range(cnt):
                 ans.append(l)
+        
         return ans
 

@@ -5,12 +5,13 @@ class Logger:
         
 
     def shouldPrintMessage(self, timestamp: int, message: str) -> bool:
-        if message not in self.store or timestamp - self.store[message] >= 10:
-            self.store[message] = timestamp
+        if message not in self.store or self.store[message] <= timestamp:
+            self.store[message] = timestamp + 10
             return True
         else:
             return False
 
+        
 
 
 # Your Logger object will be instantiated and called as such:

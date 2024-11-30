@@ -12,23 +12,16 @@ class Solution:
         while l1 or l2 or carry:
             l1val = l1.val if l1 else 0
             l2val = l2.val if l2 else 0
-            total = l1val + l2val + carry
+            total = carry + l1val + l2val
 
             carry = total // 10
-            total = total % 10
-
-            curr.next = ListNode(total)
+            remainder = total % 10
+            curr.next = ListNode(remainder)
+            
             curr = curr.next
             l1 = l1.next if l1 else None
             l2 = l2.next if l2 else None
         
-        self.printList(dhead.next)
         return dhead.next
 
-    def printList(self, head):
-        s = ""
-        while head:
-            s += f"{head.val} -->"
-            head = head.next
-        
-        print(s)
+

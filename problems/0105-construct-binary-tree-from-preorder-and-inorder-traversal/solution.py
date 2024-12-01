@@ -12,25 +12,20 @@ class Solution:
             inorderIdx[n] = i
         
         self.preIdx = 0
-        l = 0
-        r = len(preorder) - 1
 
         def dfs(l, r):
             if l > r:
-                return None
-
+                return
+            
             rootVal = preorder[self.preIdx]
             self.preIdx += 1
-
-            partitionIdx = inorderIdx[rootVal]
-            
             root = TreeNode(rootVal)
-            root.left = dfs(l, partitionIdx - 1)
-            root.right = dfs(partitionIdx + 1, r)
+            partition = inorderIdx[rootVal]
+
+            root.left = dfs(l, partition - 1)
+            root.right = dfs(partition + 1, r)
 
             return root
         
-        return dfs(l, r)
+        return dfs(0, len(preorder) - 1)
 
-
-            

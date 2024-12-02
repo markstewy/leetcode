@@ -7,10 +7,10 @@ class Solution:
         while l <= r:
             m = l + (r - l) // 2
 
-            if target > matrix[m][-1]:
-                l = m + 1
-            elif target < matrix[m][0]:
+            if matrix[m][0] > target:
                 r = m - 1
+            elif matrix[m][-1] < target:
+                l = m + 1
             else:
                 targetRow = m
                 break
@@ -25,13 +25,11 @@ class Solution:
         while l <= r:
             m = l + (r - l) // 2
 
-            if values[m] > target:
-                r = m - 1
-            elif values[m] < target:
+            if values[m] < target:
                 l = m + 1
+            elif values[m] > target:
+                r = m - 1
             else:
                 return True
-        
+
         return False
-
-

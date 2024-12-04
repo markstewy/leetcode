@@ -5,17 +5,14 @@ class Solution:
             "[": "]",
             "{": "}"
         }
-
         stack = []
 
         for c in s:
             if c in openToClose:
                 stack.append(openToClose[c])
-                continue
-
-            if stack and c == stack[-1]:
+            elif stack and c == stack[-1]:
                 stack.pop()
             else:
                 return False
-        
+            
         return not stack

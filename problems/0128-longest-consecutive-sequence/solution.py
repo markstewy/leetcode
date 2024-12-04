@@ -8,6 +8,7 @@ class Solution:
                 l = 0
                 while n + l in nset:
                     l += 1
-                    maxLen = max(maxLen, l)
-                
+                maxLen = max(maxLen, l)
+        
         return maxLen
+                

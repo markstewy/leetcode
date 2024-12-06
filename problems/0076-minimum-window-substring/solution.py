@@ -14,6 +14,7 @@ class Solution:
         for r in range(len(s)):
             c = s[r]
             scount[c] = scount.get(c, 0) + 1
+
             if c in tcount and scount[c] == tcount[c]:
                 matches += 1
             
@@ -22,12 +23,12 @@ class Solution:
                     minLen = r - l + 1
                     minl = l
                     minr = r
-                
+            
                 c = s[l]
+                l += 1
                 scount[c] -= 1
                 if c in tcount and scount[c] == tcount[c] - 1:
                     matches -= 1
-                l += 1
-                
+        
         return s[minl : minr + 1]
-
+                

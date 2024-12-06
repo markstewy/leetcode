@@ -14,16 +14,15 @@ class Solution:
                 return isSameTree(r1.left, r2.left) and isSameTree(r1.right, r2.right)
             else:
                 return False
-            
+
         def helper(root, subroot):
             if not subroot:
                 return True
             if not root:
                 return False
-            
             if isSameTree(root, subroot):
                 return True
             else:
                 return helper(root.left, subroot) or helper(root.right, subroot)
-        
+            
         return helper(root, subRoot)

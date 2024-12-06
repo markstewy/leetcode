@@ -14,6 +14,6 @@ class Solution:
                 return (helper(r1.left, r2.left) and helper(r1.right, r2.right)) or (helper(r1.left, r2.right) and helper(r1.right, r2.left))
             else:
                 return False
-        
-        return helper(root1, root2)
+            
 
+        return helper(root1, root2)

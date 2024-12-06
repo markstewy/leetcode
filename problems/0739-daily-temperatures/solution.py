@@ -4,14 +4,13 @@ class Solution:
         stack = []
 
         for i, t in enumerate(temps):
-
             while stack and t > stack[-1]["temp"]:
                 idx = stack[-1]["idx"]
                 ans[idx] = i - idx
                 stack.pop()
             
-            stack.append({"temp": t, "idx": i})
+            stack.append({"idx": i, "temp": t})
         
+
         return ans
-        
 

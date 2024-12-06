@@ -6,7 +6,6 @@ class Solution:
         for i in range(len(nums)):
             if i > 0 and nums[i] == nums[i - 1]:
                 continue
-            
             if nums[i] > 0:
                 break
 
@@ -25,5 +24,5 @@ class Solution:
                     l += 1
                     while nums[l] == nums[l - 1] and l < r:
                         l += 1
-        
+
         return ans

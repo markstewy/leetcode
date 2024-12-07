@@ -9,9 +9,8 @@ class HitCounter:
         
 
     def getHits(self, timestamp: int) -> int:
-        while self.dq and self.dq[0] <= timestamp - 300:
+        while self.dq and timestamp - self.dq[0] >= 300:
             self.dq.popleft()
-        
         return len(self.dq)
         
 

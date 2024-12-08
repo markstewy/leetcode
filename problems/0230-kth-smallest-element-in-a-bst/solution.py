@@ -9,24 +9,20 @@ class Solution:
         self.i = 0
         self.ans = None
 
-        def helper(root):
-            if not root or self.i > k:
+        def inorder(root):
+            if not root or self.i >= k:
                 return
 
-            helper(root.left)
+            inorder(root.left)
+            
             self.i += 1
             if self.i == k:
                 self.ans = root.val
-            helper(root.right)
-    
-        helper(root)
+            
+            inorder(root.right)
+        
+        inorder(root)
         return self.ans
-
-
-
-
-
-
-
+            
 
 

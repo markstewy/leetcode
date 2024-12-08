@@ -9,14 +9,13 @@ class Solution:
             "D": 500,
             "M": 1000
         }
-    
+
         s = s.replace("IV", "IIII").replace("IX", "VIIII")
         s = s.replace("XL", "XXXX").replace("XC", "LXXXX")
         s = s.replace("CD", "CCCC").replace("CM", "DCCCC")
-        print(s)
 
-        n = 0
-        for c in s:
-            n += numerals[c]
+        total = 0
+        for n in s:
+            total += numerals[n]
         
-        return n
+        return total

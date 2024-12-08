@@ -7,17 +7,17 @@
 class Solution:
     def goodNodes(self, root: TreeNode) -> int:
         self.goodCount = 0
-        
-        def helper(root, maxParent):
+
+        def dfs(root, maxParent):
             if not root:
                 return
             if root.val >= maxParent:
                 self.goodCount += 1
-
-            maxParent = max(maxParent, root.val)
-            helper(root.left, maxParent)
-            helper(root.right, maxParent)
+            
+            maxParent = max(root.val, maxParent)
+            dfs(root.left, maxParent)
+            dfs(root.right, maxParent)
         
-        helper(root, -float("infinity"))
+        dfs(root, -float("infinity"))
         return self.goodCount
 

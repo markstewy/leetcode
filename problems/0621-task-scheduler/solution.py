@@ -1,24 +1,27 @@
 class Solution:
     def leastInterval(self, tasks: List[str], n: int) -> int:
-        # max count tasks on max heap
-        # dq to hold waiting tasks
-
-        maxHeap = [-cnt for cnt in Counter(tasks).values()]
-        heapq.heapify(maxHeap)
-        waitQueue = deque()
-
+        tCount = [-count for count in Counter(tasks).values()]
+        heapq.heapify(tCount)
+        
+        waitq = deque() # (interval, count)
         interval = 0
 
-        while maxHeap or waitQueue:
-            interval += 1
+        while tCount or waitq:
+            interval = interval + 1
 
-            if waitQueue and waitQueue[0]["time"] < interval:
-                heapq.heappush(maxHeap, waitQueue[0]["cnt"])
-                waitQueue.popleft()
-
-            if maxHeap:
-                jobCount = heapq.heappop(maxHeap) + 1
-                if jobCount:
-                    waitQueue.append({"cnt": jobCount, "time": interval + n})
-
+            while waitq and interval - waitq[0][0] > n:
+                count = waitq.popleft()[1]
+                heapq.heappush(tCount, count)
+            
+            if tCount:
+                count = heapq.heappop(tCount)
+                if count < -1:
+                    waitq.append((interval, count + 1))
+        
         return interval
+
+
+        
+        
+
+        return 0

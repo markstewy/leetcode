@@ -1,14 +1,16 @@
 class Solution:
     def taskSchedulerII(self, tasks: List[int], space: int) -> int:
+        delay = {}
         day = 0
-        waitTimes = {}
 
         for t in tasks:
             day += 1
 
-            if t in waitTimes:
-                day = max(day, waitTimes[t])
-            
-            waitTimes[t] = day + space + 1
+            if t in delay and delay[t] >= day:
+                    day = delay[t] + 1
+
+            delay[t] = day + space
         
         return day
+            
+

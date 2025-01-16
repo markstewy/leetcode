@@ -2,7 +2,7 @@ class Solution:
     def searchMatrix(self, matrix: List[List[int]], target: int) -> bool:
         l = 0
         r = len(matrix) - 1
-        targetRow = -1
+        targetRow = None
 
         while l <= r:
             m = l + (r - l) // 2
@@ -12,24 +12,25 @@ class Solution:
             elif matrix[m][-1] < target:
                 l = m + 1
             else:
-                targetRow = m
+                targetRow = matrix[m]
                 break
         
-        if targetRow == -1:
+        if targetRow == None:
             return False
         
-        values = matrix[targetRow]
+
         l = 0
-        r = len(values) - 1
+        r = len(targetRow) - 1
 
         while l <= r:
             m = l + (r - l) // 2
 
-            if values[m] < target:
+            if targetRow[m] < target:
                 l = m + 1
-            elif values[m] > target:
+            elif targetRow[m] > target:
                 r = m - 1
             else:
                 return True
-
+        
         return False
+            

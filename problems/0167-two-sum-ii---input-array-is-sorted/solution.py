@@ -5,11 +5,13 @@ class Solution:
 
         while l < r:
             total = nums[l] + nums[r]
-            if total < target:
-                l += 1
-            elif total > target:
+
+            if total > target:
                 r -= 1
-            else:
-                break
+            elif total < target:
+                l += 1
+            else: 
+                return [l + 1, r + 1]
         
-        return [l + 1, r + 1]
+        return [-1, -1]
+        

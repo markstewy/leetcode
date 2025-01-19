@@ -6,7 +6,7 @@ class Solution:
         for n in nums:
             prod *= n
             ltr.append(prod)
-        
+
         prod = 1
         for i in range(len(nums) - 1, -1, -1):
             prod *= nums[i]
@@ -14,6 +14,7 @@ class Solution:
         rtl.reverse()
 
         ans = []
+
         for i in range(len(nums)):
             if i == 0:
                 ans.append(rtl[1])

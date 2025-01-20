@@ -9,25 +9,28 @@ class Node:
 
 class Solution:
     def copyRandomList(self, head: 'Optional[Node]') -> 'Optional[Node]':
-        orgToCpy = {}
         
-        dhead = Node(-1)
+        orgTocpy = {}
+
+        cpyhead = Node(0)
+        cpy = cpyhead
         org = head
-        cpy = dhead
 
         while org:
             cpy.next = Node(org.val)
-            orgToCpy[id(org)] = cpy.next
+
+            orgTocpy[id(org)] = cpy.next
+
             org = org.next
             cpy = cpy.next
-
+        
+        cpy = cpyhead.next
         org = head
-        cpy = dhead.next
 
-        while org:
-            cpy.random = orgToCpy[id(org.random)] if org.random else None
+        while head:
+            cpy.random = orgTocpy[id(head.random)] if head.random else None
 
+            head = head.next
             cpy = cpy.next
-            org = org.next
-    
-        return dhead.next
+        
+        return cpyhead.next

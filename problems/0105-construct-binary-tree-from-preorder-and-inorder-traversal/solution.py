@@ -6,29 +6,12 @@
 #         self.right = right
 class Solution:
     def buildTree(self, preorder: List[int], inorder: List[int]) -> Optional[TreeNode]:
-        
-        inorderIdx = {}
-        for i, n in enumerate(inorder):
-            inorderIdx[n] = i
-        
-        self.preorderIdx = 0
-        l = 0
-        r = len(preorder) - 1
+        if not preorder:
+            return None
 
-        def dfs(l, r):
-            if l > r:
-                return
-            
-            rootVal = preorder[self.preorderIdx]
-            self.preorderIdx += 1
-            partition = inorderIdx[rootVal]
+        root = TreeNode(preorder[0])
+        mid = inorder.index(root.val)
 
-            root = TreeNode(rootVal)
-            root.left = dfs(l, partition - 1)
-            root.right = dfs(partition + 1, r)
-
-            return root
-        
-        return dfs(l, r)
-
-    
+        root.left = self.buildTree(preorder[1:mid + 1], inorder[:mid])
+        root.right = self.buildTree(preorder[mid + 1:], inorder[mid + 1:])
+        return root

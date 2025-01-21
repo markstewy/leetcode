@@ -1,8 +1,8 @@
 class Solution:
     def isPalindrome(self, s: str) -> bool:
-        sArr = []
+        arr = []
         for c in s:
             if c.isdigit() or c.isalpha():
-                sArr.append(c.lower())
-    
-        return sArr == sArr[::-1]
+                arr.append(c.lower())
+        
+        return arr == arr[::-1]

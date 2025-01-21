@@ -1,7 +1,7 @@
 class Solution:
     def evalRPN(self, tokens: List[str]) -> int:
-        signs = "+-*/"
         stack = []
+        signs = "+-*/"
 
         for t in tokens:
             if t not in signs:
@@ -12,7 +12,6 @@ class Solution:
             else:
                 r = stack.pop()
                 l = stack.pop()
-
                 if t == "+":
                     stack.append(l + r)
                 if t == "-":
@@ -20,10 +19,9 @@ class Solution:
                 if t == "*":
                     stack.append(l * r)
                 if t == "/":
-                    if (l * r) < 0:
-                        stack.append(math.ceil(l / r))
-                    else:
+                    if l * r > 0:
                         stack.append(l // r)
+                    else:
+                        stack.append(math.ceil(l / r))
         
         return stack[0]
-

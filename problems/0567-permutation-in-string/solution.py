@@ -1,36 +1,32 @@
 class Solution:
     def checkInclusion(self, s1: str, s2: str) -> bool:
-        s1count, s2count = {}, {}
+        s1Count = Counter(s1)
+        s2Count = {}
 
-        for c in s1:
-            s1count[c] = s1count.get(c, 0) + 1
-        
         matches = 0
-        needed = len(s1count.keys())
+        needed = len(s1Count.keys())
 
         l = 0
         for r in range(len(s2)):
-            if matches == needed:
-                return True
-
             c = s2[r]
-            s2count[c] = s2count.get(c, 0) + 1
+            s2Count[c] = s2Count.get(c, 0) + 1
 
-            if c in s1count and s2count[c] == s1count[c]:
+            if c in s1Count and s1Count[c] == s2Count[c]:
                 matches += 1
-            if c in s1count and s2count[c] == s1count[c] + 1:
+            if c in s1Count and s1Count[c] == s2Count[c] - 1:
                 matches -= 1
             
-            if r - l + 1 > len(s1):
+            while r - l + 1 > len(s1):
                 c = s2[l]
-                s2count[c] -= 1
+                s2Count[c] -= 1
+                l += 1
 
-                if c in s1count and s2count[c] == s1count[c]:
+                if c in s1Count and s1Count[c] == s2Count[c]:
                     matches += 1
-                if c in s1count and s2count[c] == s1count[c] - 1:
+                if c in s1Count and s1Count[c] == s2Count[c] + 1:
                     matches -= 1
 
-                l += 1
+            if matches == needed:
+                return True
         
         return matches == needed
-

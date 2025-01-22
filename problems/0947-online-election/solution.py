@@ -1,43 +1,35 @@
 class TopVotedCandidate:
 
     def __init__(self, persons: List[int], times: List[int]):
-        self.times = times
-        self.leaders = []
-        leaderCount = {}
+        count = {}
         leader = None
-        maxCount = -1
+        leaderCount = 0
+        self.leaderRecord = []
+        self.times = times
 
         for p in persons:
-            leaderCount[p] = leaderCount.get(p, 0) + 1
-            if leaderCount[p] >= maxCount:
-                maxCount = leaderCount[p]
+            count[p] = count.get(p, 0) + 1
+            if count[p] >= leaderCount:
                 leader = p
-            self.leaders.append(leader)
+                leaderCount = count[p]
+            self.leaderRecord.append(leader)
 
-    def getClosestPrevIdx(self, timestamp):
-        target = timestamp
-        values = self.times
-
+    def q(self, t: int) -> int:
         l = 0
-        r = len(values) - 1
-        nearestPrev = -1
+        r = len(self.times) - 1
+        closestPrev = None
 
         while l <= r:
             m = l + (r - l) // 2
-
-            if values[m] < target:
-                nearestPrev = m
-                l = m + 1
-            elif values[m] > target:
+            if self.times[m] > t:
                 r = m - 1
-            else:
-                return m
+            elif self.times[m] <= t:
+                l = m + 1
+                closestPrev = m
         
-        return nearestPrev
+        return self.leaderRecord[closestPrev]
 
-    def q(self, t: int) -> int:
-        return self.leaders[self.getClosestPrevIdx(t)]
-        
+
 
 
 # Your TopVotedCandidate object will be instantiated and called as such:

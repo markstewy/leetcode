@@ -1,16 +1,14 @@
 class Solution:
     def dailyTemperatures(self, temps: List[int]) -> List[int]:
         ans = [0] * len(temps)
-        stack = []
+        minheap = [] # (temp, idx)
 
         for i, t in enumerate(temps):
-            while stack and t > stack[-1]["temp"]:
-                idx = stack[-1]["idx"]
+            while minheap and t > minheap[0][0]:
+                idx = minheap[0][1]
                 ans[idx] = i - idx
-                stack.pop()
+                heapq.heappop(minheap)
             
-            stack.append({"idx": i, "temp": t})
+            heapq.heappush(minheap, (t, i))
         
-
         return ans
-

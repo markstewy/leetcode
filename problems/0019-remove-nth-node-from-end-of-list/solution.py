@@ -8,16 +8,18 @@ class Solution:
         dhead = ListNode()
         dhead.next = head
 
-        l, r = dhead, dhead
-        i = 0
+        length = 0
+        while head:
+            length += 1
+            head = head.next
 
-        while r.next:
-            r = r.next
-            if i >= n:
-                l = l.next
+        head = dhead
+        target = length - n
+        i = 1
+        while i <= target:
+            head = head.next
             i += 1
-        
-        l.next = l.next.next if l.next else None
-    
-        return dhead.next
 
+        head.next = head.next.next if head.next else None
+
+        return dhead.next

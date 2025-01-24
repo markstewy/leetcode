@@ -7,15 +7,15 @@ class Solution:
             "L": 50,
             "C": 100,
             "D": 500,
-            "M": 1000
+            "M": 1000,
         }
-
+        
         s = s.replace("IV", "IIII").replace("IX", "VIIII")
         s = s.replace("XL", "XXXX").replace("XC", "LXXXX")
         s = s.replace("CD", "CCCC").replace("CM", "DCCCC")
 
         total = 0
-        for n in s:
-            total += numerals[n]
+        for c in s:
+            total += numerals[c]
         
         return total

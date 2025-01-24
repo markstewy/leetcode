@@ -10,9 +10,9 @@ class Solution:
         def helper(root, l, r):
             if not root:
                 return True
-            if l < root.val < r:
-                return helper(root.left, l, root.val) and helper(root.right, root.val, r)
-            else:
+            if not (l < root.val < r):
                 return False
+
+            return helper(root.right, root.val, r) and helper(root.left, l, root.val)
         
         return helper(root, -float("infinity"), float("infinity"))

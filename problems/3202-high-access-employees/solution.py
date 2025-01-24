@@ -1,18 +1,20 @@
 class Solution:
-    def findHighAccessEmployees(self, atimes: List[List[str]]) -> List[str]:
-        atimes.sort(key=lambda x : int(x[1]))
-        emps = collections.defaultdict(deque)
-        ans = set()
-        
-        for a in atimes:
-            name = a[0]
-            time = a[1]
-            emps[name].append(int(time))
+    def findHighAccessEmployees(self, access_times: List[List[str]]) -> List[str]:
+        hae = set()
+        count = {}
+        times = [[int(time[1]), time[0]] for time in access_times]
+        times.sort()
 
-            while emps[name][0] <= int(time) - 100:
-                emps[name].popleft()
-            if len(emps[name]) >= 3:
-                ans.add(name)
+        l = 0
+        for r in range(len(times)):
+            while times[r][0] - times[l][0] >= 100:
+                name = times[l][1] 
+                count[name] -= 1 
+                l += 1
+            
+            name = times[r][1]
+            count[name] = count.get(name, 0) + 1
+            if count[name] >= 3:
+                hae.add(name)
         
-        return list(ans)
-
+        return list(hae)

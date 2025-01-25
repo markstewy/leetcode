@@ -8,33 +8,18 @@ class Solution:
         """
         Do not return anything, modify head in-place instead.
         """
-        slow, fast = head, head.next
+        dq = deque()
 
-        # find middle
-        while fast and fast.next:
-            slow = slow.next
-            fast = fast.next.next
-
-        # reverse second and remove node linking first and second half
-        curr = slow.next
-        slow.next = None
-        prev = None
-
-        while curr:
-            tempNext = curr.next
-            curr.next = prev
-            prev = curr
-            curr = tempNext
+        while head:
+            dq.append(head)
+            head = head.next
+            dq[-1].next = None
         
-        lHead = head
-        rHead = prev
-
-        while rHead:
-            tempNextL, tempNextR = lHead.next, rHead.next
-            lHead.next = rHead
-            rHead.next = tempNextL
-            lHead = tempNextL
-            rHead = tempNextR
-        
-        return head
+        while dq:
+            l = dq.popleft()
+            r = dq.pop() if dq else None
+            
+            l.next = r
+            if r:
+                r.next = dq[0] if dq else None 
 

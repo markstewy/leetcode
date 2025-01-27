@@ -1,27 +1,30 @@
 class Solution:
-    def intToRoman(self, num: int) -> str:        
-        ones = ["", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX"]
-        tens = ["", "X", "XX", "XXX", "XL", "L", "LX", "LXX", "LXXX", "XC"]
-        hundreds = ["", "C", "CC", "CCC", "CD", "D", "DC", "DCC", "DCCC", "CM"]
-        thousands = ["", "M", "MM", "MMM"]
-
+    def intToRoman(self, num: int) -> str:
         ans = ""
-        sNum = str(num)
-        # 0123
-        if len(sNum) >= 1:
-            ans = ones[int(sNum[-1])]
-        if len(sNum) >= 2:
-            ans = tens[int(sNum[-2])] + ans
-        if len(sNum) >= 3:
-            ans = hundreds[int(sNum[-3])] + ans
-        if len(sNum) == 4:
-            ans = thousands[int(sNum[-4])] + ans
+        numerals = {
+            1: "I",
+            5: "V",
+            10: "X",
+            50: "L",
+            100: "C",
+            500: "D",
+            1000: "M"
+        }
+
+        while num:
+            divisors = list(numerals.keys())
+            divisors.sort(reverse=True)
+            for n in divisors:
+                while num / n >= 1:
+                    num -= n
+                    ans += numerals[n]
+        print(ans)
+        ans = ans.replace("DCCCC", "CM").replace("CCCC", "CD")
+        ans = ans.replace("LXXXX", "XC").replace("XXXX", "XL")
+        ans = ans.replace("VIIII", "IX").replace("IIII", "IV")
     
         return ans
-        
-            
 
-        
-        
-        
-        
+
+    
+

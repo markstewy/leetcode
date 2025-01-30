@@ -1,11 +1,8 @@
 class Solution:
     def letterCombinations(self, digits: str) -> List[str]:
-        ans = []
-
-        if digits == "": 
-            return ans
-
-        numToChars = {
+        self.ans = []
+        self.digits = digits
+        self.dial = {
             "2": "abc",
             "3": "def",
             "4": "ghi",
@@ -13,20 +10,20 @@ class Solution:
             "6": "mno",
             "7": "pqrs",
             "8": "tuv",
-            "9": "wxyz",
+            "9": "wxyz"
         }
 
-        def helper(numString, variation):
-            if numString == "":
-                ans.append(variation)
+        def helper(comb:str, i:int) -> None:
+            if i >= len(self.digits):
+                if comb:
+                    self.ans.append(comb)
                 return
-            
-            num = numString[0]
-            for c in numToChars[num]:
-                helper(numString[1:], variation + c)
+
+            digit = self.digits[i]
+            for c in self.dial[digit]:
+                helper(comb + c, i + 1)
         
-        helper(digits, "")
-            
-        return ans
+        helper("", 0)
+        return self.ans
 
             

@@ -7,26 +7,27 @@
 
 class Solution:
     def lowestCommonAncestor(self, root: 'TreeNode', nodes: 'List[TreeNode]') -> 'TreeNode':
-        nSet = set(nodes)
+        self.lca = root
+        self. nodes = [node.val for node in nodes]
 
-        def helper(node):
+        def containsCount(root):
+            if not root:
+                return 0
+            if root.val in self.nodes:
+                return (containsCount(root.left) + containsCount(root.right)) + 1
+            else:
+                return (containsCount(root.left) + containsCount(root.right)) + 0
 
-            if not node:
-                return None
-
-            if node in nSet:
-                return node
-            
-            l = helper(node.left)
-            r = helper(node.right)
-
-            if l and r:
-                return node
-            if l:
-                return l
-            if r: 
-                return r
-            
-        return helper(root)
-  
-
+        def helper(root):
+            if not root:
+                return
+            if containsCount(root) == len(self.nodes):
+                self.lca = root
+            else:
+                return
+            helper(root.left)
+            helper(root.right)
+        
+        helper(root)
+        return self.lca
+                

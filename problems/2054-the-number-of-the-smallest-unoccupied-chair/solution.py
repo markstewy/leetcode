@@ -1,32 +1,30 @@
 class Solution:
-            
     def smallestChair(self, times: List[List[int]], targetFriend: int) -> int:
-        # seats are 0 to len(times) max will be every seated at same time
-        availableSeatIds = list( range(len(times)) ) # minheap
-        minHeap = heapq.heapify(availableSeatIds)
+        seats = list(range(len(times)))
+        heapq.heapify(seats)
+        seatMap = {} # userId: seatIdx
 
-        chrono = [] # {"friend": 0, "time": 0, "action": leave/arr}
-        assignedSeats = {} # friendId: seatTaken 
+        events = []
+        for personId, times in enumerate(times):
+            events.append([times[0], "arrive", personId])
+            events.append([times[1], "leave", personId])
+        events.sort(key=lambda x : (-x[0], x[1]), reverse=True)
 
-        for i, t in enumerate(times):
-            chrono.append({"friend": i, "time": t[0], "action": "arrive"})
-            chrono.append({"friend": i, "time": t[1], "action": "leave"})
+        for e in events:
+            userId = e[2]
 
-        chrono.sort(key= lambda x: x["action"], reverse=True) # so that time ties will have leave happen first
-        chrono.sort(key= lambda x: x["time"])
-
-        for event in chrono:
-            if event["action"] == "arrive":
-                seat = heapq.heappop(availableSeatIds)
-                if event["friend"] == targetFriend:
-                    return seat
-                assignedSeats[event["friend"]] = seat
-
-            elif event["action"] == "leave":
-                seat = assignedSeats[event["friend"]]
-                heapq.heappush(availableSeatIds, seat)
-
+            if userId == targetFriend:
+                return seats[0]
+            elif e[1] == "arrive":
+                seatMap[userId]  = heapq.heappop(seats)
+            elif e[1] == "leave":
+                heapq.heappush(seats, seatMap[userId])
+                del seatMap[userId]
+        
         return -1
+            
+
+
 
 
 

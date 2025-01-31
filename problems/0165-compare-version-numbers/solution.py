@@ -3,25 +3,19 @@ class Solution:
         v1 = deque([int(n) for n in version1.split(".")])
         v2 = deque([int(n) for n in version2.split(".")])
 
-        while v1 and v1[-1] == 0:
-            v1.pop()
-        while v2 and v2[-1] == 0:
-            v2.pop()
-
-
-        while v1 and v2:
-            if v1[0] < v2[0]:
-                return -1
-            elif v1[0] > v2[0]:
+        while v1 or v2:
+            v1n = v1[0] if v1 else 0
+            v2n = v2[0] if v2 else 0
+            
+            if v1n > v2n:
                 return 1
-            else:
+            if v1n < v2n:
+                return -1
+            if v1:
                 v1.popleft()
+            if v2:
                 v2.popleft()
         
-        if v1 and not v2:
-            return 1
-        if v2 and not v1:
-            return -1
-        if not v2 and not v1:
-            return 0
+        return 0
+
 

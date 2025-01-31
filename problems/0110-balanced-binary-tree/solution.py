@@ -8,17 +8,17 @@ class Solution:
     def isBalanced(self, root: Optional[TreeNode]) -> bool:
         self.isBalanced = True
 
-        def helper(node):
-            if not node:
+        def helper(root):
+            if not root:
                 return 0
-            
-            l = helper(node.left)
-            r = helper(node.right)
+
+            l = helper(root.left)
+            r = helper(root.right)
+
             if abs(l - r) > 1:
                 self.isBalanced = False
             
-            return 1 + max(l, r)
-
-            
+            return max(l, r) + 1
+        
         helper(root)
         return self.isBalanced

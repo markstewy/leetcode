@@ -1,37 +1,26 @@
 class Solution:
     def leastInterval(self, tasks: List[str], n: int) -> int:
-        taskCounts = [-count for count in Counter(tasks).values()] # maxheap
-        taskCounts.sort(reverse=True)
-        
+        # execute the highest freq tasks first
+        # use a que to set aside a task during it's gap time
+        maxheap = [-v for v in Counter(tasks).values()]
+        heapq.heapify(maxheap)
+        timeout = deque() #[time, taskcount]
         time = 0
-        heapq.heapify(taskCounts)
-        dq = deque()
-        
-        while taskCounts or dq:
+
+        while maxheap or timeout:
             time += 1
 
-            # add back all items from dq if wait is over
-            while dq and dq[0][0] < time:
-                heapq.heappush(taskCounts, dq.popleft()[1])
+            while timeout and timeout[0][0] < time:
+                taskCount = timeout.popleft()[1]
+                heapq.heappush(maxheap, taskCount)
             
-            # execute the current task with the max count
-            if not taskCounts:
-                continue
-            taskCount = heapq.heappop(taskCounts) + 1
-
-            # if still counts left on that task, put back in the dq
-            if taskCount:
-                dq.append((time + n, taskCount))
+            if not maxheap:
+                time = timeout[0][0]
+            else:
+                task = heapq.heappop(maxheap) + 1
+                if task < 0:
+                    timeout.append([time + n, task])
         
         return time
-
-
-            # for each time increment move add back all from timeout that are done waiting
-            # operate on the largest in the maxheap
-            # if it still has counts left move to timeout queue
             
-            # move to queue
-
-
-
 

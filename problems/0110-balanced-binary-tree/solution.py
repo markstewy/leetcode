@@ -8,17 +8,17 @@ class Solution:
     def isBalanced(self, root: Optional[TreeNode]) -> bool:
         self.isBalanced = True
 
-        def helper(root):
+        def dfsPostOrder(root):
             if not root:
                 return 0
-
-            l = helper(root.left)
-            r = helper(root.right)
+            
+            l = dfsPostOrder(root.left)
+            r = dfsPostOrder(root.right)
 
             if abs(l - r) > 1:
                 self.isBalanced = False
             
             return max(l, r) + 1
         
-        helper(root)
+        dfsPostOrder(root)
         return self.isBalanced

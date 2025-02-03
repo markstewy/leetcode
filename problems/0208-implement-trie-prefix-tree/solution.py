@@ -1,46 +1,35 @@
 class Node:
     def __init__(self):
+        self.isWord = False
         self.next = {}
-        self.isEnd = False
 
 class Trie:
 
     def __init__(self):
-        self.dummyHead = Node()
+        self.root = Node()
 
     def insert(self, word: str) -> None:
-        curr = self.dummyHead
-        for i, c in enumerate(word):
-            if c in curr.next:
-                curr = curr.next[c]
-            else:
-                curr.next[c] = Node()
-                curr = curr.next[c]
-            if i == len(word) - 1:
-                curr.isEnd = True
+        root = self.root
+        for c in word:
+            root.next[c] = root.next.get(c, Node())
+            root = root.next[c]
+        root.isWord = True
 
     def search(self, word: str) -> bool:
-        curr = self.dummyHead
-        for i, c in enumerate(word):
-            if c in curr.next:
-                curr = curr.next[c]
-            else:
+        root = self.root
+        for c in word:
+            if c not in root.next:
                 return False
-            
-            if i == len(word) - 1:
-                return curr.isEnd == True
-        
+            root = root.next[c]
+        return root.isWord
 
     def startsWith(self, prefix: str) -> bool:
-        curr = self.dummyHead
-        for i, c in enumerate(prefix):
-            if c in curr.next:
-                curr = curr.next[c]
-            else:
+        root = self.root
+        for c in prefix:
+            if c not in root.next:
                 return False
+            root = root.next[c]
         return True
-  
-
         
 
 

@@ -1,37 +1,27 @@
-class Node:
-    def __init__(self, clss: int):
-        self.clss = clss
-        self.prereqs = []
-
 class Solution:
     def checkIfPrerequisite(self, numCourses: int, prerequisites: List[List[int]], queries: List[List[int]]) -> List[bool]:
-        self.ans = [False] * len(queries)
-        map = collections.defaultdict(list)
+        prmap = collections.defaultdict(list)
+        for pr, crs in prerequisites:
+            prmap[crs].append(pr)
 
-        for p in prerequisites:
-            clss = p[1]
-            pr = p[0]
-            map[clss].append(pr)
-
-        def helper(clss, target, i, visited):
-            if clss in visited:
-                return
-            visited.add(clss)
-
-            if clss == target:
-                self.ans[i] = True
-            if clss in map:
-                for c in map[clss]:
-                    helper(c, target, i, visited)
-            else:
-                return
+        def helper(crs, target, circular: set[int]):
+            if crs == target:
+                return True
+            if crs in circular:
+                return False
+            
+            circular.add(crs)
+            for c in prmap[crs]: # if any of the paths have the pr return True
+                if helper(c, target, circular) == True:
+                    return True
+            
+            return False
         
-        for i, q in enumerate(queries):
-            clss = q[1]
-            pr = q[0]
-            helper(clss, pr, i, set())
+        ans = []
+        for pr, crs in queries:
+            ans.append(helper(crs, pr, set()))
         
-        return self.ans
+        return ans
 
 
             

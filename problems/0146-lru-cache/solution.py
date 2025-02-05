@@ -1,72 +1,63 @@
-class Node():
-    def __init__(self, val:int = None, key:str = None, prev = None, next = None):
-        self.val = val
+class Node:
+    def __init__(self, val, key):
         self.key = key
-        self.prev = prev
-        self.next = next
+        self.val = val
+        self.next = None
+        self.prev = None
 
 class LRUCache:
 
     def __init__(self, capacity: int):
-        self.l = Node()
-        self.r = Node()
+        self.capacity = capacity
+        self.l = Node(-1, "")
+        self.r = Node(-1, "")
         self.l.next = self.r
         self.r.prev = self.l
-        self.cache = {}
-        self.cap = capacity
+
+        self.nodeMap = {}
 
     def get(self, key: int) -> int:
-        if key not in self.cache:
-            return -1
-
-        self.moveToFront(key)
-        return self.cache[key].val
-        
+        if key in self.nodeMap:
+            self.moveToTop(key)
+            return self.nodeMap[key].val
+        return -1
 
     def put(self, key: int, value: int) -> None:
-        if key not in self.cache: # add to the right
-            self.add(key, value)
+        if key in self.nodeMap:
+            self.moveToTop(key)
+            self.nodeMap[key].val = value
         else:
-            self.remove(key)
-            self.add(key, value)
-        
-        if len(self.cache.keys()) > self.cap:
-            self.remove(self.l.next.key)
+            # create node
+            self.nodeMap[key] = Node(value, key)
+            node = self.nodeMap[key]
+            # append to top of list
+            node.prev = self.r.prev
+            node.next = self.r
+            self.r.prev.next = node
+            self.r.prev = node
+        while len(self.nodeMap.keys()) > self.capacity:
+            self.delete(self.l.next.key)
 
-    def add(self, key:int, value:int) -> None:
-            n = Node(value, key)
-            self.cache[key] = n
-            n.prev = self.r.prev
-            n.next = self.r
-            self.r.prev.next = n
-            self.r.prev = n
 
-    def remove(self, key:int):
-            n = self.cache[key]
-            n.prev.next = n.next
-            n.next.prev = n.prev
-            del self.cache[key]
-
-    def moveToFront(self, key):
-        n = self.cache[key]
-        n.prev.next = n.next
-        n.next.prev = n.prev
-        
-        n.prev = self.r.prev
-        n.next = self.r
-        
-        self.r.prev.next = n
-        self.r.prev = n
-
+    def delete(self, key) -> None:
+        node = self.nodeMap[key]
+        node.next.prev = node.prev
+        node.prev.next = node.next
+        del self.nodeMap[key]
     
-    def plist(self):
-        s = ""
-        curr = self.l.next
-        while curr.next:
-            s += f"{curr.val}--> "
-            curr = curr.next
-        
-        print(s)
+    def moveToTop(self, key) -> None:
+        node = self.nodeMap[key]
+        # remove the node
+        node.next.prev = node.prev
+        node.prev.next = node.next
+
+        # add to top of list
+        node.prev = self.r.prev
+        node.next = self.r
+        self.r.prev.next = node
+        self.r.prev = node
+
+
 
 # Your LRUCache object will be instantiated and called as such:
 # obj = LRUCache(capacity)

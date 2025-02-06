@@ -1,29 +1,30 @@
 class Solution:
     def canFinish(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
-        prmap = collections.defaultdict(list)
+        preMap = collections.defaultdict(list)
 
         for crs, pr in prerequisites:
-            prmap[crs].append(pr)
-        
+            preMap[crs].append(pr)
 
-        completed, circular = set(), set()
-        def dfs(crs):
+        visited = set()
+        completed = set()
+        def canComplete(crs: int) -> None:
+            if crs in visited:
+                return False
             if crs in completed:
                 return True
-            if crs in circular:
-                return False
-            
-            circular.add(crs)
-            for pr in prmap[crs]:
-                if dfs(pr) == False:
+
+            visited.add(crs)
+            for pr in preMap[crs]:
+                if canComplete(pr) == False:
                     return False
-            circular.remove(crs)
-            
+            visited.remove(crs)
+        
             completed.add(crs)
             return True
         
-        for i in range(numCourses):
-            if dfs(i) == False:
+        for crs in range(numCourses):
+            if canComplete(crs) == False:
                 return False
-            
         return True
+
+

@@ -6,10 +6,11 @@ class Node:
 class WordDictionary:
 
     def __init__(self):
-        self.tree = Node()
+        self.root = Node()
 
     def addWord(self, word: str) -> None:
-        curr = self.tree
+        curr = self.root
+        
         for c in word:
             if c not in curr.next:
                 curr.next[c] = Node()
@@ -17,34 +18,32 @@ class WordDictionary:
         curr.isWord = True
 
     def search(self, word: str) -> bool:
-        return self.helper(word, 0, self.tree)
-    
+        
+        def hasWord(word: str, i: int, node: Node):
+            c: str = word[i]
+            isLastChar: bool =  i == len(word) - 1
 
-    def helper(self, word: str, i, curr) -> bool:
-        c = word[i]
-        isLastChar = i == len(word) - 1
-
-        if c == ".":
-            if isLastChar:
-                for k in curr.next.keys():
-                    if curr.next[k].isWord:
+            if c == ".":
+                if isLastChar:
+                    for k in node.next:
+                        if node.next[k].isWord:
+                            return True
+                    return False
+                for k in node.next:
+                    if hasWord(word, i + 1, node.next[k]) == True:
                         return True
                 return False
-            
-            for k in curr.next.keys():
-                if self.helper(word, i + 1, curr.next[k]) == True:
-                    return True
-            return False
 
-        else:
             if isLastChar:
-                return c in curr.next and curr.next[c].isWord
-
-            if c in curr.next:
-                return self.helper(word, i + 1, curr.next[c])
-            else:
+                return c in node.next and node.next[c].isWord
+            
+            if c not in node.next:
                 return False
             
+            return hasWord(word, i + 1, node.next[c])
+        
+        return hasWord(word, 0, self.root)
+
 
 
 

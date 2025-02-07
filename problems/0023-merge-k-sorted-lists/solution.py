@@ -5,23 +5,24 @@
 #         self.next = next
 class Solution:
     def mergeKLists(self, lists: List[Optional[ListNode]]) -> Optional[ListNode]:
-        def sortNode(ListNode):
-            return ListNode.val
-    
-        if len(lists) == 0:
-            return None
+        nodeArr = []
+
+        for l in lists:
+            curr = l
+            while curr:
+                nodeArr.append(curr)
+                temp = curr.next
+                curr.next = None
+                curr = temp
         
-        nodeArray: List[ListNode] = []
-        for list in lists:
-            while list:
-                nodeArray.append(ListNode(list.val))
-                list = list.next
-                
-        sortedNodeArray = sorted(nodeArray, key=sortNode)
-        rootNode = sortedNodeArray[0] if len(sortedNodeArray) > 0 else None
+        nodeArr.sort(key=lambda x : x.val)
+
+        dhead = ListNode()
+        curr = dhead
+
+        for node in nodeArr:
+            curr.next = node
+            curr = curr.next
         
-        for i, x in enumerate(sortedNodeArray):
-            if i < len(sortedNodeArray) - 1:
-                sortedNodeArray[i].next = sortedNodeArray[i + 1]
-        
-        return rootNode
+        return dhead.next
+

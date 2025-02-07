@@ -14,5 +14,6 @@ class Solution:
         while True:
             s = nums[s]
             s2 = nums[s2]
+
             if s == s2:
                 return s

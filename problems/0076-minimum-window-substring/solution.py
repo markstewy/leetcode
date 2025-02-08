@@ -1,33 +1,37 @@
 class Solution:
     def minWindow(self, s: str, t: str) -> str:
-        ans = ""
-        minl, minr = 0, len(s)
+        if len(t) > len(s):
+            return ""
 
-        scount = {}
+        minl, minr = 0, float("infinity")
         tcount = Counter(t)
-        matches = 0
+        scount = {}
         needed = len(tcount.keys())
+        matches = 0
 
         l = 0
         for r in range(len(s)):
-            # add new char
             c = s[r]
             scount[c] = scount.get(c, 0) + 1
 
-            if c in tcount and scount[c] == tcount[c]:
+            if c in tcount and tcount[c] == scount[c]:
                 matches += 1
-
-            # remove trailing char
+            
             while matches >= needed:
-                if r - l < minr - minl:
-                    ans = s[l : r + 1]
-                    minl, minr = l, r
-
+                if (r - l) < (minr - minl):
+                    print("hit")
+                    minr = r
+                    minl = l
+                    print(f"minl: {minl}.   minr: {minr}")
                 c = s[l]
                 scount[c] -= 1
+
+                if c in tcount and tcount[c] == scount[c] + 1:
+                    matches -= 1
                 l += 1
 
-                if c in tcount and tcount[c] - 1 == scount[c]:
-                    matches -= 1
+        if minr == float("infinity"):
+            return ""
+        return s[minl: minr + 1] 
         
-        return ans
+

@@ -1,30 +1,28 @@
 class Solution:
     def canFinish(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
         preMap = collections.defaultdict(list)
-
         for crs, pr in prerequisites:
             preMap[crs].append(pr)
+        
 
-        visited = set()
-        completed = set()
-        def canComplete(crs: int) -> None:
-            if crs in visited:
+        circular, completed = set(), set()
+        def helper(crs):
+            if crs in circular:
                 return False
             if crs in completed:
                 return True
-
-            visited.add(crs)
+            
+            circular.add(crs)
             for pr in preMap[crs]:
-                if canComplete(pr) == False:
+                if helper(pr) == False:
                     return False
-            visited.remove(crs)
-        
+            circular.remove(crs)
+
+            # if we reach this point is has no prereqs or all prereqs are complete-able
             completed.add(crs)
             return True
         
         for crs in range(numCourses):
-            if canComplete(crs) == False:
+            if helper(crs) == False:
                 return False
         return True
-
-

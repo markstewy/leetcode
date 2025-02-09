@@ -11,20 +11,18 @@ class Solution:
         dq = deque()
 
         while head:
-            temp = head
             dq.append(head)
+            temp = head
             head = head.next
-            temp.next = None
-        
+            dq[-1].next = None
+    
         dhead = ListNode()
-        head = dhead
+        curr = dhead
 
         while dq:
-            head.next = dq.popleft() if dq else None
-            head = head.next
-            head.next = dq.pop() if dq else None
-            head = head.next
+            curr.next = dq.popleft()
+            curr = curr.next
+            curr.next = dq.pop() if dq else None
+            curr = curr.next
         
         return dhead.next
-
-            

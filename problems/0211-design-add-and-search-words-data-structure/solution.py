@@ -10,41 +10,38 @@ class WordDictionary:
 
     def addWord(self, word: str) -> None:
         curr = self.root
-        
         for c in word:
             if c not in curr.next:
                 curr.next[c] = Node()
             curr = curr.next[c]
         curr.isWord = True
 
+
     def search(self, word: str) -> bool:
         
-        def hasWord(word: str, i: int, node: Node):
-            c: str = word[i]
-            isLastChar: bool =  i == len(word) - 1
+        def containsWord(curr, word, i):
+            c = word[i]
+            isLast = i == len(word) - 1
 
             if c == ".":
-                if isLastChar:
-                    for k in node.next:
-                        if node.next[k].isWord:
+                if isLast:
+                    for k in curr.next.keys():
+                        if curr.next[k].isWord:
                             return True
                     return False
-                for k in node.next:
-                    if hasWord(word, i + 1, node.next[k]) == True:
+                for k in curr.next.keys():
+                    if containsWord(curr.next[k], word, i + 1) == True:
                         return True
                 return False
-
-            if isLastChar:
-                return c in node.next and node.next[c].isWord
             
-            if c not in node.next:
+            else:
+                if isLast:
+                    return c in curr.next and curr.next[c].isWord
+                if c in curr.next:
+                    return containsWord(curr.next[c], word, i + 1)
                 return False
-            
-            return hasWord(word, i + 1, node.next[c])
         
-        return hasWord(word, 0, self.root)
-
-
+        return containsWord(self.root, word, 0)
 
 
 # Your WordDictionary object will be instantiated and called as such:

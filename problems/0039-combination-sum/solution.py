@@ -1,19 +1,19 @@
 class Solution:
     def combinationSum(self, candidates: List[int], target: int) -> List[List[int]]:
-        self.ans = []
+        ans = []
 
-        def helper(i: int, sub: [int], total: int) -> None:
+        def helper(i, sub, total):
             if i >= len(candidates) or total > target:
                 return
-            
             if total == target:
-                self.ans.append(sub.copy())
+                ans.append(sub.copy())
                 return
-
+            
+            helper(i + 1, sub, total)
+            
             sub.append(candidates[i])
             helper(i, sub, total + candidates[i])
             sub.pop()
-            helper(i + 1, sub, total)
         
         helper(0, [], 0)
-        return self.ans
+        return ans

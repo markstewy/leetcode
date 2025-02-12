@@ -3,16 +3,17 @@ class Solution:
         ans = []
 
         def helper(i, sub):
-            if i >= len(nums):
+            if i == len(nums):
                 ans.append(sub.copy())
-                return 
+                return
             
+            helper(i + 1, sub)
             sub.append(nums[i])
             helper(i + 1, sub)
             sub.pop()
-
-            helper(i + 1, sub)
-
+        
         helper(0, [])
         return ans
+
+
 

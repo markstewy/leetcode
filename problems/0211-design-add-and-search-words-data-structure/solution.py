@@ -1,7 +1,7 @@
 class Node:
     def __init__(self):
         self.isWord = False
-        self.next = {}
+        self.children = {}
 
 class WordDictionary:
 
@@ -11,37 +11,43 @@ class WordDictionary:
     def addWord(self, word: str) -> None:
         curr = self.root
         for c in word:
-            if c not in curr.next:
-                curr.next[c] = Node()
-            curr = curr.next[c]
-        curr.isWord = True
-
+            if c not in curr.children:
+                curr.children[c] = Node()
+            curr = curr.children[c]
+        curr.isWord = True      
 
     def search(self, word: str) -> bool:
-        
-        def containsWord(curr, word, i):
+
+        def isWord(i, word, curr):
             c = word[i]
             isLast = i == len(word) - 1
 
             if c == ".":
                 if isLast:
-                    for k in curr.next.keys():
-                        if curr.next[k].isWord:
+                    for k in curr.children:
+                        if curr.children[k].isWord == True:
                             return True
                     return False
-                for k in curr.next.keys():
-                    if containsWord(curr.next[k], word, i + 1) == True:
+                for k in curr.children:
+                    if isWord(i + 1, word, curr.children[k]) == True:
                         return True
                 return False
             
-            else:
-                if isLast:
-                    return c in curr.next and curr.next[c].isWord
-                if c in curr.next:
-                    return containsWord(curr.next[c], word, i + 1)
+            if isLast:
+                return c in curr.children and curr.children[c].isWord
+            if c in curr.children:
+                return isWord(i + 1, word, curr.children[c])
+            else: 
                 return False
+
+        return isWord(0, word, self.root)
         
-        return containsWord(self.root, word, 0)
+            
+
+
+            
+
+        
 
 
 # Your WordDictionary object will be instantiated and called as such:

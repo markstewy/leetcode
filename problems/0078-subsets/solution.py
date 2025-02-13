@@ -1,19 +1,18 @@
 class Solution:
     def subsets(self, nums: List[int]) -> List[List[int]]:
-        ans = []
+        self.ans = []
+        self.nums = nums
 
-        def helper(i, sub):
-            if i == len(nums):
-                ans.append(sub.copy())
+        def helper(sub, i):
+            if i == len(self.nums):
+                self.ans.append(sub.copy())
                 return
             
-            helper(i + 1, sub)
-            sub.append(nums[i])
-            helper(i + 1, sub)
+            helper(sub, i + 1)
+            sub.append(self.nums[i])
+            helper(sub, i + 1)
             sub.pop()
         
-        helper(0, [])
-        return ans
-
-
+        helper([], 0)
+        return self.ans
 

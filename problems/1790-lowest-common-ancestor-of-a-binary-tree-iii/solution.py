@@ -10,26 +10,31 @@ class Node:
 
 class Solution:
     def lowestCommonAncestor(self, p: 'Node', q: 'Node') -> 'Node':
+        self.p = p
+        self.q = q
         self.lca = None
 
-        root = p
-        while root.parent:
-            root = root.parent
-
-        def helper(root):
+        def dfs(root):
             if not root:
                 return 0
             
-            l = helper(root.left)
-            r = helper(root.right)
+            l = dfs(root.left)
+            r = dfs(root.right)
 
-            curr = 1 if (p.val == root.val or q.val == root.val) else 0
-            total = l + r + curr
-
-            if total == 2 and not self.lca:
+            total = l + r
+            if root.val == self.p.val or root.val == self.q.val:
+                total += 1
+            
+            if total > 1:
                 self.lca = root
-
+                return 0
+            
             return total
         
-        helper(root)
+        root = self.p
+        while root.parent:
+            root = root.parent
+        dfs(root)
+
         return self.lca
+

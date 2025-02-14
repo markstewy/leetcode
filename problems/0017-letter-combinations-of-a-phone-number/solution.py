@@ -1,8 +1,6 @@
 class Solution:
     def letterCombinations(self, digits: str) -> List[str]:
-        self.ans = []
-        self.digits = digits
-        self.dial = {
+        letters = {
             "2": "abc",
             "3": "def",
             "4": "ghi",
@@ -10,20 +8,33 @@ class Solution:
             "6": "mno",
             "7": "pqrs",
             "8": "tuv",
-            "9": "wxyz"
+            "9": "wxyz",
         }
+        self.ans = []
+        self.digits = list(digits)
 
-        def helper(comb:str, i:int) -> None:
-            if i >= len(self.digits):
-                if comb:
-                    self.ans.append(comb)
-                return
+        if not self.digits:
+            return self.ans
 
-            digit = self.digits[i]
-            for c in self.dial[digit]:
-                helper(comb + c, i + 1)
+        def helper(sub, i):
+            if len(sub) == len(self.digits):
+                if sub:
+                    self.ans.append("".join(sub))
+                    return
+            
+            for c in letters[self.digits[i]]:
+                sub.append(c)
+                helper(sub, i + 1)
+                sub.pop()
         
-        helper("", 0)
+        helper([], 0)
         return self.ans
+            
+            
 
             
+                
+        
+
+        
+

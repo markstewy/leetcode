@@ -1,19 +1,17 @@
 class Solution:
     def minSwaps(self, data: List[int]) -> int:
-        windowSize = sum(data)
-        maxCount = 0
-        count = 0
-        
+        windowLen = data.count(1)
+        maxWindowCount = 0
+        windowCount = 0
+
         l = 0
         for r in range(len(data)):
-            if r - l + 1 > windowSize:
-                count -= data[l]
+            if data[r] == 1:
+                windowCount += 1
+            if r - l + 1 > windowLen:
+                if data[l] == 1:
+                    windowCount -= 1
                 l += 1
-            
-            count += data[r]
-            maxCount = max(maxCount, count)
+            maxWindowCount = max(maxWindowCount, windowCount)
         
-        return windowSize - maxCount
-            
-                
-
+        return windowLen - maxWindowCount

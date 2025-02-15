@@ -1,26 +1,23 @@
 class Solution:
     def generate(self, numRows: int) -> List[List[int]]:
-        tree = []
-        for i in range(1, numRows + 1):
-            tree.append([1] * i)
-        
-        for r in range(len(tree)):
-            for c in range(len(tree[r])):
-                if r == 0:
-                    tree[r][0] = 1
-                    continue
-                if c == 0:
-                    tree[r][c] = tree[r - 1][0]
-                elif c == len(tree[r]) - 1:
-                    tree[r][c] = tree[r - 1][-1]
-                else:
-                    tree[r][c] = tree[r - 1][c] + tree[r - 1][c - 1]
-        
-        return tree
-                
+            if numRows == 0:
+                return []
             
+            matrix = [[1]]
 
-                
+            for r in range(1, numRows):
+                childRow = [0] * (r + 1)
+                matrix.append(childRow)
+                parentRow = matrix[r - 1]
+                for i in range(len(childRow)):
+                    l = parentRow[i - 1] if i > 0 else 0
+                    r = parentRow[i] if i < len(parentRow) else 0
+                    childRow[i] = l + r
+            
+            return matrix
+
+
+           
 
 
 

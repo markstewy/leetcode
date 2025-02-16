@@ -3,7 +3,7 @@ class Solution:
         self.ans = []
         self.nums = nums
 
-        def helper(sub, subSet) -> None:
+        def helper(sub: [int], subSet: set) -> None:
             if len(sub) == len(self.nums):
                 self.ans.append(sub.copy())
                 return
@@ -13,8 +13,12 @@ class Solution:
                     subSet.add(n)
                     sub.append(n)
                     helper(sub, subSet)
-                    sub.pop()
                     subSet.remove(n)
-
-        helper([], set())            
+                    sub.pop()
+        
+        helper([], set())
         return self.ans
+                
+                    
+
+

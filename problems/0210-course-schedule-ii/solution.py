@@ -1,30 +1,34 @@
 class Solution:
     def findOrder(self, numCourses: int, prerequisites: List[List[int]]) -> List[int]:
-        preMap = collections.defaultdict(list)
+        self.prs = collections.defaultdict(list)
         for crs, pr in prerequisites:
-            preMap[crs].append(pr)
+            self.prs[crs].append(pr)
         
+        self.order = []
+        self.orderSet = set()
+        self.visited = set()
 
-        completed, circular = set(), set()
-        completedOrder = []
-        def helper(crs):
-            if crs in circular:
+        def isCompleteable(crs):
+            if crs in self.visited:
                 return False
-            if crs in completed:
+            if crs in self.orderSet:
+            # if crs not in self.prs or crs in self.orderSet:
                 return True
             
-            circular.add(crs)
-            for pr in preMap[crs]:
-                if helper(pr) == False:
+            self.visited.add(crs)
+            for pr in self.prs[crs]:
+                if isCompleteable(pr) == False:
                     return False
-            circular.remove(crs)
+            self.visited.remove(crs)
 
-            completed.add(crs)
-            completedOrder.append(crs)
+            self.orderSet.add(crs)
+            self.order.append(crs)
             return True
-    
-        for crs in range(numCourses):
-            if helper(crs) == False:
-                return []
+            
         
-        return completedOrder
+        for crs in range(numCourses):
+            if isCompleteable(crs) == False:
+                return []
+        return self.order
+            
+            

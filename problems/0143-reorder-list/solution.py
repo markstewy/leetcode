@@ -9,20 +9,20 @@ class Solution:
         Do not return anything, modify head in-place instead.
         """
         dq = deque()
-
         while head:
             dq.append(head)
-            temp = head
             head = head.next
             dq[-1].next = None
-    
+        
         dhead = ListNode()
         curr = dhead
 
         while dq:
             curr.next = dq.popleft()
             curr = curr.next
-            curr.next = dq.pop() if dq else None
-            curr = curr.next
+            if curr:
+                curr.next = dq.pop() if dq else None
+                curr = curr.next
         
         return dhead.next
+

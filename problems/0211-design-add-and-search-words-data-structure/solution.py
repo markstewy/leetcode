@@ -14,39 +14,37 @@ class WordDictionary:
             if c not in curr.children:
                 curr.children[c] = Node()
             curr = curr.children[c]
-        curr.isWord = True      
-
+        curr.isWord = True
+        
     def search(self, word: str) -> bool:
 
-        def isWord(i, word, curr):
+        def helper(curr, i, word):
             c = word[i]
             isLast = i == len(word) - 1
 
             if c == ".":
                 if isLast:
-                    for k in curr.children:
-                        if curr.children[k].isWord == True:
+                    for child in curr.children:
+                        if curr.children[child].isWord:
                             return True
                     return False
-                for k in curr.children:
-                    if isWord(i + 1, word, curr.children[k]) == True:
+                for child in curr.children:
+                    if helper(curr.children[child], i + 1, word) == True:
                         return True
                 return False
-            
-            if isLast:
-                return c in curr.children and curr.children[c].isWord
-            if c in curr.children:
-                return isWord(i + 1, word, curr.children[c])
-            else: 
-                return False
 
-        return isWord(0, word, self.root)
+            else:
+                if c in curr.children:
+                    if isLast:
+                         return curr.children[c].isWord
+                    else:
+                        return helper(curr.children[c], i + 1, word)
+                else:
+                    return False
         
-            
 
 
-            
-
+        return helper(self.root, 0, word)
         
 
 

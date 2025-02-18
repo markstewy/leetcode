@@ -7,30 +7,28 @@ class Solution:
         while l <= r:
             m = l + (r - l) // 2
 
-            if matrix[m][0] > target:
+            if target < matrix[m][0]:
                 r = m - 1
-            elif matrix[m][-1] < target:
+            elif target > matrix[m][-1]:
                 l = m + 1
             else:
-                targetRow = matrix[m]
+                targetRow = m
                 break
-        
         if targetRow == None:
             return False
-        
 
+        vals = matrix[targetRow]
         l = 0
-        r = len(targetRow) - 1
+        r = len(vals) - 1
 
         while l <= r:
             m = l + (r - l) // 2
-
-            if targetRow[m] < target:
+            if vals[m] < target:
                 l = m + 1
-            elif targetRow[m] > target:
+            elif vals[m] > target:
                 r = m - 1
             else:
                 return True
         
         return False
-            
+

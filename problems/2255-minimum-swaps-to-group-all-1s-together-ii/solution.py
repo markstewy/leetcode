@@ -1,18 +1,20 @@
 class Solution:
     def minSwaps(self, nums: List[int]) -> int:
-        windowSize = sum(nums)
-        arrayLen = len(nums)
+        windowSize = nums.count(1)
+        nums = nums + nums
+        oneCount = 0
+        maxOneCount = 0
 
-        count = 0
-        maxCount = 0
         l = 0
-        for r in range(arrayLen * 2):
-            if r - l + 1 > windowSize:
-                count -= nums[l % arrayLen]
-                l += 1
+        for r in range(len(nums)):
+            if nums[r] == 1:
+                oneCount += 1
             
-            count += nums[r % arrayLen] 
-            maxCount = max(count, maxCount)
-        
-        return windowSize - maxCount
+            if r - l + 1 > windowSize:
+                if nums[l] == 1:
+                    oneCount -= 1
+                l += 1
 
+            maxOneCount = max(maxOneCount, oneCount)
+    
+        return windowSize - maxOneCount

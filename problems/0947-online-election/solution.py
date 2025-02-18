@@ -1,19 +1,21 @@
 class TopVotedCandidate:
 
     def __init__(self, persons: List[int], times: List[int]):
-        times = list(zip(times, persons))
-        times.sort()
+        self.votes = list(zip(times, persons))
         self.leaders = []
+
+        voteCount = {}
         leader = None
         leaderCount = 0
-        count = {}
-        
-        for time, name in times:
-            count[name] = count.get(name, 0) + 1
-            if count[name] >= leaderCount:
-                leaderCount =  count[name]
-                leader = name
-            self.leaders.append((time, leader))
+
+        for t, p in self.votes:
+            voteCount[p] = voteCount.get(p, 0) + 1
+            if voteCount[p] >= leaderCount:
+                leaderCount = voteCount[p]
+                leader = p
+            self.leaders.append([t, leader])
+
+        print(self.leaders)
 
     def q(self, t: int) -> int:
         l = 0
@@ -23,13 +25,14 @@ class TopVotedCandidate:
         while l <= r:
             m = l + (r - l) // 2
 
-            if self.leaders[m][0] <= t:
-                closestPrev = self.leaders[m][1]  
+            if t >= self.leaders[m][0]:
+                closestPrev = self.leaders[m][1]
                 l = m + 1
             else:
                 r = m - 1
-
-        return closestPrev      
+        
+        return closestPrev
+        
 
 
 # Your TopVotedCandidate object will be instantiated and called as such:

@@ -8,21 +8,16 @@ class Solution:
         dhead = ListNode()
         curr = dhead
 
-        while list1 and list2:
-            if list1.val < list2.val:
+        while list1 or list2:
+            if (list1 and list2 and list1.val <= list2.val) or not list2:
                 curr.next = list1
-                curr = curr.next
                 list1 = list1.next
+                curr = curr.next
             else:
                 curr.next = list2
-                curr = curr.next
                 list2 = list2.next
+                curr = curr.next
         
-        if list1:
-            curr.next = list1
-        if list2:
-            curr.next = list2
+        return dhead.next
 
-
-        return dhead.next 
 

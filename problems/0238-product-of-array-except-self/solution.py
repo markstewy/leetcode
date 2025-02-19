@@ -14,13 +14,14 @@ class Solution:
         rtl.reverse()
 
         ans = []
-
         for i in range(len(nums)):
             if i == 0:
                 ans.append(rtl[1])
             elif i == len(nums) - 1:
                 ans.append(ltr[-2])
             else:
-                ans.append(ltr[i - 1] * rtl[i + 1])
+                ans.append(ltr[i-1] * rtl[i+1])
         
         return ans
+        
+

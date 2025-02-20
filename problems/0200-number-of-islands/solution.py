@@ -1,27 +1,27 @@
 class Solution:
     def numIslands(self, grid: List[List[str]]) -> int:
-        self.grid = grid
-        count = 0
-
-        def removeIsland(r, c):
-            if r >= len(self.grid) or r < 0:
-                return
-            if c >= len(self.grid[0]) or c < 0:
-                return
-            if self.grid[r][c] == "1":
-                self.grid[r][c] = "0"
-                removeIsland(r + 1, c)
-                removeIsland(r - 1, c)
-                removeIsland(r, c + 1)
-                removeIsland(r, c - 1)
-            else:
-                return
+        islandCount = 0
         
-        for r in range(len(self.grid)):
-            for c in range(len(self.grid[0])):
-                if self.grid[r][c] == "1":
-                    count += 1
-                    removeIsland(r, c)
-    
-        return count
+        def delIsland(r, c):
+            if grid[r][c] == "0":
+                return
+            
+            grid[r][c] = "0"
+
+            if r > 0:
+                delIsland(r - 1, c)
+            if r < len(grid) - 1:
+                delIsland(r + 1, c)
+            if c > 0:
+                delIsland(r, c - 1)
+            if c < len(grid[0]) - 1:
+                delIsland(r, c + 1)
+        
+        for r in range(len(grid)):
+            for c in range(len(grid[0])):
+                if grid[r][c] == "1":
+                    islandCount += 1
+                    delIsland(r, c)
+        
+        return islandCount
 

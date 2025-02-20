@@ -1,30 +1,26 @@
 class Solution:
     def smallestChair(self, times: List[List[int]], targetFriend: int) -> int:
-        chrono = []
-        minSeats = list(range(len(times) + 1))
-        heapq.heapify(minSeats)
-        friendToSeat = {}
+        chairs = list(range(len(times)))
+        heapq.heapify(chairs)
 
-        for friend, (arrTime, leaveTime) in enumerate(times):
-            chrono.append([arrTime, "2arrive", friend])
-            chrono.append([leaveTime, "1leave", friend]) # leave first
+        events = []
+        for name, t in enumerate(times):
+            arrTime = t[0]
+            depTime = t[1]
+            events.append([arrTime, "2-arr", name])
+            events.append([depTime, "1-dep", name])
+        events.sort()
+
+        friendSeats = {}
+        for time, event, name in events:
+            if event == "2-arr":
+                if name == targetFriend:
+                    return heapq.heappop(chairs)
+                friendSeats[name] = heapq.heappop(chairs)
+            if event == "1-dep":
+                heapq.heappush(chairs, friendSeats[name])
+                del friendSeats[name]
         
-        chrono.sort()
-
-        for arrTime, typ, friend in chrono:
-            if friend == targetFriend:
-                return heapq.heappop(minSeats)
-            if typ == "1leave":
-                seat = friendToSeat[friend]
-                heapq.heappush(minSeats, seat)
-                del friendToSeat[friend]
-            if typ == "2arrive":
-                seat = heapq.heappop(minSeats)
-                friendToSeat[friend] = seat
-            
-
-        
-
-        
+        return -1
 
 

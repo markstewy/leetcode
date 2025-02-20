@@ -3,22 +3,23 @@ class Solution:
         candidates.sort()
         ans = []
 
-        def helper(i: int, sub: [int], total: int):
+        def helper(sub, i, total):
             if total == target:
                 ans.append(sub.copy())
                 return
-            if i >= len(candidates) or total > target:
+            if total > target or i >= len(candidates):
                 return
             
             sub.append(candidates[i])
-            helper(i + 1, sub, total + candidates[i])
+            helper(sub, i + 1, total + candidates[i])
             sub.pop()
-            
+
             while i < len(candidates) - 1 and candidates[i] == candidates[i + 1]:
-                i += 1
-            
-            helper(i + 1, sub, total)
+                 i += 1
+
+            helper(sub, i + 1, total)
         
-        helper(0, [], 0)
+        helper([], 0, 0)
         return ans
+
 

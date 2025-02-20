@@ -4,14 +4,15 @@ class Solution:
         ans = []
 
         for i, n in enumerate(nums):
-            while dq and dq[-1]["n"] < n:
+            while dq and dq[-1]["n"] <= n:
                 dq.pop()
-            dq.append({"i": i, "n": n})
+            dq.append({"n": n, "i": i})
 
-            while dq[0]["i"] <= i - k:
+            lastIdx = i - k + 1
+            while dq and dq[0]["i"] < lastIdx:
                 dq.popleft()
             
-            if i >= k - 1:
+            if i + 1 >= k:
                 ans.append(dq[0]["n"])
         
         return ans

@@ -6,16 +6,17 @@ class Solution:
 
         for r in range(len(board)):
             for c in range(len(board[0])):
-                v = board[r][c]
-                if v == ".":
+               
+                val = board[r][c]
+                if val == ".":
                     continue
-
-                if v in rows[r] or v in cols[c] or v in sqs[(r//3, c//3)]:
+                
+                if val in rows[r] or val in cols[c] or val in sqs[(r//3, c//3)]:
                     return False
                 
-                rows[r].add(v)
-                cols[c].add(v)
-                sqs[(r//3, c//3)].add(v)
-        
+                else:
+                    rows[r].add(val)
+                    cols[c].add(val)
+                    sqs[(r//3, c//3)].add(val)
+                
         return True
-

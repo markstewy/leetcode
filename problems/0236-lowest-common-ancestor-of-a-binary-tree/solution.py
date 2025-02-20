@@ -7,22 +7,20 @@
 
 class Solution:
     def lowestCommonAncestor(self, root: 'TreeNode', p: 'TreeNode', q: 'TreeNode') -> 'TreeNode':
-        self.pval = p.val
-        self.qval = q.val
         self.lca = None
 
-        def dfs(root: TreeNode) -> int:
+        def dfs(root):
             if not root:
                 return 0
-            
+                   
             l = dfs(root.left)
             r = dfs(root.right)
 
             total = l + r
-            if root.val == self.pval or root.val == self.qval:
+            if id(root) == id(p) or id(root) == id(q):
                 total += 1
-
-            if total > 1:
+            
+            if total == 2:
                 self.lca = root
                 return 0
             
@@ -30,6 +28,4 @@ class Solution:
         
         dfs(root)
         return self.lca
-            
-            
 

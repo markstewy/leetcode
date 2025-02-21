@@ -4,9 +4,9 @@ class Solution:
         for crs, pr in prerequisites:
             prs[crs].append(pr)
         
-        order = []
-        completed = set()
         visiting = set()
+        completed = set()
+        order = []
 
         def helper(crs):
             if crs in visiting:
@@ -20,13 +20,13 @@ class Solution:
                     return False
             visiting.remove(crs)
             
+            
             completed.add(crs)
             order.append(crs)
-            return True    
+            return True
         
         for crs in range(numCourses):
             if helper(crs) == False:
                 return []
-            
         return order
-            
+

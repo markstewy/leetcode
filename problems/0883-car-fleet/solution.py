@@ -2,24 +2,23 @@ class Solution:
     def carFleet(self, target: int, position: List[int], speed: List[int]) -> int:
         cars = list(zip(position, speed))
         cars.sort()
-        
-        arrivalTimes = [] # dist / speed
 
-        for c in cars:
-            distance = target - c[0]
-            speed = c[1]
-            arrivalTimes.append(distance / speed)
+        arrivalTimes = []
+        for pos, speed in cars:
+            dist = target - pos
+            time = dist / speed
+            arrivalTimes.append(time)
 
-
-        fleetCount = 0
-        fleetTime = 0
-        print(arrivalTimes)
+        mostRecentArrival = arrivalTimes[-1]
+        fleetCount = 1
 
         for i in range(len(arrivalTimes) - 1, -1, -1):
-            carTime = arrivalTimes[i]
-            
-            if carTime > fleetTime: # if carTime is greater than fleetTime, it arrives after separately
+            if arrivalTimes[i] <= mostRecentArrival:
+                continue
+            else:
                 fleetCount += 1
-                fleetTime = carTime
+                mostRecentArrival = arrivalTimes[i]
         
         return fleetCount
+            
+

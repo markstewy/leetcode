@@ -10,8 +10,10 @@ class Node:
 
 class Solution:
     def lowestCommonAncestor(self, p: 'Node', q: 'Node') -> 'Node':
-        self.p = p
-        self.q = q
+        root = p
+        while root.parent:
+            root = root.parent
+
         self.lca = None
 
         def dfs(root):
@@ -20,21 +22,20 @@ class Solution:
             
             l = dfs(root.left)
             r = dfs(root.right)
-
             total = l + r
-            if root.val == self.p.val or root.val == self.q.val:
+
+            if root.val == p.val or root.val == q.val:
                 total += 1
             
-            if total > 1:
+            if total == 2:
                 self.lca = root
                 return 0
             
             return total
         
-        root = self.p
-        while root.parent:
-            root = root.parent
         dfs(root)
-
         return self.lca
+
+
+
 

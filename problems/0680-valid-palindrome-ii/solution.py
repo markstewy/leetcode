@@ -1,26 +1,20 @@
 class Solution:
-    def __init__(self):
-        self.delCount = 0
-
     def validPalindrome(self, s: str) -> bool:
-        l = 0
-        r = len(s) - 1
+        self.replaced = False
 
-        while l < r and s[l] == s[r]:
-            l += 1
-            r -= 1
-        
-        if l >= r:
+        def helper(s):
+            l = 0
+            r = len(s) - 1
+
+            while l < r:
+                if s[l] == s[r]:
+                    l += 1
+                    r -= 1
+                else:
+                    if self.replaced:
+                        return False
+                    self.replaced = True
+                    return (helper(s[l+1:r+1]) or helper(s[l:r]))
             return True
         
-        remainder1 = s[l + 1 : r + 1]
-        remainder2 = s[l : r]
-        return remainder1 == remainder1[::-1] or remainder2 == remainder2[::-1]
-        
-        
-            
-
-        
-        
-            
-        
+        return helper(s)

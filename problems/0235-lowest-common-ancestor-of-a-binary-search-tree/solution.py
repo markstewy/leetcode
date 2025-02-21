@@ -7,47 +7,55 @@
 
 class Solution:
     def lowestCommonAncestor(self, root: 'TreeNode', p: 'TreeNode', q: 'TreeNode') -> 'TreeNode':
-        #RECURSION
-        # self.q = q
-        # self.p = p
-        # self.lca = None
-
-        # def helper(root):
-        #     if not root:
-        #         return 0
-            
-        #     l = helper(root.left)
-        #     r = helper(root.right)
-        #     total = l + r
-
-        #     if root.val == self.p.val or root.val == self.q.val:
-        #         total += 1
-            
-        #     if total > 1:
-        #         self.lca = root
-        #         return 0
-            
-        #     return total
-        
-        # helper(root)
-        # return self.lca
-
-        self.l = min(p.val, q.val)
-        self.r = max(p.val, q.val)
-        self.lca = None
+        l = min(p.val, q.val)
+        r = max(p.val, q.val)
 
         def helper(root):
-            if self.l <= root.val <= self.r:
-                self.lca = root
-                return
-            
-            if root.val < self.l:
-                helper(root.right)
-            
-            if root.val > self.r:
-                helper(root.left)
+            print(root.val)
+            if l <= root.val <= r:
+                return root
+            if root.val < l:
+                return helper(root.right)
+            elif root.val > r:
+                return helper(root.left)
         
-        helper(root)
-        return self.lca
+        return helper(root)
+
+# class Solution:
+#     def lowestCommonAncestor(self, root: 'TreeNode', p: 'TreeNode', q: 'TreeNode') -> 'TreeNode':
+#         self.lca = None
+
+#         def dfs(root):
+#             if not root:
+#                 return 0
             
+#             l = dfs(root.left)
+#             r = dfs(root.right)
+#             total = l + r
+
+#             if root.val == p.val or root.val == q.val:
+#                 total += 1
+            
+#             if total == 2:
+#                 self.lca = root
+#                 return 0
+            
+#             return total
+        
+#         dfs(root)
+#         return self.lca
+            
+
+
+
+
+
+
+
+
+
+
+
+
+
 

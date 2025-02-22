@@ -6,14 +6,15 @@ class Solution:
             if total == target:
                 ans.append(sub.copy())
                 return
-            if total > target or i >= len(candidates):
+            if i >= len(candidates) or total > target:
                 return
-
+            
             sub.append(candidates[i])
             helper(sub, i, total + candidates[i])
             sub.pop()
 
             helper(sub, i + 1, total)
-        
+
         helper([], 0, 0)
         return ans
+

@@ -1,23 +1,19 @@
 class Solution:
     def commonChars(self, words: List[str]) -> List[str]:
-        mainCount = Counter(words[0])
-        counts = [Counter(word) for word in words]
+        count = Counter(words[0])
         
-        for count in counts:
-            for letter in mainCount.keys():
-                if letter not in count:
-                    mainCount[letter] = 0
+        for w in words:
+            wCount = Counter(w)
+
+            for c in count.keys():
+                if c not in wCount:
+                    count[c] = 0
                 else:
-                    mainCount[letter] = min(mainCount[letter], count[letter])
+                    count[c] = min(count[c], wCount[c])
         
         ans = []
-        print(mainCount)
-        for letter, count in mainCount.items():
-            for i in range(count):
-                ans.append(letter)
+        for k, c in count.items():
+            for _ in range(c):
+                ans.append(k)
         
         return ans
-
-
-
-

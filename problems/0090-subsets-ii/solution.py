@@ -1,7 +1,7 @@
 class Solution:
     def subsetsWithDup(self, nums: List[int]) -> List[List[int]]:
-        nums.sort()
         ans = []
+        nums.sort()
 
         def helper(sub, i):
             if i >= len(nums):

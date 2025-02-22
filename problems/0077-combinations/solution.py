@@ -1,21 +1,19 @@
 class Solution:
     def combine(self, n: int, k: int) -> List[List[int]]:
-        nums = list(range(1, n + 1))
         ans = []
 
         def helper(sub, i):
             if len(sub) == k:
                 ans.append(sub.copy())
                 return
-            if i >= len(nums):
+            if i > n:
                 return
             
-            helper(sub, i + 1)
-            sub.append(nums[i])
+            sub.append(i)
             helper(sub, i + 1)
             sub.pop()
+
+            helper(sub, i + 1)
         
-        helper([], 0)
+        helper([], 1)
         return ans
-
-

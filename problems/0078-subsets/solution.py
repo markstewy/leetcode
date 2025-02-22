@@ -7,10 +7,11 @@ class Solution:
                 ans.append(sub.copy())
                 return
             
-            helper(sub, i + 1)
             sub.append(nums[i])
             helper(sub, i + 1)
             sub.pop()
+
+            helper(sub, i + 1)
         
         helper([], 0)
         return ans

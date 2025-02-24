@@ -1,25 +1,24 @@
 class Solution:
     def findDifferentBinaryString(self, nums: List[str]) -> str:
-        k = len(nums)
-        count = {"0": k, "1": k}
+        count = {"0": len(nums), "1": len(nums)}
         numSet = set(nums)
-        perm = []
         self.ans = None
 
+        perm = []
         def helper():
-            if len(perm) == k:
-                if "".join(perm) not in numSet:
-                    self.ans = "".join(perm)
+            if len(perm) == len(nums) and "".join(perm) not in numSet:
+                self.ans = "".join(perm)
                 return
-            
-            for d in count:
-                if count[d] > 0:
-                    perm.append(d)
-                    count[d] -= 1
+
+            for n in count:
+                if count[n] > 0:
+                    perm.append(n)
+                    count[n] -= 1
                     helper()
-                    count[d] += 1
+                    count[n] += 1
                     perm.pop()
+    
         helper()
         return self.ans
-            
+
 

@@ -19,14 +19,13 @@ class Solution:
                 if helper(pr) == False:
                     return False
             visiting.remove(crs)
-            
-            
+
             completed.add(crs)
             order.append(crs)
             return True
-        
+
         for crs in range(numCourses):
             if helper(crs) == False:
                 return []
+            
         return order
-

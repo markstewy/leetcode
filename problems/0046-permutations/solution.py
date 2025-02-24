@@ -1,8 +1,8 @@
 class Solution:
     def permute(self, nums: List[int]) -> List[List[int]]:
         ans = []
+        permSet = set()
         perm = []
-        numSet = set()
 
         def helper():
             if len(perm) == len(nums):
@@ -10,11 +10,13 @@ class Solution:
                 return
             
             for n in nums:
-                if n not in numSet:
-                    numSet.add(n)
+                if n not in permSet:
+                    permSet.add(n)
                     perm.append(n)
                     helper()
                     perm.pop()
-                    numSet.remove(n)
+                    permSet.remove(n)
+        
         helper()
         return ans
+

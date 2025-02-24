@@ -7,25 +7,28 @@
 
 class Solution:
     def lowestCommonAncestor(self, root: 'TreeNode', nodes: 'List[TreeNode]') -> 'TreeNode':
-        self.nodeSet = set(nodes)
+        k = len(nodes)
+        vals = [node.val for node in nodes]
+        nodeSet = set(vals)
         self.lca = None
 
-        def dfs(root):
+        def helper(root):
             if not root:
                 return 0
-            
-            l = dfs(root.left)
-            r = dfs(root.right)
 
+            l = helper(root.left)
+            r = helper(root.right)
             total = l + r
-            if root in self.nodeSet:
-                total += 1
 
-            if total >= len(self.nodeSet):
+            if root.val in nodeSet:
+                total += 1
+            
+            if total == k:
                 self.lca = root
                 return 0
-
+            
             return total
         
-        dfs(root)
+        helper(root)
         return self.lca
+

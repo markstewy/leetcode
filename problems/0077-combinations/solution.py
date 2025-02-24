@@ -1,6 +1,7 @@
 class Solution:
     def combine(self, n: int, k: int) -> List[List[int]]:
         ans = []
+        i = 1
 
         def helper(sub, i):
             if len(sub) == k:
@@ -15,5 +16,5 @@ class Solution:
 
             helper(sub, i + 1)
         
-        helper([], 1)
+        helper([], i)
         return ans

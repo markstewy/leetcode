@@ -1,8 +1,8 @@
 class Solution:
     def permuteUnique(self, nums: List[int]) -> List[List[int]]:
         count = Counter(nums)
-        perm = []
         ans = []
+        perm = []
 
         def helper():
             if len(perm) == len(nums):
@@ -16,6 +16,8 @@ class Solution:
                     helper()
                     count[n] += 1
                     perm.pop()
-        
         helper()
         return ans
+        
+
+

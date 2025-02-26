@@ -1,43 +1,19 @@
-class ListNode:
-    def __init__(self, key: int):
-        self.key = key
-        self.next = None
-
 class MyHashSet:
 
     def __init__(self):
-        self.set = [ListNode(0) for i in range(10**4)]
-
+        self.myset = [None] * 10**6
+        
     def add(self, key: int) -> None:
-        idx = key % len(self.set)
-        cur = self.set[idx]
-
-        while cur.next:
-            if cur.next.key == key:
-                return
-            cur = cur.next
-        cur.next = ListNode(key)
+        i = key % len(self.myset)
+        self.myset[i] = key
 
     def remove(self, key: int) -> None:
-        idx = key % len(self.set)
-        cur = self.set[idx]
-
-        while cur.next:
-            if cur.next.key == key:
-                cur.next = cur.next.next
-                return
-            cur = cur.next
-
+         i = key % len(self.myset)
+         self.myset[i] = None
 
     def contains(self, key: int) -> bool:
-        idx = key % len(self.set)
-        cur = self.set[idx]
-
-        while cur.next:
-            if cur.next.key == key:
-                return True
-            cur = cur.next
-        return False
+        i = key % len(self.myset)
+        return self.myset[i] == key
         
 
 

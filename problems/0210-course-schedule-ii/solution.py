@@ -3,7 +3,7 @@ class Solution:
         prs = collections.defaultdict(list)
         for crs, pr in prerequisites:
             prs[crs].append(pr)
-        
+
         visiting = set()
         completed = set()
         order = []
@@ -13,7 +13,8 @@ class Solution:
                 return False
             if crs in completed:
                 return True
-            
+
+            # check all prs
             visiting.add(crs)
             for pr in prs[crs]:
                 if helper(pr) == False:
@@ -23,9 +24,8 @@ class Solution:
             completed.add(crs)
             order.append(crs)
             return True
-
+        
         for crs in range(numCourses):
             if helper(crs) == False:
                 return []
-            
         return order

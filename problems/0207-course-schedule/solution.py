@@ -1,9 +1,11 @@
 class Solution:
     def canFinish(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
         prs = collections.defaultdict(list)
+
         for crs, pr in prerequisites:
             prs[crs].append(pr)
-        
+
+
         visiting = set()
         completed = set()
 
@@ -13,6 +15,7 @@ class Solution:
             if crs in completed:
                 return True
             
+            # check all prs
             visiting.add(crs)
             for pr in prs[crs]:
                 if helper(pr) == False:

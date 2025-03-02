@@ -1,20 +1,23 @@
 class Solution:
     def countCharacters(self, words: List[str], chars: str) -> int:
-        total = 0
+        self.charCount = Counter(chars)
+        self.length = 0
 
-        chars = Counter(chars)
-        words = [Counter(word) for word in words]
+        def canBeFormed(word):
+            wcount = Counter(word)
+            
+            for ch, count in wcount.items():
+                if ch not in self.charCount or wcount[ch] > self.charCount[ch]:
+                    return False
 
-        for wordCount in words:
-            isValid = True
-            for letter, count in wordCount.items():
-                if letter not in chars or chars[letter] < count:
-                    # is not valid word
-                    isValid = False
-                    break
-            if isValid:
-                total += sum(wordCount.values())
+            return True
+
+        for w in words:
+            if canBeFormed(w):
+                self.length += len(w)
         
-        return total
-                
-                
+        return self.length
+
+
+
+        

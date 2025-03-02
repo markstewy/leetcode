@@ -1,14 +1,13 @@
 class Solution:
     def maxNumberOfBalloons(self, text: str) -> int:
-        charCount = Counter(text)
-        charCount["l"] //= 2
-        charCount["o"] //= 2
-        maxBalloon = float("infinity")
+        count = Counter(text)
+        balloonCount = 0
 
-        for c in "balloon":
-            maxBalloon = min(maxBalloon, charCount[c])
-        
-        return maxBalloon
-
-
-
+        while True:
+            for c in "balloon":
+                if c in count and count[c] > 0:
+                    count[c] -= 1
+                else:
+                    return balloonCount
+            
+            balloonCount += 1

@@ -1,56 +1,63 @@
-class Node:
-    def __init__(self, val=None, key=None):
+class Node():
+    def __init__(self, val=None):
         self.val = val
-        self.key = key
         self.next = None
         self.prev = None
+        self.key = None
+
 
 class LRUCache:
 
     def __init__(self, capacity: int):
-        self.l = Node()
-        self.r = Node()
-        self.l.next = self.r
-        self.r.prev = self.l
+        self.left = Node()
+        self.right = Node()
+        self.right.prev = self.left
+        self.left.next = self.right
 
-        self.nodeMap = {}
+        self.nodeMap = {} # key: node
         self.capacity = capacity
-        
+
     def get(self, key: int) -> int:
-        if key in self.nodeMap:
-            node = self.cut(key)
-            print(node.val)
-            self.insertFront(node)
-            return self.nodeMap[key].val
-        return -1
+        if key not in self.nodeMap:
+            return -1
+        node = self.nodeMap[key]
+        self.pasteFront(self.cut(node))
+        return node.val
+
 
     def put(self, key: int, value: int) -> None:
         if key not in self.nodeMap:
-            self.nodeMap[key] = Node(value, key)
-            self.insertFront(self.nodeMap[key])
+            node = Node(value)
+            node.key = key
+            self.nodeMap[key] = node
+            self.pasteFront(node)
         else:
-            self.nodeMap[key].val = value
-            self.insertFront(self.cut(key))
+            node = self.nodeMap[key]
+            node.val = value
+            self.pasteFront(self.cut(node))
         
-        if len(self.nodeMap.keys()) > self.capacity:
-            delNode = self.cut(self.l.next.key)
-            del self.nodeMap[delNode.key]
-        
-    def cut(self, key: int) -> Node:
-        prev = self.nodeMap[key].prev
-        next = self.nodeMap[key].next
-        prev.next = next
-        next.prev = prev
-        
-        return self.nodeMap[key]
-    
-    def insertFront(self, node: Node) -> None:
-        prev = self.r.prev
-        node.prev = prev
-        node.next = self.r
-        
-        prev.next = node
-        self.r.prev = node
+        self.trimCache()
+
+    def cut(self, node) -> Node:
+        node.prev.next = node.next
+        node.next.prev = node.prev
+        node.next = None
+        node.prev = None
+        return node
+
+    def pasteFront(self, node) -> None:
+        node.prev = self.right.prev
+        node.next = self.right
+        node.prev.next = node
+        node.next.prev = node
+
+    def trimCache(self):
+        while len(self.nodeMap.keys()) > self.capacity:
+            node = self.left.next
+            key = node.key
+            self.cut(node)
+            del self.nodeMap[key]
+
 
 # Your LRUCache object will be instantiated and called as such:
 # obj = LRUCache(capacity)

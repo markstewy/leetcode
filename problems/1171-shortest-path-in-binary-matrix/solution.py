@@ -1,26 +1,30 @@
 class Solution:
     def shortestPathBinaryMatrix(self, grid: List[List[int]]) -> int:
+        stack = deque([[0, 0, 1]])
+        directions = [[1, 1], [1, 0], [1, -1], [0, 1], [0, -1], [-1, 1], [-1, 0], [-1, -1]]
+        visited = set()
+        for r in grid:
+            print(r)
+
         if grid[0][0] == 1 or grid[-1][-1] == 1:
             return -1
 
-        dq = deque()
-        dq.append((0, 0, 1))
-        visiting = set()
-
-        dirs = [(1, 1), (1, 0), (1, -1), (0, 1), (0, -1), (-1, 1), (-1, 0), (-1, -1)]
-
-        while dq:
-            r, c, l = dq.popleft()
-            if r == len(grid) - 1 and c == len(grid[0]) - 1:
+        while stack:
+            r, c, l = stack.popleft()
+            if r == len(grid) - 1 and c == len(grid[0]) - 1 and grid[r][c] == 0:
                 return l
-
-            for rdir, cdir in dirs:
-                nr, nc = r + rdir, c + cdir
-                if nr == len(grid) - 1 and nc == len(grid[0]) - 1:
-                    return l + 1
-                if 0 <= nr < len(grid) and 0 <= nc < len(grid[0]) and (nr, nc) not in visiting and grid[nr][nc] == 0:
-                    dq.append((nr, nc, l + 1))
-                    visiting.add((nr, nc))
+            
+            for nr, nc in directions:
+                nr = nr + r
+                nc = nc + c
+                if 0 <= nr < len(grid) and 0 <= nc < len(grid[0]) and grid[nr][nc] == 0 and (nr, nc) not in visited:
+                    visited.add((nr, nc))
+                    stack.append([nr, nc, l + 1])
         
         return -1
+
+            
+            
+
+
 

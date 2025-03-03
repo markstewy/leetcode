@@ -1,12 +1,14 @@
 class Solution:
     def partitionString(self, s: str) -> int:
-        cset = set()
         count = 1
-        
-        for c in s:
-            if c in cset:
-                cset.clear()
+        cset = set()
+
+        for i in range(len(s)):
+            if s[i] in cset:
                 count += 1
-            cset.add(c)
+                cset.clear()
+            cset.add(s[i])
         
         return count
+
+

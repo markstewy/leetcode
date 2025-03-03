@@ -1,16 +1,29 @@
 class Solution:
     def maxAbsoluteSum(self, nums: List[int]) -> int:
-        min_pre_sum = 0
-        max_pre_sum = 0
-        curr_sum = 0
-        max_abs_sum = 0
+        totals = []
+        prevPosSum = [0]
+        prevNegSum = [0]
+
+        total = 0
+        maxSum = 0
+        minSum = 0
 
         for n in nums:
-            curr_sum += n
-            max_abs_sum = max(max_abs_sum, abs(curr_sum - max_pre_sum), abs(curr_sum - min_pre_sum))
-            max_pre_sum = max(max_pre_sum, curr_sum)
-            min_pre_sum = min(min_pre_sum, curr_sum)
-    
-        return max_abs_sum
+            total += n
+            maxSum = max(maxSum, total)
+            minSum = min(minSum, total)
 
-            
+            totals.append(total)
+            prevPosSum.append(maxSum)
+            prevNegSum.append(minSum)
+        
+        maxAbsSum = abs(nums[0])
+
+        for i in range(len(nums)):
+            posMax = totals[i] - prevNegSum[i] # minus a negative
+            negMax = totals[i] - prevPosSum[i] # minus a positive 
+            maxAbsSum = max(maxAbsSum, abs(posMax), abs(negMax))
+        
+        return maxAbsSum
+
+

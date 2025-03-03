@@ -9,6 +9,7 @@ class Solution:
         Do not return anything, modify head in-place instead.
         """
         dq = deque()
+
         while head:
             dq.append(head)
             head = head.next
@@ -16,13 +17,11 @@ class Solution:
         
         dhead = ListNode()
         curr = dhead
-
         while dq:
             curr.next = dq.popleft()
             curr = curr.next
-            if curr:
-                curr.next = dq.pop() if dq else None
+            if dq:
+                curr.next = dq.pop()
                 curr = curr.next
         
         return dhead.next
-

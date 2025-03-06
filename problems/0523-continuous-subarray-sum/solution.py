@@ -1,25 +1,29 @@
 class Solution:
     def checkSubarraySum(self, nums: List[int], k: int) -> bool:
-        sumRemainders = []
+        totals = []
         total = 0
+        mods = []
         for i, n in enumerate(nums):
             total += n
+            mod = total % k
             
-            if total % k == 0 and i > 0:
+            if mod == 0 and i > 0:
                 return True
-            
-            sumRemainders.append(total % k)
-        
-        print(sumRemainders)
-        remainderCount = collections.defaultdict(list) # remainder: [idx]
 
-        for i, n in enumerate(sumRemainders):
-            remainderCount[n].append(i)
+            totals.append(total)
+            mods.append(mod)
         
-        for idxs in remainderCount.values():
+        print(totals)
+        print(mods)
+        modIdxs = collections.defaultdict(list)
+        for i, n in enumerate(mods):
+            modIdxs[n].append(i)
+        
+        for m, idxs in modIdxs.items():
             if max(idxs) - min(idxs) > 1:
                 return True
-            
+        
         return False
 
-        
+
+

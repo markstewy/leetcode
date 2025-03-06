@@ -1,15 +1,13 @@
 class Solution:
     def combinationSum2(self, candidates: List[int], target: int) -> List[List[int]]:
-        candidates.sort()
         ans = []
+        candidates.sort()
 
-
-        sub = []
         def helper(sub, i, total):
             if total == target:
                 ans.append(sub.copy())
                 return
-            if total > target or i >= len(candidates):
+            if i >= len(candidates) or total > target:
                 return
             
             sub.append(candidates[i])
@@ -21,6 +19,6 @@ class Solution:
             
             helper(sub, i + 1, total)
 
-        
         helper([], 0, 0)
         return ans
+

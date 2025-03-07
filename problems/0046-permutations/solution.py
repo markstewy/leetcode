@@ -1,7 +1,7 @@
 class Solution:
     def permute(self, nums: List[int]) -> List[List[int]]:
         ans = []
-        permSet = set()
+        nset = set()
         perm = []
 
         def helper():
@@ -10,12 +10,14 @@ class Solution:
                 return
             
             for n in nums:
-                if n not in permSet:
-                    permSet.add(n)
+                if n not in nset:
+                    nset.add(n)
                     perm.append(n)
                     helper()
                     perm.pop()
-                    permSet.remove(n)
+                    nset.remove(n)
         
         helper()
         return ans
+
+

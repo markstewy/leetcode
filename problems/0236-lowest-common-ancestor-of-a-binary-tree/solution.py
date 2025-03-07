@@ -9,15 +9,15 @@ class Solution:
     def lowestCommonAncestor(self, root: 'TreeNode', p: 'TreeNode', q: 'TreeNode') -> 'TreeNode':
         self.lca = None
 
-        def dfs(root):
+        def helper(root):
             if not root:
                 return 0
-                   
-            l = dfs(root.left)
-            r = dfs(root.right)
-
+            
+            l = helper(root.left)
+            r = helper(root.right)
             total = l + r
-            if id(root) == id(p) or id(root) == id(q):
+
+            if root.val == p.val or root.val == q.val:
                 total += 1
             
             if total == 2:
@@ -26,6 +26,8 @@ class Solution:
             
             return total
         
-        dfs(root)
+        helper(root)
         return self.lca
+        
 
+            

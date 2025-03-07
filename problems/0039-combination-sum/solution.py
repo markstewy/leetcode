@@ -9,7 +9,7 @@ class Solution:
                 return
             if i >= len(candidates) or total > target:
                 return
-            
+
             sub.append(candidates[i])
             helper(sub, i, total + candidates[i])
             sub.pop()
@@ -18,4 +18,3 @@ class Solution:
         
         helper([], 0, 0)
         return ans
-            

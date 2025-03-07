@@ -10,7 +10,7 @@ class Solution:
             sub.append(nums[i])
             helper(sub, i + 1)
             sub.pop()
-
+            
             helper(sub, i + 1)
         
         helper([], 0)

@@ -1,21 +1,21 @@
 class Solution:
     def permuteUnique(self, nums: List[int]) -> List[List[int]]:
+        count = Counter(nums)
         ans = []
         perm = []
-        nCount = Counter(nums)
 
         def helper():
             if len(perm) == len(nums):
                 ans.append(perm.copy())
                 return
             
-            for n in nCount:
-                if nCount[n] > 0:
+            for n in count:
+                if count[n] > 0:
+                    count[n] -= 1
                     perm.append(n)
-                    nCount[n] -= 1
                     helper()
-                    nCount[n] += 1
                     perm.pop()
+                    count[n] += 1
+        
         helper()
         return ans
-

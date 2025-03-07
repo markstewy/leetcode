@@ -1,27 +1,28 @@
 class Solution:
     def findDifferentBinaryString(self, nums: List[str]) -> str:
-        binarySet = set(nums)
-        k = len(nums[0])
-        
-        bitCount = {"0": k, "1": k}
+        k = len(nums)
+        numSet = set(nums)
+        numCount = {"0": k, "1": k}
+        ans = None
         perm = []
-        self.ans = None
 
         def helper():
-            if self.ans != None:
+            nonlocal ans
+            if ans != None:
                 return
-            if len(perm) == k and "".join(perm) not in binarySet:
-                self.ans = "".join(perm)
+            if len(perm) == k:
+                if "".join(perm) not in numSet:
+                    ans = "".join(perm)
                 return
             
-            for n in bitCount:
-                if bitCount[n] > 0:
+            for n in numCount:
+                if numCount[n] > 0:
+                    numCount[n] -= 1
                     perm.append(n)
-                    bitCount[n] -= 1
                     helper()
-                    bitCount[n] += 1
                     perm.pop()
+                    numCount[n] += 1
         
         helper()
-        return self.ans
-            
+        return ans
+

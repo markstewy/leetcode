@@ -1,18 +1,18 @@
 class Solution:
     def findMin(self, nums: List[int]) -> int:
-        
+        # min will be in noncontinuous section
+
         l = 0
         r = len(nums) - 1
-        minVal = float("infinity"
-        )
+        mn = float("infinity")
+
         while l <= r:
             m = l + (r - l) // 2
+            mn = min(mn, nums[m])
 
-            if nums[r] < nums[m]: # min is on the right
-                l = m + 1            
-            else:               # min is on the left
+            if nums[r] < nums[m]: # contains the min
+                l = m + 1
+            else: # contians the min
                 r = m - 1
-            minVal = min(minVal, nums[m])
-        
-        return minVal
+        return mn
 

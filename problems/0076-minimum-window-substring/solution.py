@@ -1,37 +1,36 @@
 class Solution:
     def minWindow(self, s: str, t: str) -> str:
-        if len(t) > len(s):
-            return ""
-
         tcount = Counter(t)
         scount = {}
-        minl, minr = None, None
-        minLen = float("infinity")
+        minWin = float("infinity")
+        minl, minr = 0, 0
 
-        needed = len(tcount.keys())
         matches = 0
+        needed = len(tcount.keys())
 
         l = 0
         for r in range(len(s)):
+            print(f"{l}. {r}")
             c = s[r]
             scount[c] = scount.get(c, 0) + 1
+
             if c in tcount and tcount[c] == scount[c]:
                 matches += 1
-            
+            # print(matches)
             while matches >= needed:
-                if r - l + 1 < minLen:
-                    minLen = r - l + 1
-                    minl = l
+                # print(f"{matches}.  {needed}")
+                if r - l + 1 < minWin:
+                    minWin = r - l + 1
                     minr = r
+                    minl = l
 
                 c = s[l]
-                l += 1
                 scount[c] -= 1
-
                 if c in tcount and tcount[c] == scount[c] + 1:
                     matches -= 1
-        
-        if minl == None:
+                
+                l += 1
+        if minWin == float("infinity"):
             return ""
         return s[minl : minr + 1]
-                
+

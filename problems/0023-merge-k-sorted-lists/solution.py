@@ -5,24 +5,23 @@
 #         self.next = next
 class Solution:
     def mergeKLists(self, lists: List[Optional[ListNode]]) -> Optional[ListNode]:
-        nodeArr = []
+        minHeap = []
+        heapq.heapify(minHeap)
+        nodeMap = collections.defaultdict(list)
 
-        for l in lists:
-            curr = l
+        for curr in lists:
             while curr:
-                nodeArr.append(curr)
-                temp = curr.next
-                curr.next = None
-                curr = temp
-        
-        nodeArr.sort(key=lambda x : x.val)
-
+                heapq.heappush(minHeap, curr.val)
+                nodeMap[curr.val].append(curr)
+                temp = curr
+                curr = curr.next
+                temp.next = None
+    
         dhead = ListNode()
         curr = dhead
-
-        for node in nodeArr:
-            curr.next = node
+        while minHeap:
+            val = heapq.heappop(minHeap)
+            curr.next = nodeMap[val].pop()
             curr = curr.next
         
         return dhead.next
-

@@ -7,46 +7,41 @@ class WordDictionary:
 
     def __init__(self):
         self.root = Node()
-
+        
     def addWord(self, word: str) -> None:
+        # print("add")
         curr = self.root
         for c in word:
             if c not in curr.children:
                 curr.children[c] = Node()
             curr = curr.children[c]
         curr.isWord = True
-        
 
     def search(self, word: str) -> bool:
-        print(f"{word}---- {self.hasWord(self.root, word, 0)}")
-        return self.hasWord(self.root, word, 0)
 
-    def hasWord(self, curr, word, i):
-        c = word[i]
-        isLastChar = i == len(word) - 1
-        
-        if c == ".":
-            if isLastChar:
-                for child in curr.children.values():
-                    if child.isWord:
-                        return True
-                return False
-            else:
-                for child in curr.children.values():
-                    if self.hasWord(child, word, i + 1):
-                        return True
-                return False
-
-        else:
-            if isLastChar:
-                return c in curr.children and curr.children[c].isWord
-            else:
-                if c in curr.children:
-                    return self.hasWord(curr.children[c], word, i + 1)
-                else:
+        def containsWord(i, curr):
+            c = word[i]
+            if c == ".":
+                if i == len(word) - 1:
+                    for child in curr.children.values():
+                        if child.isWord:
+                            return True
                     return False
-    
-    
+                else:
+                    for child in curr.children.values():
+                        if containsWord(i + 1, child) == True:
+                            return True
+                    return False
+            else:
+                if i == len(word) - 1:
+                    return c in curr.children and curr.children[c].isWord
+                if c not in curr.children:
+                    return False
+                return containsWord(i + 1, curr.children[c])
+        
+        return containsWord(0, self.root)
+
+
 
         
 

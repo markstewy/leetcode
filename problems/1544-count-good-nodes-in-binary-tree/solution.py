@@ -6,18 +6,18 @@
 #         self.right = right
 class Solution:
     def goodNodes(self, root: TreeNode) -> int:
-        self.good = 0
-        
+        self.count = 0
+
         def helper(root, mx):
-            if not root:
+            if not root: 
                 return
+
             if root.val >= mx:
-                self.good += 1
-            mx = max(mx, root.val)
+                self.count += 1
 
-            helper(root.left, mx)
-            helper(root.right, mx)
+            helper(root.left, max(mx, root.val))
+            helper(root.right, max(mx, root.val))
     
-        helper(root, -float("infinity"))
-        return self.good
+        helper(root, root.val)
 
+        return self.count

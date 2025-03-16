@@ -3,33 +3,19 @@ class Solution:
         """
         Do not return anything, modify nums1 in-place instead.
         """
-        k = len(nums1) - len(nums2)
-        for n in nums2:
-            nums1[k] = n
-            k += 1
 
-        def merge(l, r, m):
-            dq1 = deque(nums1[l:m+1])
-            dq2 = deque(nums1[m+1:r+1])
+        dq1 = deque(nums1)
+        dq2 = deque(nums2)
+        for _ in range(len(nums2)):
+            dq1.pop()
 
-            while dq1 or dq2:
-                val1 = dq1[0] if dq1 else float("infinity")
-                val2 = dq2[0] if dq2 else float("infinity")
-                
-                if val1 < val2:
-                    nums1[l] = dq1.popleft() 
-                else:
-                    nums1[l] = dq2.popleft()
-                l += 1
-
-        def mergeSort(l, r):
-            if l == r:
-                return
+        i = 0
+        while dq1 or dq2:
+            dq1val = dq1[0] if dq1 else float("infinity")
+            dq2val = dq2[0] if dq2 else float("infinity")
+            if dq1val < dq2val:
+                nums1[i] = dq1.popleft()
+            else:
+                nums1[i] = dq2.popleft()
+            i += 1
             
-            m = l + (r - l) // 2
-            mergeSort(l, m)
-            mergeSort(m+1, r)
-
-            merge(l, r, m)
-    
-        mergeSort(0, len(nums1) - 1)

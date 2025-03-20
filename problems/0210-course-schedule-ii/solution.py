@@ -9,17 +9,17 @@ class Solution:
         order = []
 
         def helper(crs):
-            if crs in visiting:
-                return False
             if crs in completed:
                 return True
-        
+            if crs in visiting: # circular prereq
+                return False
+            
             visiting.add(crs)
             for pr in prs[crs]:
                 if helper(pr) == False:
                     return False
             visiting.remove(crs)
-            
+
             completed.add(crs)
             order.append(crs)
             return True

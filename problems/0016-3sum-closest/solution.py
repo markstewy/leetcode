@@ -1,7 +1,7 @@
 class Solution:
     def threeSumClosest(self, nums: List[int], target: int) -> int:
         nums.sort()
-        ans = sum(nums[:3])
+        closestSum = float("infinity")
 
         for i in range(len(nums)):
             l = i + 1
@@ -9,15 +9,15 @@ class Solution:
 
             while l < r:
                 total = nums[i] + nums[l] + nums[r]
+                if abs(target - total) < abs(target - closestSum):
+                    closestSum = total
 
-                if abs(total - target) < abs(ans - target):
-                    ans = total
                 if total > target:
                     r -= 1
                 elif total < target:
                     l += 1
-                else:
-                    break
+                elif total == target:
+                    return total
         
-        return ans
-        # 0 1 1 1
+        return closestSum
+

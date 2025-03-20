@@ -1,32 +1,28 @@
 class Solution:
     def sortArray(self, nums: List[int]) -> List[int]:
         
-        def merge(lArr, rArr):
-            ans = []
-            ldq = deque(lArr)
-            rdq = deque(rArr)
-            
-            while ldq or rdq:
-                if not ldq:
-                    ans.append(rdq.popleft())
-                elif not rdq:
-                    ans.append(ldq.popleft())
-                elif ldq[0] <= rdq[0]:
-                    ans.append(ldq.popleft())
+        def merge(l, r, m):
+            dq1 = deque(nums[l:m+1])
+            dq2 = deque(nums[m+1:r+1])
+
+            while dq1 or dq2:
+                dq1val = dq1[0] if dq1 else float("infinity")
+                dq2val = dq2[0] if dq2 else float("infinity")
+                
+                if dq1val < dq2val:
+                    nums[l] = dq1.popleft()
                 else:
-                    ans.append(rdq.popleft())
-            
-            return ans   
+                    nums[l] = dq2.popleft()
+                l += 1
 
+        def mergeSort(l, r):
+            if l == r:
+                return
 
-        def mergeSort(arr):
-            if len(arr) == 1:
-                return arr
-            
-            m = len(arr) // 2
-            l = mergeSort(arr[:m])
-            r = mergeSort(arr[m:])
-
-            return merge(l, r)
-    
-        return mergeSort(nums)
+            m = l + (r - l) // 2
+            mergeSort(l, m)
+            mergeSort(m+1, r)
+            merge(l, r, m)
+        
+        mergeSort(0, len(nums) - 1)
+        return nums

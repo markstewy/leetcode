@@ -7,9 +7,8 @@ class WordDictionary:
 
     def __init__(self):
         self.root = Node()
-        
+
     def addWord(self, word: str) -> None:
-        # print("add")
         curr = self.root
         for c in word:
             if c not in curr.children:
@@ -18,8 +17,8 @@ class WordDictionary:
         curr.isWord = True
 
     def search(self, word: str) -> bool:
-
-        def containsWord(i, curr):
+        
+        def hasWord(i, curr):
             c = word[i]
             if c == ".":
                 if i == len(word) - 1:
@@ -29,18 +28,18 @@ class WordDictionary:
                     return False
                 else:
                     for child in curr.children.values():
-                        if containsWord(i + 1, child) == True:
+                        if hasWord(i + 1, child):
                             return True
                     return False
             else:
-                if i == len(word) - 1:
-                    return c in curr.children and curr.children[c].isWord
                 if c not in curr.children:
                     return False
-                return containsWord(i + 1, curr.children[c])
+                if i == len(word) - 1:
+                    return curr.children[c].isWord
+                else:
+                    return hasWord(i + 1, curr.children[c])
         
-        return containsWord(0, self.root)
-
+        return hasWord(0, self.root)
 
 
         

@@ -1,26 +1,24 @@
 class Solution:
     def maximumCandies(self, candies: List[int], k: int) -> int:
-        if sum(candies) < k:
+        if k > sum(candies):
             return 0
         
-        candies.sort()
         l = 1
         r = max(candies)
-        maxValid = 0
+        maxPileSize = 0
 
         while l <= r:
             m = l + (r - l) // 2
-            pileCount = 0
 
+            # if all kids get candies make pile bigger
+            kidCount = 0
             for c in candies:
-                pileCount += c // m
-                if pileCount >= k:
-                    break
-
-            if pileCount >= k:
-                maxValid = max(maxValid, m)
-                l = m + 1
+                kidCount += c // m
+            
+            if kidCount >= k:
+                maxPileSize = m
+                l = m + 1 # enough for each kid, increase pile size
             else:
-                r = m - 1
+                r = m - 1 # not enought decrease pile size
         
-        return maxValid
+        return maxPileSize

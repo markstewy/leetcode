@@ -1,25 +1,25 @@
 class Solution:
     def maxAbsoluteSum(self, nums: List[int]) -> int:
-        
+        maxNegSums = [0]
+        maxPosSums = [0]
+
         totals = []
         total = 0
+
         for n in nums:
             total += n
             totals.append(total)
-        
-        prevNeg = [0]
-        prevPos = [0]
+            maxNeg = min(maxNegSums[-1], total)
+            maxPos = max(maxPosSums[-1], total)
+            maxNegSums.append(maxNeg)
+            maxPosSums.append(maxPos)
 
-        for t in totals:
-            minNeg = min(prevNeg[-1], t)
-            maxPos = max(prevPos[-1], t)
-            prevNeg.append(minNeg)
-            prevPos.append(maxPos)
-        
-        absSum = abs(nums[0])
+        absMax = 0
+        print(totals)
+        print(maxNegSums)
+        print(maxPosSums)
 
         for i, t in enumerate(totals):
-            absSum = max(absSum, abs(t - prevPos[i]), abs(t - prevNeg[i]))
+            absMax = max(absMax, t - maxNegSums[i], abs(t - maxPosSums[i]))
         
-        return absSum
-
+        return absMax

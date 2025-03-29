@@ -1,20 +1,18 @@
 class Solution:
     def isValid(self, s: str) -> bool:
-        openToClose = {
-            "(": ")",
-            "[": "]",
-            "{": "}"
+        stack = []
+        closeToOpen = {
+            "]": "[",
+            "}": "{",
+            ")": "("
         }
 
-        stack = []
-
         for c in s:
-            if c in openToClose:
-                stack.append(openToClose[c])
+            if c not in closeToOpen:
+                stack.append(c)
             else:
-                if stack and stack[-1] == c:
-                    stack.pop()
-                else:
+                if not stack or stack[-1] != closeToOpen[c]:
                     return False
+                stack.pop()
         
         return not stack

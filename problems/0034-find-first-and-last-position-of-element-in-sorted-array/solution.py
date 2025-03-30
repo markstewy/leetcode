@@ -1,49 +1,56 @@
 class Solution:
     def searchRange(self, nums: List[int], target: int) -> List[int]:
-        def bs():
+        
+        def hasIndex():
             l = 0
             r = len(nums) - 1
 
             while l <= r:
                 m = l + (r - l) // 2
-                if nums[m] > target:
-                    r = m - 1
-                elif nums[m] < target:
+
+                if nums[m] < target:
                     l = m + 1
+                elif nums[m] > target:
+                    r = m - 1
                 else:
                     return True
             return False
-        
-        def bsl():
+
+
+        def firstIdx():
             l = 0
             r = len(nums) - 1
             closestPrev = -1
 
             while l <= r:
                 m = l + (r - l) // 2
+
                 if nums[m] < target:
-                    closestPrev = m
+                    closestPrev = max(closestPrev, m)
                     l = m + 1
-                else:
+                elif nums[m] >= target:
                     r = m - 1
             
             return closestPrev + 1
+
         
-        def bsr():
+        def lastIdx():
             l = 0
             r = len(nums) - 1
             closestNext = len(nums)
 
             while l <= r:
                 m = l + (r - l) // 2
+            
                 if nums[m] > target:
+                    closestNext = min(closestNext, m)
                     r = m - 1
-                    closestNext = m
-                else:
-                    l = m + 1
+                elif nums[m] <= target:
+                    l += 1
             
             return closestNext - 1
         
-        if not bs():
+        if not hasIndex():
             return [-1, -1]
-        return [bsl(), bsr()]
+        return [firstIdx(), lastIdx()]
+

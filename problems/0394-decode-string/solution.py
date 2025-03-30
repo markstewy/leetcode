@@ -5,11 +5,13 @@ class Solution:
         for c in s:
             if c != "]":
                 stack.append(c)
+            
             else:
                 word = ""
                 while stack[-1] != "[":
                     word = stack.pop() + word
                 stack.pop()
+
                 k = ""
                 while stack and stack[-1].isdigit():
                     k = stack.pop() + k
@@ -18,6 +20,4 @@ class Solution:
         
         return "".join(stack)
 
-                    
-            
 

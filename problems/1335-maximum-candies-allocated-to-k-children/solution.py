@@ -1,8 +1,5 @@
 class Solution:
     def maximumCandies(self, candies: List[int], k: int) -> int:
-        if k > sum(candies):
-            return 0
-        
         l = 1
         r = max(candies)
         maxPileSize = 0
@@ -10,15 +7,15 @@ class Solution:
         while l <= r:
             m = l + (r - l) // 2
 
-            # if all kids get candies make pile bigger
+
             kidCount = 0
-            for c in candies:
-                kidCount += c // m
+            for p in candies:
+                kidCount += p // m
             
             if kidCount >= k:
-                maxPileSize = m
-                l = m + 1 # enough for each kid, increase pile size
+                maxPileSize = max(maxPileSize, m)
+                l = m + 1
             else:
-                r = m - 1 # not enought decrease pile size
+                r = m - 1
         
         return maxPileSize

@@ -1,22 +1,42 @@
 class MyHashMap:
 
     def __init__(self):
-        self.mymap = [None] * 10**6
+        self.size = 10**4
+        self.arr = [[] for _ in range(self.size)]
 
     def put(self, key: int, value: int) -> None:
-        self.mymap[self.hash(key)] = value
+        idx = key % self.size
+        kvs = self.arr[idx]
+        valueSet = False
+
+        for i, pair in enumerate(kvs):
+            if pair[0] == key:
+                kvs[i][1] = value
+                valueSet = True
+        
+        if not valueSet:
+            kvs.append([key, value])
+        
 
     def get(self, key: int) -> int:
-        i = self.hash(key)
-        if self.mymap[i] == None:
-            return -1
-        return self.mymap[i]
+        idx = key % self.size
+        kvs = self.arr[idx]
+        value = None
+
+        for k, v in kvs:
+            if key == k:
+                value = v
+            
+        return value if value != None else -1
+
 
     def remove(self, key: int) -> None:
-        self.mymap[self.hash(key)] = None
-
-    def hash(self, key: int) -> int:
-        return key % len(self.mymap)
+        idx = key % self.size
+        kvs = self.arr[idx]
+        
+        for i, pair in enumerate(kvs):
+            if pair[0] == key:
+                del kvs[i]
         
 
 

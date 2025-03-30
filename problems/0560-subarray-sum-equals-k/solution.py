@@ -1,23 +1,28 @@
 class Solution:
     def subarraySum(self, nums: List[int], k: int) -> int:
+        prefixSums = collections.defaultdict(list) #sum: [idx]
+
         totals = []
         total = 0
-        for n in nums:
+        for i, n in enumerate(nums):
             total += n
             totals.append(total)
-
-        totalsIdx = collections.defaultdict(list)
-        for i, t in enumerate(totals):
-            totalsIdx[t].append(i)
+            prefixSums[total].append(i)
         
+
         count = 0
         for i, t in enumerate(totals):
-            diff = t - k
-            if diff == 0:
+            if t == k:
                 count += 1
-            if diff in totalsIdx:
-                for idx in totalsIdx[diff]:
+
+            diff = t - k
+
+            if diff in prefixSums:
+                for idx in prefixSums[diff]:
                     if idx < i:
                         count += 1
         
         return count
+
+        
+

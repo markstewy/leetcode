@@ -1,20 +1,26 @@
 class MyHashSet:
 
     def __init__(self):
-        self.myset = [None] * 10**6
+        self.size = 10**4
+        self.arr = [[]] * self.size
         
+
     def add(self, key: int) -> None:
-        i = key % len(self.myset)
-        self.myset[i] = key
+        if not self.contains(key):
+            self.arr[key % self.size].append(key)
+        
 
     def remove(self, key: int) -> None:
-         i = key % len(self.myset)
-         self.myset[i] = None
+        for i, k in  enumerate(self.arr[key % self.size]):
+            if k == key:
+                del self.arr[key % self.size][i]
+        
 
     def contains(self, key: int) -> bool:
-        i = key % len(self.myset)
-        return self.myset[i] == key
-        
+        for k in  self.arr[key % self.size]:
+            if k == key:
+                return True
+        return False
 
 
 # Your MyHashSet object will be instantiated and called as such:

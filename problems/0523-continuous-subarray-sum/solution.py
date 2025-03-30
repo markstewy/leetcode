@@ -6,22 +6,16 @@ class Solution:
             total += n
             totals.append(total)
         
-        mods = []
-        for t in totals:
-            mods.append(t % k)
-        
-        modMap = collections.defaultdict(list)
 
-        for i, m in enumerate(mods):
-            modMap[m].append(i)
-        
-        for i, m in enumerate(mods):
-            if m == 0 and i > 0:
+        mods = collections.defaultdict(list)
+        for i, t in enumerate(totals):
+            mod = t % k
+
+            if mod in mods and i - min(mods[mod]) >= 2:
                 return True
-            
-            if i - min(modMap[m]) > 1:
+            if mod == 0 and i > 0:
                 return True
-        
+
+            mods[mod].append(i)
+
         return False
-
-

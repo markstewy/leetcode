@@ -15,28 +15,22 @@ class Trie:
                 curr.children[c] = Node()
             curr = curr.children[c]
         curr.isWord = True
-        
 
     def search(self, word: str) -> bool:
         curr = self.root
-        
         for c in word:
-            if c in curr.children:
-                curr = curr.children[c]
-            else:
+            if c not in curr.children:
                 return False
+            curr = curr.children[c]
         
         return curr.isWord
-            
-
+        
     def startsWith(self, prefix: str) -> bool:
         curr = self.root
-        
         for c in prefix:
-            if c in curr.children:
-                curr = curr.children[c]
-            else:
+            if c not in curr.children:
                 return False
+            curr = curr.children[c]
         
         return True
         

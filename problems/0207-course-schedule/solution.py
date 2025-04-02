@@ -7,6 +7,7 @@ class Solution:
         visiting = set()
         completed = set()
 
+
         def helper(crs):
             if crs in completed:
                 return True
@@ -18,11 +19,13 @@ class Solution:
                 if helper(pr) == False:
                     return False
             visiting.remove(crs)
-
+                
             completed.add(crs)
             return True
+
         
         for crs in range(numCourses):
             if helper(crs) == False:
                 return False
+        
         return True

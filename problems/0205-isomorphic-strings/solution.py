@@ -3,22 +3,24 @@ class Solution:
         if len(s) != len(t):
             return False
 
+        s = list(s)
+        t = list(t)
+
         sTot = {}
         tTos = {}
 
         for i in range(len(s)):
-            sc = s[i]
-            tc = t[i]
-
-            if sc in sTot and sTot[sc] != tc:
-                return False
-            elif tc in tTos and tTos[tc] != sc:
-                return False
+            if s[i] in sTot:
+                if sTot[s[i]] != t[i]:
+                    return False
+            elif t[i] in tTos:
+                if tTos[t[i]] != s[i]:
+                    return False
             else:
-                sTot[sc] = tc
-                tTos[tc] = sc
+                sTot[s[i]] = t[i]
+                tTos[t[i]] = s[i]
         
         return True
-        
-        
+            
+
 

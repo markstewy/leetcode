@@ -1,7 +1,6 @@
 class Solution:
     def subsets(self, nums: List[int]) -> List[List[int]]:
-        ans = []
-
+        ans = []        
 
         def helper(sub, i):
             if i >= len(nums):
@@ -13,6 +12,6 @@ class Solution:
             sub.pop()
 
             helper(sub, i + 1)
-        
+    
         helper([], 0)
         return ans

@@ -4,14 +4,15 @@ class Solution:
             if nums[i] < 0:
                 nums[i] = 0
         
-        for n in nums:
-            idx =  abs(n) - 1
+        for i in range(len(nums)):
+            idx = abs(nums[i]) - 1
+
             if 0 <= idx < len(nums):
                 if nums[idx] == 0:
                     nums[idx] = -len(nums)
                 else:
                     nums[idx] = -abs(nums[idx])
-        print(nums)
+        
         for i, n in enumerate(nums):
             if n >= 0:
                 return i + 1

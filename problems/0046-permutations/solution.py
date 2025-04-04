@@ -1,21 +1,22 @@
 class Solution:
     def permute(self, nums: List[int]) -> List[List[int]]:
         ans = []
-        nset = set()
         perm = []
+        count = Counter(nums)
 
         def helper():
             if len(perm) == len(nums):
                 ans.append(perm.copy())
                 return
             
-            for n in nums:
-                if n not in nset:
-                    nset.add(n)
-                    perm.append(n)
+            for c in count:
+                if count[c] > 0:
+                    count[c] -= 1
+                    perm.append(c)
                     helper()
                     perm.pop()
-                    nset.remove(n)
+                    count[c] += 1
+                    
         
         helper()
         return ans

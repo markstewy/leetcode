@@ -15,9 +15,10 @@ class Solution:
             
             l = helper(root.left)
             r = helper(root.right)
+
             total = l + r
 
-            if root.val == p.val or root.val == q.val:
+            if root.val == q.val or root.val == p.val:
                 total += 1
             
             if total == 2:
@@ -28,6 +29,3 @@ class Solution:
         
         helper(root)
         return self.lca
-        
-
-            

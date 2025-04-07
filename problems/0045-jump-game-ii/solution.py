@@ -1,21 +1,22 @@
 class Solution:
     def jump(self, nums: List[int]) -> int:
-        maxReachIdxs = []
+        if len(nums) == 1:
+            return 0
+
+        reach = []
         maxReach = 0
 
         for i, n in enumerate(nums):
             maxReach = max(maxReach, i + n)
-            maxReachIdxs.append(maxReach)
+            reach.append(maxReach)
+
+        print(reach)
         
-        prev = -1
-        i = 0
         count = 0
-        while i != prev:
+        i = 0
+        while True:
+            i = reach[i]
+            count += 1
             if i >= len(nums) - 1:
                 return count
-            
-            prev = i
-            i = maxReachIdxs[i]
-            count += 1
-        
-        
+

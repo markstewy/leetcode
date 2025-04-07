@@ -1,7 +1,7 @@
 class Node:
     def __init__(self):
-        self.isWord = False
         self.children = {}
+        self.isWord = False
 
 class WordDictionary:
 
@@ -17,10 +17,9 @@ class WordDictionary:
         curr.isWord = True
 
     def search(self, word: str) -> bool:
-        
-        def hasWord(i, curr):
-            c = word[i]
-            if c == ".":
+
+        def helper(curr, i):
+            if word[i] == ".":
                 if i == len(word) - 1:
                     for child in curr.children.values():
                         if child.isWord:
@@ -28,18 +27,18 @@ class WordDictionary:
                     return False
                 else:
                     for child in curr.children.values():
-                        if hasWord(i + 1, child):
+                        if helper(child, i + 1) == True:
                             return True
                     return False
             else:
-                if c not in curr.children:
+                if word[i] not in curr.children:
                     return False
                 if i == len(word) - 1:
-                    return curr.children[c].isWord
-                else:
-                    return hasWord(i + 1, curr.children[c])
+                    return curr.children[word[i]].isWord
+                
+                return helper(curr.children[word[i]], i + 1)
         
-        return hasWord(0, self.root)
+        return helper(self.root, 0)
 
 
         

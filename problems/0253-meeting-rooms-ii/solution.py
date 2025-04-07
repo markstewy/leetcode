@@ -1,16 +1,19 @@
 class Solution:
     def minMeetingRooms(self, intervals: List[List[int]]) -> int:
+        
+        endTimes = []
+        heapq.heapify(endTimes)
         intervals.sort()
-        mtgEnds = []
-        heapq.heapify(mtgEnds)
-
         maxRooms = 0
 
-        for b, e in intervals:
-            while mtgEnds and mtgEnds[0] <= b:
-                heapq.heappop(mtgEnds)
-
-            heapq.heappush(mtgEnds, e)
-            maxRooms = max(maxRooms, len(mtgEnds))
+        for s, e in intervals:
+            while endTimes and endTimes[0] <= s:
+                heapq.heappop(endTimes)
+            
+            heapq.heappush(endTimes, e)
+            maxRooms = max(maxRooms, len(endTimes))
         
         return maxRooms
+
+
+
